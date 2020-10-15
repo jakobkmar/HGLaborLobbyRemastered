@@ -1,0 +1,14 @@
+{
+  "name": "HGLaborLobby",
+  "author": "bluefireoly",
+  "version": "1.0.0",
+
+  "main": "net.axay.hglaborlobby.main.Manager",
+  "api-version": "1.16",
+
+  "commands": {
+    "spawn": {
+      "description": "Teleportiert dich zum Spawn."
+    }
+  }
+}
