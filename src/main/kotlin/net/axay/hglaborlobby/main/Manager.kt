@@ -29,7 +29,7 @@ class InternalMainClass : KSpigot() {
 
         SoupHealing.enable()
 
-        broadcast("${KColors.GREEN}-> ENABLED PLUGIN")
+        broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
 
         console.success("Lobby plugin enabled.")
@@ -40,7 +40,7 @@ class InternalMainClass : KSpigot() {
 
         console.info("Shutting down Lobby plugin...")
 
-        broadcast("${KColors.RED}-> DISABLING PLUGIN ${KColors.DARKGRAY}(maybe a reload)")
+        broadcast("${KColors.TOMATO}-> DISABLING PLUGIN ${KColors.DARKGRAY}(maybe a reload)")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_DEACTIVATE) }
 
         console.success("Shut down Lobby plugin.")
