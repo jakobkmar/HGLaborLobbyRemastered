@@ -1,4 +1,14 @@
+@file:Suppress("PropertyName")
+
 import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+/*
+ * BUILD CONSTANTS
+ */
+
+val JVM_VERSION = JavaVersion.VERSION_1_8
+val JVM_VERSION_STRING = JVM_VERSION.versionString
 
 /*
  * PROJECT
@@ -32,11 +42,25 @@ dependencies {
     // KSPIGOT
     implementation("net.axay", "KSpigot", "1.16.3_R11")
 
+    // BLUEUTILS
+    implementation("net.axay", "BlueUtils", "1.0.0")
+
 }
 
 /*
  * BUILD
  */
+
+// JVM VERSION
+
+java.sourceCompatibility = JVM_VERSION
+
+tasks {
+    compileKotlin.configureJvmVersion()
+    compileTestKotlin.configureJvmVersion()
+}
+
+// SHADOW
 
 tasks {
     shadowJar {
@@ -50,3 +74,14 @@ val relocateShadowJar by tasks.creating(ConfigureShadowRelocation::class) {
 }
 
 tasks.shadowJar.get().dependsOn(relocateShadowJar)
+
+/*
+ * EXTENSIONS
+ */
+
+val JavaVersion.versionString get() = majorVersion.let {
+    val version = it.toInt()
+    if (version <= 10) "1.$it" else it
+}
+
+fun TaskProvider<KotlinCompile>.configureJvmVersion() { get().kotlinOptions.jvmTarget = JVM_VERSION_STRING }
