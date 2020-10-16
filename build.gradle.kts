@@ -17,6 +17,10 @@ val JVM_VERSION_STRING = JVM_VERSION.versionString
 group = "net.axay"
 version = "1.0.0"
 
+/*
+ * PLUGINS
+ */
+
 plugins {
 
     kotlin("jvm") version "1.4.10"
@@ -44,6 +48,10 @@ dependencies {
 
     // BLUEUTILS
     implementation("net.axay", "BlueUtils", "1.0.0")
+
+    // KMONGO and MONGODB
+    implementation("org.litote.kmongo", "kmongo", "4.1.3")
+    implementation("org.mongodb", "mongodb-driver-sync", "4.1.1")
 
 }
 
