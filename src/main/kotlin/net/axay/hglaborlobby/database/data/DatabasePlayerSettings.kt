@@ -7,8 +7,8 @@ import java.util.*
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PlayerSettings(
     val uuid: UUID,
-    val customSpawnLoc: SerializableLocation?,
-    val privacySettings: PlayerPrivacySettings
+    val customSpawnLoc: SerializableLocation? = null,
+    val privacySettings: PlayerPrivacySettings? = null
 ) {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
