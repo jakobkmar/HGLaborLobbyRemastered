@@ -1,5 +1,7 @@
 package net.axay.hglaborlobby.main
 
+import net.axay.hglaborlobby.functionality.JoinMessage
+import net.axay.hglaborlobby.functionality.PlayerSettingsHolder
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
@@ -27,7 +29,9 @@ class InternalMainClass : KSpigot() {
 
     override fun startup() {
 
+        PlayerSettingsHolder.enable()
         SoupHealing.enable()
+        JoinMessage.enable()
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
