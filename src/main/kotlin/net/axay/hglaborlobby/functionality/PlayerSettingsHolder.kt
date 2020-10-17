@@ -16,10 +16,10 @@ object PlayerSettingsHolder {
 
     private val playerSettings = mutableMapOf<Player, PlayerSettings>()
 
-    fun loadFromDatabase(player: Player)
+    private fun loadFromDatabase(player: Player)
         = (
             DatabaseManager.playerSettings.findOne(PlayerSettings::uuid eq player.uniqueId)
-                ?: PlayerSettings(player.uniqueId).apply {
+                ?: PlayerSettings.createDefault(player.uniqueId).apply {
                     DatabaseManager.playerSettings.insertOneIfNotContains(
                         PlayerSettings::uuid eq player.uniqueId,
                         this@apply
@@ -27,11 +27,8 @@ object PlayerSettingsHolder {
                 }
         ).apply { playerSettings[player] = this@apply }
 
-    operator fun get(player: Player, loadIfNotPresent: Boolean = true)
-        = playerSettings[player] ?:
-            if (loadIfNotPresent)
-                loadFromDatabase(player)
-            else null
+    operator fun get(player: Player)
+        = playerSettings[player] ?: loadFromDatabase(player)
 
     fun enable() {
 
