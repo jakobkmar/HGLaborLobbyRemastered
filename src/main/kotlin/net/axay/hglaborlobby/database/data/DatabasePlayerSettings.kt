@@ -7,10 +7,19 @@ import java.util.*
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class PlayerSettings(
     val uuid: UUID,
-    val customSpawnLoc: SerializableLocation? = null,
+    val customSpawnLoc: SerializableLocation?,
     val privacySettings: PlayerPrivacySettings,
-    val ifSeeJoinMessages: Boolean = true
+    val ifSeeJoinMessages: Boolean
 ) {
+
+    companion object {
+        fun createDefault(uuid: UUID) = PlayerSettings(
+            uuid,
+            null,
+            PlayerPrivacySettings(ifCountry = false, ifState = false, ifCity = false),
+            true
+        )
+    }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     data class PlayerPrivacySettings(
