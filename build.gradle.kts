@@ -1,6 +1,5 @@
 @file:Suppress("PropertyName")
 
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
@@ -36,6 +35,7 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    jcenter()
 }
 
 dependencies {
@@ -44,7 +44,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.3-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay", "KSpigot", "1.16.3_R11")
+    implementation("net.axay", "KSpigot", "1.16.3_R14")
 
     // BLUEUTILS
     implementation("net.axay", "BlueUtils", "1.0.0")
@@ -62,26 +62,22 @@ dependencies {
 // JVM VERSION
 
 java.sourceCompatibility = JVM_VERSION
+java.targetCompatibility = JVM_VERSION
 
-tasks {
-    compileKotlin.configureJvmVersion()
-    compileTestKotlin.configureJvmVersion()
+tasks.withType<KotlinCompile> {
+    configureJvmVersion()
+    configureJvmVersion()
 }
 
 // SHADOW
 
 tasks {
     shadowJar {
-        minimize()
+        minimize {
+            exclude(dependency("org.litote.kmongo:.*:.*"))
+        }
     }
 }
-
-val relocateShadowJar by tasks.creating(ConfigureShadowRelocation::class) {
-    target = tasks.shadowJar.get()
-    prefix = "${project.group}.shadow"
-}
-
-tasks.shadowJar.get().dependsOn(relocateShadowJar)
 
 /*
  * EXTENSIONS
@@ -92,4 +88,4 @@ val JavaVersion.versionString get() = majorVersion.let {
     if (version <= 10) "1.$it" else it
 }
 
-fun TaskProvider<KotlinCompile>.configureJvmVersion() { get().kotlinOptions.jvmTarget = JVM_VERSION_STRING }
+fun KotlinCompile.configureJvmVersion() { kotlinOptions.jvmTarget = JVM_VERSION_STRING }
