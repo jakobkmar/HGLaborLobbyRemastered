@@ -1,9 +1,9 @@
 {
-  "name": "HGLaborLobby",
+  "name": "HGLaborLobbyRemastered",
   "author": "bluefireoly",
   "version": "1.0.0",
 
-  "main": "net.axay.hglaborlobby.main.Manager",
+  "main": "net.axay.hglaborlobby.main.InternalMainClass",
   "api-version": "1.16",
 
   "commands": {
