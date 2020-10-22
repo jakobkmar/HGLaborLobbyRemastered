@@ -9,7 +9,7 @@ import org.litote.kmongo.ascendingIndex
 
 object DatabaseManager {
 
-    private val mongoDB = MongoDB(ConfigManager.databaseLoginInformation)
+    private val mongoDB = MongoDB(ConfigManager.databaseLoginInformation, spigot = true)
 
     val playerSettings
             = mongoDB.getCollectionOrCreate<PlayerSettings>("${PLUGIN_DATA_PREFIX}player_settings") {
