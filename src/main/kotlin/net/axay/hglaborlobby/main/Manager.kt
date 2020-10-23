@@ -4,10 +4,12 @@ import net.axay.hglaborlobby.eventmanager.joinserver.JoinMessage
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
 import net.axay.hglaborlobby.functionality.PlayerSettingsHolder
 import net.axay.hglaborlobby.functionality.SoupHealing
+import net.axay.hglaborlobby.gui.AdminGUI
 import net.axay.hglaborlobby.protection.WorldProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
 import net.axay.kspigot.extensions.bukkit.info
+import net.axay.kspigot.extensions.bukkit.register
 import net.axay.kspigot.extensions.bukkit.success
 import net.axay.kspigot.extensions.console
 import net.axay.kspigot.extensions.onlinePlayers
@@ -38,6 +40,8 @@ class InternalMainClass : KSpigot() {
         SoupHealing.enable()
         JoinMessage.enable()
         OnJoinManager.enable()
+
+        AdminGUI.register("admingui")
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
