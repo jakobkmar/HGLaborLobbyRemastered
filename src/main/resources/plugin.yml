@@ -9,6 +9,9 @@
   "commands": {
     "spawn": {
       "description": "Teleportiert dich zum Spawn."
+    },
+    "admingui": {
+      "description": "Öffnet das Admin GUI."
     }
   }
 }
