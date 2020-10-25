@@ -23,7 +23,7 @@ object AdminGUI : CommandExecutor {
 
         page(1) {
 
-            placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS) { meta { name = " " } })
+            placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS) { meta { name = null } })
 
             button(Slots.RowFiveSlotTwo, itemStack(Material.END_ROD) {
                 meta {
