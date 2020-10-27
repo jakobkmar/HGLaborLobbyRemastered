@@ -12,10 +12,12 @@ object OnJoinManager {
 
         listen<PlayerJoinEvent>(EventPriority.HIGHEST) {
 
+            val player = it.player
+
             async {
 
-                JoinMessage.joinMessage(it.player)
-                BadIPDetection.checkPlayer(it.player)
+                JoinMessage.joinMessage(player)
+                BadIPDetection.checkPlayer(player)
 
             }
 
