@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.database.data
+package net.axay.hglaborlobby.data
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import net.axay.kspigot.serialization.serializables.SerializableLocation
