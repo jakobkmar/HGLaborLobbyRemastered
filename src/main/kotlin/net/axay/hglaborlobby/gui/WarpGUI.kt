@@ -2,9 +2,9 @@ package net.axay.hglaborlobby.gui
 
 import net.axay.hglaborlobby.data.Warp
 import net.axay.kspigot.chat.KColors
-import net.axay.kspigot.inventory.InventoryType
-import net.axay.kspigot.inventory.Slots
-import net.axay.kspigot.inventory.kSpigotGUI
+import net.axay.kspigot.gui.GUIType
+import net.axay.kspigot.gui.Slots
+import net.axay.kspigot.gui.kSpigotGUI
 import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.name
 import net.axay.kspigot.items.setLore
@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack
 
 object WarpGUI {
 
-    val gui = kSpigotGUI(InventoryType.THREE_BY_NINE) {
+    val gui = kSpigotGUI(GUIType.THREE_BY_NINE) {
 
         page(1) {
 
