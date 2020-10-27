@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
@@ -50,6 +51,17 @@ object ServerProtection {
             if (whoClicked is Player)
                 if (it.inventory == whoClicked.inventory)
                     GeneralProtectionUtils.checkPlayerAction(it, whoClicked)
+
+        }
+
+        listen<InventoryMoveItemEvent> {
+
+            val source = it.source
+            val holder = source.holder
+
+            if (holder is Player)
+                if (holder.inventory == source)
+                    GeneralProtectionUtils.checkPlayerAction(it, holder)
 
         }
 
