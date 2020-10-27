@@ -2,7 +2,7 @@ package net.axay.hglaborlobby.gui
 
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.chat.input.awaitAnvilInput
-import net.axay.kspigot.chat.input.awaitBookInput
+import net.axay.kspigot.chat.input.awaitBookInputAsString
 import net.axay.kspigot.gui.GUIType
 import net.axay.kspigot.gui.Slots
 import net.axay.kspigot.gui.kSpigotGUI
@@ -40,23 +40,23 @@ object AdminGUI : CommandExecutor {
                         invTitle = "Gib den Namen des Warps ein!"
                     ) { name ->
 
-                        val warpName = name ?: kotlin.run {
+                        val warpName = name.input ?: kotlin.run {
                             player.sendMessage("${KColors.RED}ABBRUCH. ${KColors.INDIANRED}Du musst einen validen Namen für den Warp eingeben!")
                             return@awaitAnvilInput
                         }
 
                         player.sendMessage("${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}$warpName ${KColors.BISQUE}als Warpname festgelegt.")
 
-                        player.awaitBookInput { description ->
+                        player.awaitBookInputAsString { description ->
 
-                            val warpDescription = description ?: kotlin.run {
+                            val warpDescription = description.input ?: kotlin.run {
                                 player.sendMessage("${KColors.RED}ABBRUCH. ${KColors.INDIANRED}Du musst eine valide Beschreibung für den Warp eingeben!")
-                                return@awaitBookInput
+                                return@awaitBookInputAsString
                             }
 
                             val takeElements = 20
-                            val dots = if (warpDescription.length > 20) "..." else ""
-                            player.sendMessage("${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}${warpDescription.take(20)}$dots ${KColors.BISQUE}als Warpname festgelegt.")
+                            val dots = if (warpDescription.length > takeElements) "..." else ""
+                            player.sendMessage("${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}${warpDescription.take(takeElements)}$dots ${KColors.BISQUE}als Warpname festgelegt.")
 
                         }
                     }
