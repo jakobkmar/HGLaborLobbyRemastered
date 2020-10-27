@@ -49,7 +49,7 @@ object ServerProtection {
             val whoClicked = it.whoClicked
 
             if (whoClicked is Player)
-                if (it.inventory == whoClicked.inventory)
+                if (it.clickedInventory == whoClicked.inventory)
                     GeneralProtectionUtils.checkPlayerAction(it, whoClicked)
 
         }
