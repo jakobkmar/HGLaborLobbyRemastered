@@ -4,7 +4,7 @@ package net.axay.hglaborlobby.functionality
 
 import net.axay.blueutils.database.mongodb.insertOneIfNotContains
 import net.axay.hglaborlobby.database.DatabaseManager
-import net.axay.hglaborlobby.database.data.PlayerSettings
+import net.axay.hglaborlobby.data.PlayerSettings
 import net.axay.kspigot.event.listen
 import org.bukkit.entity.Player
 import org.bukkit.event.EventPriority

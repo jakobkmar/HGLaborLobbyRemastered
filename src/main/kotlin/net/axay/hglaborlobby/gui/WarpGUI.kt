@@ -1,6 +1,6 @@
 package net.axay.hglaborlobby.gui
 
-import net.axay.hglaborlobby.database.data.DatabaseWarp
+import net.axay.hglaborlobby.data.Warp
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.inventory.InventoryType
 import net.axay.kspigot.inventory.Slots
@@ -20,7 +20,7 @@ object WarpGUI {
 
             placeholder(Slots.Border, ItemStack(Material.PINK_STAINED_GLASS_PANE))
 
-            val warpsCompound = createCompound<DatabaseWarp>(
+            val warpsCompound = createCompound<Warp>(
 
                 Slots.RowTwoSlotTwo,
                 Slots.RowTwoSlotEight,
