@@ -2,10 +2,12 @@ package net.axay.hglaborlobby.main
 
 import net.axay.hglaborlobby.eventmanager.joinserver.JoinMessage
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
+import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.hglaborlobby.functionality.PlayerSettingsHolder
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.AdminGUI
 import net.axay.hglaborlobby.protection.WorldProtection
+import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
 import net.axay.kspigot.extensions.bukkit.info
@@ -34,12 +36,14 @@ class InternalMainClass : KSpigot() {
     override fun startup() {
 
         WorldProtection.enable()
+        ServerProtection.enable()
 
         PlayerSettingsHolder.enable()
 
         SoupHealing.enable()
         JoinMessage.enable()
         OnJoinManager.enable()
+        LobbyItems.enable()
 
         AdminGUI.register("admingui")
 
