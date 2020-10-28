@@ -7,10 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.player.PlayerDropItemEvent
-import org.bukkit.event.player.PlayerInteractEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.event.player.*
 import org.bukkit.inventory.CraftingInventory
 
 object ServerProtection {
@@ -73,6 +70,10 @@ object ServerProtection {
         }
 
         listen<PlayerDropItemEvent> {
+            GeneralProtectionUtils.checkPlayerAction(it)
+        }
+
+        listen<PlayerTakeLecternBookEvent> {
             GeneralProtectionUtils.checkPlayerAction(it)
         }
 
