@@ -14,7 +14,11 @@ import java.util.*
 data class PlayerSettings(
     @Contextual @SerialName("_id") val uuid: UUID,
     val customSpawnLoc: Location? = null,
-    val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(ifCountry = false, ifState = false, ifCity = false),
+    val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(
+        ifCountry = false,
+        ifState = false,
+        ifCity = false
+    ),
     val ifSeeJoinMessages: Boolean = true
 ) {
 
