@@ -26,6 +26,8 @@ plugins {
 
     id("com.github.johnrengelman.shadow") version "6.0.0"
 
+    kotlin("plugin.serialization") version "1.4.10"
+
 }
 
 /*
