@@ -2,7 +2,7 @@
 
 package net.axay.hglaborlobby.data
 
-import kotlinx.serialization.Contextual
+import com.github.jershell.kbson.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
@@ -12,7 +12,7 @@ import java.util.*
 
 @Serializable
 data class PlayerSettings(
-    @Contextual @SerialName("_id") val uuid: UUID,
+    @Serializable(with = UUIDSerializer::class) @SerialName("_id") val uuid: UUID,
     val customSpawnLoc: Location? = null,
     val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(
         ifCountry = false,
