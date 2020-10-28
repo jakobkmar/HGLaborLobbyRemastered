@@ -19,7 +19,7 @@ object PlayerSettingsHolder {
     private fun loadFromDatabase(player: Player)
         = (
             DatabaseManager.playerSettings.findOne(PlayerSettings::uuid eq player.uniqueId)
-                ?: PlayerSettings.createDefault(player.uniqueId).apply {
+                ?: PlayerSettings(player.uniqueId).apply {
                     DatabaseManager.playerSettings.insertOneIfNotContains(
                         PlayerSettings::uuid eq player.uniqueId,
                         this@apply
