@@ -1,13 +1,19 @@
+@file:UseSerializers(LocationSerializer::class)
+
 package net.axay.hglaborlobby.data
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import net.axay.kspigot.serialization.serializables.SerializableLocation
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
+import net.axay.kspigot.serialization.LocationSerializer
+import org.bukkit.Location
 import java.util.*
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Serializable
 data class PlayerSettings(
-    val uuid: UUID,
-    val customSpawnLoc: SerializableLocation?,
+    @Contextual @SerialName("_id") val uuid: UUID,
+    val customSpawnLoc: Location?,
     val privacySettings: PlayerPrivacySettings,
     val ifSeeJoinMessages: Boolean
 ) {
@@ -21,7 +27,7 @@ data class PlayerSettings(
         )
     }
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Serializable
     data class PlayerPrivacySettings(
         val ifCountry: Boolean,
         val ifState: Boolean,
