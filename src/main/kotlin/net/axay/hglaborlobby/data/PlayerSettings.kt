@@ -12,7 +12,9 @@ import java.util.*
 
 @Serializable
 data class PlayerSettings(
+
     @Serializable(with = UUIDSerializer::class) @SerialName("_id") val uuid: UUID,
+
     val customSpawnLoc: Location? = null,
     val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(
         ifCountry = false,
@@ -20,6 +22,7 @@ data class PlayerSettings(
         ifCity = false
     ),
     val ifSeeJoinMessages: Boolean = true
+
 ) {
 
     @Serializable
