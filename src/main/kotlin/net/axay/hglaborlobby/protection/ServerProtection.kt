@@ -7,10 +7,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.inventory.CraftingInventory
 
 object ServerProtection {
 
@@ -47,22 +48,24 @@ object ServerProtection {
         listen<InventoryClickEvent> {
 
             val whoClicked = it.whoClicked
+            val clickedInv = it.clickedInventory ?: return@listen
+
+            fun belongsToPlayer(player: Player): Boolean {
+                return when {
+                    clickedInv == player.inventory -> true
+                    clickedInv is CraftingInventory && clickedInv.holder as? Player == player -> true
+                    else -> false
+                }
+            }
 
             if (whoClicked is Player)
-                if (it.clickedInventory == whoClicked.inventory)
+                if (belongsToPlayer(whoClicked))
                     GeneralProtectionUtils.checkPlayerAction(it, whoClicked)
 
         }
 
-        listen<InventoryMoveItemEvent> {
-
-            val source = it.source
-            val holder = source.holder
-
-            if (holder is Player)
-                if (holder.inventory == source)
-                    GeneralProtectionUtils.checkPlayerAction(it, holder)
-
+        listen<PlayerSwapHandItemsEvent> {
+            GeneralProtectionUtils.checkPlayerAction(it)
         }
 
         listen<PlayerDeathEvent> {
