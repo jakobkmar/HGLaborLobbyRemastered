@@ -83,12 +83,24 @@ tasks {
 }
 
 /*
+val relocateShadowJar by tasks.creating(ConfigureShadowRelocation::class) {
+    target = tasks.shadowJar.get()
+    prefix = "${project.group}.shadow"
+}
+
+tasks.shadowJar.get().dependsOn(relocateShadowJar)
+*/
+
+/*
  * EXTENSIONS
  */
 
-val JavaVersion.versionString get() = majorVersion.let {
-    val version = it.toInt()
-    if (version <= 10) "1.$it" else it
-}
+val JavaVersion.versionString
+    get() = majorVersion.let {
+        val version = it.toInt()
+        if (version <= 10) "1.$it" else it
+    }
 
-fun KotlinCompile.configureJvmVersion() { kotlinOptions.jvmTarget = JVM_VERSION_STRING }
+fun KotlinCompile.configureJvmVersion() {
+    kotlinOptions.jvmTarget = JVM_VERSION_STRING
+}
