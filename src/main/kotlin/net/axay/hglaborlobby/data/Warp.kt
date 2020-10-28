@@ -1,13 +1,17 @@
+@file:UseSerializers(LocationSerializer::class)
+
 package net.axay.hglaborlobby.data
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import net.axay.kspigot.serialization.serializables.SerializableLocation
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
+import net.axay.kspigot.serialization.LocationSerializer
+import org.bukkit.Location
 import org.bukkit.Material
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Serializable
 data class Warp(
     val name: String,
-    val location: SerializableLocation,
+    val location: Location,
     val description: String?,
     val icon: Material
 )
