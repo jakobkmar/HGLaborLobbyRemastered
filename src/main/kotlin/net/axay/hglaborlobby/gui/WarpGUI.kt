@@ -40,7 +40,7 @@ object WarpGUI {
 
                     clickEvent.bukkitEvent.isCancelled = true
 
-                    clickEvent.bukkitEvent.whoClicked.teleport(element.location.toSpigot())
+                    clickEvent.bukkitEvent.whoClicked.teleport(element.location)
 
                 }
 
