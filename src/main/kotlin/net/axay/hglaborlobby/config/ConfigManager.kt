@@ -14,7 +14,7 @@ object ConfigManager {
 
     val ipServiceConfig
             by kSpigotJsonConfig(PluginFile("ipServiceConfig.json")) {
-                IPServiceConfig.NOTSET_DEFAULT
+                IPServiceConfig()
             }
 
 }
