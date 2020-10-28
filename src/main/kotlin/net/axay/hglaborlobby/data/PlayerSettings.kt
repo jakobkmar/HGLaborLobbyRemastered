@@ -13,19 +13,10 @@ import java.util.*
 @Serializable
 data class PlayerSettings(
     @Contextual @SerialName("_id") val uuid: UUID,
-    val customSpawnLoc: Location?,
-    val privacySettings: PlayerPrivacySettings,
-    val ifSeeJoinMessages: Boolean
+    val customSpawnLoc: Location? = null,
+    val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(ifCountry = false, ifState = false, ifCity = false),
+    val ifSeeJoinMessages: Boolean = true
 ) {
-
-    companion object {
-        fun createDefault(uuid: UUID) = PlayerSettings(
-            uuid,
-            null,
-            PlayerPrivacySettings(ifCountry = false, ifState = false, ifCity = false),
-            true
-        )
-    }
 
     @Serializable
     data class PlayerPrivacySettings(
