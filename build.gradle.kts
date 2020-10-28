@@ -51,8 +51,8 @@ dependencies {
     implementation("net.axay", "BlueUtils", "1.0.0")
 
     // KMONGO and MONGODB
-    implementation("org.litote.kmongo", "kmongo", "4.1.3")
-    implementation("org.mongodb", "mongodb-driver-sync", "4.1.1")
+    implementation("org.litote.kmongo", "kmongo-core", "4.1.3")
+    implementation("org.litote.kmongo", "kmongo-serialization-mapping", "4.1.3")
 
 }
 
