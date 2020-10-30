@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.gui.guis
 
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
+import net.axay.kspigot.extensions.events.isRightClick
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.gui.elements.GUICompoundElement
 import net.axay.kspigot.gui.elements.GUIRectSpaceCompound
@@ -57,6 +58,8 @@ object MainGUI {
     fun enable() {
 
         listen<PlayerInteractEvent> {
+
+            if (!it.action.isRightClick) return@listen
 
             if (it.item?.hasMark("maingui") == true) {
                 it.isCancelled = true
