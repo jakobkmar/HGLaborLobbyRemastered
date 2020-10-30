@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.gui
+package net.axay.hglaborlobby.gui.guis
 
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.chat.input.awaitAnvilInput
