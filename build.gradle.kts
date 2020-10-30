@@ -35,8 +35,8 @@ plugins {
  */
 
 repositories {
-    mavenCentral()
     mavenLocal()
+
     jcenter()
     maven("https://jitpack.io")
 }
@@ -47,7 +47,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.3-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay", "KSpigot", "v1.16.3_R16")
+    implementation("net.axay", "KSpigot", "v1.16.3_R18")
 
     // BLUEUTILS
     implementation("net.axay", "BlueUtils", "1.0.0")
@@ -79,6 +79,7 @@ tasks {
         minimize {
             exclude(dependency("org.litote.kmongo:.*:.*"))
         }
+        relocate("net.axay.kspigot", "${project.group}.shadow.net.axay.kspigot")
     }
 }
 
