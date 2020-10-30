@@ -21,7 +21,8 @@ data class PlayerSettings(
         ifState = false,
         ifCity = false
     ),
-    val ifSeeJoinMessages: Boolean = true
+    val ifSeeJoinMessages: Boolean = true,
+    val visibilitySettings: PlayerVisibilitySettings = PlayerVisibilitySettings.SHOW_ALL
 
 ) {
 
@@ -32,6 +33,10 @@ data class PlayerSettings(
         val ifCity: Boolean
     ) {
         val ifLoadAny get() = ifCountry || ifState || ifCity
+    }
+
+    enum class PlayerVisibilitySettings {
+        SHOW_ALL, ONLY_FRIENDS, HIDE_ALL
     }
 
 }
