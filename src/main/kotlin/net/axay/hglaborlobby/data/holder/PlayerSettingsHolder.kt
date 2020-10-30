@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package net.axay.hglaborlobby.functionality
+package net.axay.hglaborlobby.data.holder
 
 import net.axay.blueutils.database.mongodb.insertOneIfNotContains
 import net.axay.hglaborlobby.database.DatabaseManager
