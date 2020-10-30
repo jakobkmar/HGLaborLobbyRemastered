@@ -6,6 +6,7 @@ import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.meta
 import net.axay.kspigot.items.name
 import net.axay.kspigot.items.toLoreList
+import net.axay.kspigot.utils.hasMark
 import net.axay.kspigot.utils.mark
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -17,19 +18,22 @@ object LobbyItems {
 
     private fun givePlayer(player: Player) {
 
+        player.inventory.clear()
+
         val contents = HashMap<Int, ItemStack>()
 
         contents[8] = itemStack(Material.LODESTONE) {
             meta {
                 name = "${KColors.CORAL}MENÜ"
                 lore = "Rechtsklicke dieses Item, um das Hauptmenü zu öffnen."
-                    .toLoreList(lineColor = KColors.CHARTREUSE)
+                    .toLoreList(KColors.CHARTREUSE)
             }
             mark("maingui")
         }
 
         val playerInv = player.inventory
         contents.forEach { (index, item) ->
+            item.mark("lobbyitem")
             playerInv.setItem(index, item)
         }
 
@@ -48,3 +52,5 @@ object LobbyItems {
     }
 
 }
+
+val ItemStack.isLobbyItem get() = hasMark("lobbyitem")
