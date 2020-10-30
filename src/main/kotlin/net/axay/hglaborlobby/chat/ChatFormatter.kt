@@ -31,6 +31,8 @@ object ChatFormatter {
 
         listen<AsyncPlayerChatEvent> {
 
+            if (it.isCancelled) return@listen
+
             it.isCancelled = true
 
             val player = it.player
