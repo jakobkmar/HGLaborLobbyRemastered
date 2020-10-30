@@ -27,7 +27,7 @@ object PlayerVisiblityGUI {
                 meta {
                     name = "${KColors.SPRINGGREEN}SHOW ALL PLAYERS"
                     lore = "Zeige alle Spieler, egal ob sie deine Freunde sind oder nicht."
-                        .toLoreList(lineColor = KColors.CORNSILK)
+                        .toLoreList(KColors.CORNSILK)
                 }
             }) {
 
@@ -42,7 +42,7 @@ object PlayerVisiblityGUI {
                 meta {
                     name = "${KColors.BLUEVIOLET}SHOW FRIENDS"
                     lore = "Zeige nur Spieler, die auch deine Freunde sind."
-                        .toLoreList(lineColor = KColors.CORNSILK)
+                        .toLoreList(KColors.CORNSILK)
                 }
             }) {
 
@@ -57,7 +57,7 @@ object PlayerVisiblityGUI {
                 meta {
                     name = "${KColors.MAROON}HIDE ALL PLAYERS"
                     lore = "Verstecke alle Spieler."
-                        .toLoreList(lineColor = KColors.CORNSILK)
+                        .toLoreList(KColors.CORNSILK)
                 }
             }) {
 

@@ -43,7 +43,7 @@ object MainGUI {
         itemStack(material) {
             meta {
                 this.name = "${KColors.ORANGE}$name"
-                lore = description.toLoreList(lineColor = KColors.CHARTREUSE)
+                lore = description.toLoreList(KColors.CHARTREUSE)
             }
         },
 
