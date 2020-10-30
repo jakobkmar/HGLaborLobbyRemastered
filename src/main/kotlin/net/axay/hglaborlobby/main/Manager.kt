@@ -50,6 +50,8 @@ class InternalMainClass : KSpigot() {
         KickMessageListener.enable()
 
         AdminGUI.register("admingui")
+        MainGUI.enable()
+        PlayerVisiblityGUI.enable()
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
