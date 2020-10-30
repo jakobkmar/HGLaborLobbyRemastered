@@ -2,6 +2,7 @@
 
 package net.axay.hglaborlobby.data
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import net.axay.kspigot.serialization.LocationSerializer
@@ -10,7 +11,7 @@ import org.bukkit.Material
 
 @Serializable
 data class Warp(
-    val name: String,
+    @SerialName("_id") val name: String,
     val location: Location,
     val description: String?,
     val icon: Material
