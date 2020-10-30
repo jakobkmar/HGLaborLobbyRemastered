@@ -1,6 +1,6 @@
 package net.axay.hglaborlobby.eventmanager.joinserver
 
-import net.axay.hglaborlobby.functionality.PlayerSettingsHolder
+import net.axay.hglaborlobby.data.holder.PlayerSettingsHolder
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.ipaddress.ipAddressData
