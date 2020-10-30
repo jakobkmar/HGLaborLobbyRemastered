@@ -1,6 +1,7 @@
 package net.axay.hglaborlobby.eventmanager.joinserver
 
-import net.axay.hglaborlobby.functionality.PlayerSettingsHolder
+import net.axay.hglaborlobby.data.holder.PlayerSettingsHolder
+import net.axay.hglaborlobby.data.holder.WarpsHolder
 import net.axay.hglaborlobby.security.BadIPDetection
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.onlinePlayers
@@ -15,6 +16,10 @@ object OnJoinManager {
         listen<PlayerJoinEvent>(EventPriority.HIGHEST) {
 
             val player = it.player
+
+            JoinPlayerReset.resetPlayer(player)
+
+            WarpsHolder.instance.spawn?.let { spawn -> player.teleport(spawn.location) }
 
             async {
 
