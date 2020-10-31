@@ -4,8 +4,9 @@ import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.hglaborlobby.security.BadIPDetection
 import net.axay.kspigot.event.listen
-import net.axay.kspigot.extensions.onlinePlayers
+import net.axay.kspigot.extensions.onlineSenders
 import net.axay.kspigot.runnables.async
+import org.bukkit.entity.Player
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -32,8 +33,11 @@ object OnJoinManager {
                         append(" $ipCheckMessage")
                 }.toString()
 
-                onlinePlayers.forEach { messageReceiver ->
-                    if (PlayerSettingsHolder[messageReceiver].ifSeeJoinMessages)
+                onlineSenders.forEach { messageReceiver ->
+                    if (
+                        (messageReceiver is Player && PlayerSettingsHolder[messageReceiver].ifSeeJoinMessages) ||
+                        messageReceiver !is Player
+                    )
                         messageReceiver.sendMessage(joinMessage)
                 }
 
