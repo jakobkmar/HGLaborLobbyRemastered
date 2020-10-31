@@ -1,7 +1,7 @@
 package net.axay.hglaborlobby.config
 
 import net.axay.blueutils.database.DatabaseLoginInformation
-import net.axay.hglaborlobby.data.IPServiceConfig
+import net.axay.hglaborlobby.data.config.IPServiceConfig
 import net.axay.kspigot.config.PluginFile
 import net.axay.kspigot.config.kSpigotJsonConfig
 

@@ -2,8 +2,8 @@ package net.axay.hglaborlobby.database
 
 import net.axay.blueutils.database.mongodb.MongoDB
 import net.axay.hglaborlobby.config.ConfigManager
-import net.axay.hglaborlobby.data.PlayerSettings
-import net.axay.hglaborlobby.data.Warp
+import net.axay.hglaborlobby.data.database.PlayerSettings
+import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.main.PLUGIN_DATA_PREFIX
 
 object DatabaseManager {

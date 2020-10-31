@@ -1,11 +1,10 @@
 package net.axay.hglaborlobby.gui.guis
 
 import com.google.common.base.Enums
-import net.axay.hglaborlobby.data.Warp
+import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.chat.input.awaitAnvilInput
-import net.axay.kspigot.chat.input.awaitBookInputAsString
 import net.axay.kspigot.chat.input.awaitChatInput
 import net.axay.kspigot.gui.GUIType
 import net.axay.kspigot.gui.Slots

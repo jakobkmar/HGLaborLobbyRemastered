@@ -1,8 +1,7 @@
 package net.axay.hglaborlobby.gui.guis
 
-import net.axay.hglaborlobby.data.Warp
-import net.axay.hglaborlobby.data.holder.WarpsHolder
-import net.axay.hglaborlobby.database.DatabaseManager
+import net.axay.hglaborlobby.data.database.Warp
+import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.gui.GUIType
 import net.axay.kspigot.gui.Slots
