@@ -4,7 +4,9 @@ import net.axay.hglaborlobby.config.ConfigManager
 import net.axay.hglaborlobby.data.database.IPCheckData
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.kspigot.chat.KColors
+import net.axay.kspigot.extensions.bukkit.info
 import net.axay.kspigot.extensions.bukkit.kick
+import net.axay.kspigot.extensions.console
 import net.axay.kspigot.ipaddress.BadIPDetectionResult
 import net.axay.kspigot.ipaddress.BadIPDetector
 import net.axay.kspigot.ipaddress.badipdetectionservices.GetIPIntel
@@ -51,6 +53,8 @@ object BadIPDetection {
             // now check the players ip address
 
             val checkResult = player.checkIP(detector)
+
+            console.info("IP check result for player ${player.name}: ${checkResult.values}")
 
             // no result or only error codes?
             if (!checkResult.all { it.value == BadIPDetectionResult.ERROR || it.value == BadIPDetectionResult.LIMIT }) {
