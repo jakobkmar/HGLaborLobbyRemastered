@@ -1,7 +1,7 @@
 package net.axay.hglaborlobby.eventmanager.joinserver
 
-import net.axay.hglaborlobby.data.holder.PlayerSettingsHolder
-import net.axay.hglaborlobby.data.holder.WarpsHolder
+import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
+import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.hglaborlobby.security.BadIPDetection
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.onlinePlayers

@@ -1,6 +1,6 @@
 @file:UseSerializers(LocationSerializer::class)
 
-package net.axay.hglaborlobby.data
+package net.axay.hglaborlobby.data.database
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

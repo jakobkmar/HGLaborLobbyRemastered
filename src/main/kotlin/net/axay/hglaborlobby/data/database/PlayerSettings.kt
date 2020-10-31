@@ -1,6 +1,6 @@
 @file:UseSerializers(LocationSerializer::class)
 
-package net.axay.hglaborlobby.data
+package net.axay.hglaborlobby.data.database
 
 import com.github.jershell.kbson.UUIDSerializer
 import kotlinx.serialization.SerialName

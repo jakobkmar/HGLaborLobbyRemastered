@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.data
+package net.axay.hglaborlobby.data.config
 
 data class IPServiceConfig(
     val ipInfoToken: String = "notset",

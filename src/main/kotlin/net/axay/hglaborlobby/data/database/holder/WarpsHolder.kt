@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.data.holder
+package net.axay.hglaborlobby.data.database.holder
 
 import net.axay.hglaborlobby.database.DatabaseManager
 
