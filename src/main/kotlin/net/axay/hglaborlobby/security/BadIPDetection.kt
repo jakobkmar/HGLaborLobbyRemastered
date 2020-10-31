@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.security
 
+import net.axay.hglaborlobby.config.ConfigManager
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.bukkit.kick
 import net.axay.kspigot.ipaddress.BadIPDetectionResult
@@ -14,7 +15,7 @@ object BadIPDetection {
 
     private val detector = BadIPDetector(
         GetIPIntel(),
-        IPHub()
+        IPHub(ConfigManager.ipServiceConfig.ipHubApiKey)
     )
 
     fun checkPlayer(player: Player): String? {

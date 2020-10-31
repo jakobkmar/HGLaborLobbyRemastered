@@ -13,7 +13,7 @@ object ConfigManager {
             }
 
     val ipServiceConfig
-            by kSpigotJsonConfig(PluginFile("ipServiceConfig.json")) {
+            by kSpigotJsonConfig(PluginFile("ipServiceConfig.json"), true) {
                 IPServiceConfig()
             }
 
