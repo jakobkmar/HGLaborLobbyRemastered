@@ -9,7 +9,7 @@ import net.axay.hglaborlobby.main.PLUGIN_DATA_PREFIX
 
 object DatabaseManager {
 
-    private val mongoDB = MongoDB(ConfigManager.databaseLoginInformation, spigot = true)
+    val mongoDB = MongoDB(ConfigManager.databaseLoginInformation, spigot = true)
 
     val playerSettings = mongoDB.getCollectionOrCreate<PlayerSettings>("${PLUGIN_DATA_PREFIX}player_settings")
 
