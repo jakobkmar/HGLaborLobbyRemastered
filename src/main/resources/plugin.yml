@@ -6,6 +6,8 @@
   "main": "net.axay.hglaborlobby.main.InternalMainClass",
   "api-version": "1.16",
 
+  "depend": ["HGLaborDependencies"],
+
   "commands": {
     "spawn": {
       "description": "Teleportiert dich zum Spawn."
