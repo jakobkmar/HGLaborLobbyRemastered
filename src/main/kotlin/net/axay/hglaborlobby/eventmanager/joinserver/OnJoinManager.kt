@@ -19,6 +19,7 @@ object OnJoinManager {
             val player = it.player
 
             JoinPlayerReset.resetPlayer(player)
+            JoinTablist.setTablist(player)
 
             WarpsHolder.instance.spawn?.let { spawn -> player.teleport(spawn.location) }
 
