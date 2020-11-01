@@ -1,12 +1,13 @@
 @file:Suppress("PropertyName")
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 /*
  * BUILD CONSTANTS
  */
 
-val JVM_VERSION = JavaVersion.VERSION_1_8
+val JVM_VERSION = JavaVersion.VERSION_11
 val JVM_VERSION_STRING = JVM_VERSION.versionString
 
 /*
@@ -24,7 +25,7 @@ plugins {
 
     kotlin("jvm") version "1.4.10"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 
     kotlin("plugin.serialization") version "1.4.10"
 
@@ -50,11 +51,11 @@ dependencies {
     implementation("net.axay", "KSpigot", "v1.16.3_R18")
 
     // BLUEUTILS
-    implementation("net.axay", "BlueUtils", "1.0.0")
+    compileOnly("net.axay", "BlueUtils", "1.0.0")
 
     // KMONGO and MONGODB
-    implementation("org.litote.kmongo", "kmongo-core", "4.1.3")
-    implementation("org.litote.kmongo", "kmongo-serialization-mapping", "4.1.3")
+    compileOnly("org.litote.kmongo", "kmongo-core", "4.1.3")
+    compileOnly("org.litote.kmongo", "kmongo-serialization-mapping", "4.1.3")
 
 }
 
@@ -76,21 +77,17 @@ tasks.withType<KotlinCompile> {
 
 tasks {
     shadowJar {
-        minimize {
-            exclude(dependency("org.litote.kmongo:.*:.*"))
+
+        dependencies {
+            exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib.*"))
         }
-        relocate("net.axay.kspigot", "${project.group}.shadow.net.axay.kspigot")
+
+        minimize()
+
+        simpleRelocate("net.axay.kspigot")
+
     }
 }
-
-/*
-val relocateShadowJar by tasks.creating(ConfigureShadowRelocation::class) {
-    target = tasks.shadowJar.get()
-    prefix = "${project.group}.shadow"
-}
-
-tasks.shadowJar.get().dependsOn(relocateShadowJar)
-*/
 
 /*
  * EXTENSIONS
@@ -104,4 +101,8 @@ val JavaVersion.versionString
 
 fun KotlinCompile.configureJvmVersion() {
     kotlinOptions.jvmTarget = JVM_VERSION_STRING
+}
+
+fun ShadowJar.simpleRelocate(pattern: String) {
+    relocate(pattern, "${project.group}.${project.name.toLowerCase()}.shadow.$pattern")
 }
