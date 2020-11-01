@@ -11,6 +11,9 @@ import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.name
 import net.axay.kspigot.items.setMeta
 import net.axay.kspigot.items.toLoreList
+import net.axay.kspigot.runnables.async
+import net.axay.kspigot.runnables.firstAsync
+import net.axay.kspigot.runnables.thenSync
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -52,7 +55,11 @@ object WarpGUI {
 
             )
 
-            warpsCompound.addContent(WarpsHolder.instance.warps)
+            firstAsync {
+                WarpsHolder.instance.warps
+            }.thenSync {
+                warpsCompound.addContent(it)
+            }.execute()
 
         }
 
