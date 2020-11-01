@@ -7,6 +7,7 @@ import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
 import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
+import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.guis.AdminGUI
 import net.axay.hglaborlobby.gui.guis.MainGUI
@@ -67,6 +68,8 @@ class InternalMainClass : KSpigot() {
     override fun shutdown() {
 
         console.info("Shutting down Lobby plugin...")
+
+        DatabaseManager.mongoDB.close()
 
         broadcast("${KColors.TOMATO}-> DISABLING PLUGIN ${KColors.DARKGRAY}(maybe a reload)")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_DEACTIVATE) }
