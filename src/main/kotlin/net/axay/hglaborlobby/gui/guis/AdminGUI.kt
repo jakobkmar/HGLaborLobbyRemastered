@@ -25,9 +25,11 @@ object AdminGUI : CommandExecutor {
 
     private val gui = kSpigotGUI(GUIType.SIX_BY_NINE) {
 
+        title = "${KColors.RED}ADMIN GUI"
+
         page(1) {
 
-            placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS) { meta { name = null } })
+            placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS_PANE) { meta { name = null } })
 
             button(Slots.RowFiveSlotTwo, itemStack(Material.END_ROD) {
                 meta {
