@@ -27,10 +27,10 @@ object JoinMessage {
                     if (string != null) locationBuilder.append(string).append(" / ")
                 }
 
-                appendToLocation(ipData.continentCode)
-                appendToLocation(ipData.country)
-                appendToLocation(ipData.region)
-                appendToLocation(ipData.city)
+                if (settings.ifContinent) appendToLocation(ipData.continentCode)
+                if (settings.ifCountry) appendToLocation(ipData.country)
+                if (settings.ifState) appendToLocation(ipData.region)
+                if (settings.ifCity) appendToLocation(ipData.city)
 
                 if (locationBuilder.isNotEmpty())
                     locationBuilder.removeSuffix(" / ")
