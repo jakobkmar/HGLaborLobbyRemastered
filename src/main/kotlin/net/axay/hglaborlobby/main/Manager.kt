@@ -54,9 +54,11 @@ class InternalMainClass : KSpigot() {
         ChatFormatter.enable()
 
         AdminGUI.register("admingui")
+
+        // Main GUI
         MainGUI.enable()
-        PlayerVisiblityGUI.enable()
         WarpGUI.enable()
+        PlayerVisiblityGUI.enable()
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
