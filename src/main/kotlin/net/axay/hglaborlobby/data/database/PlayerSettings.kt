@@ -16,11 +16,7 @@ data class PlayerSettings(
     @Serializable(with = UUIDSerializer::class) @SerialName("_id") val uuid: UUID,
 
     val customSpawnLoc: Location? = null,
-    val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(
-        ifCountry = false,
-        ifState = false,
-        ifCity = false
-    ),
+    val privacySettings: PlayerPrivacySettings = PlayerPrivacySettings(),
     val ifSeeJoinMessages: Boolean = true,
     val visibilitySettings: PlayerVisibilitySettings = PlayerVisibilitySettings.SHOW_ALL
 
@@ -28,9 +24,10 @@ data class PlayerSettings(
 
     @Serializable
     data class PlayerPrivacySettings(
-        val ifCountry: Boolean,
-        val ifState: Boolean,
-        val ifCity: Boolean
+        val ifContinent: Boolean = false,
+        val ifCountry: Boolean = false,
+        val ifState: Boolean = false,
+        val ifCity: Boolean = false
     ) {
         val ifLoadAny get() = ifCountry || ifState || ifCity
     }
