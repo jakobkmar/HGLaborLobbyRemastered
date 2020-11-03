@@ -25,7 +25,7 @@ object WarpGUI {
 
         page(1) {
 
-            placeholder(Slots.Border, ItemStack(Material.PINK_STAINED_GLASS_PANE))
+            placeholder(Slots.Border, ItemStack(Material.WHITE_STAINED_GLASS_PANE))
 
             val warpsCompound = createRectCompound<Warp>(
 
