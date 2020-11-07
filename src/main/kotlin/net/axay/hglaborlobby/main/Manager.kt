@@ -9,10 +9,7 @@ import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.functionality.SoupHealing
-import net.axay.hglaborlobby.gui.guis.AdminGUI
-import net.axay.hglaborlobby.gui.guis.MainGUI
-import net.axay.hglaborlobby.gui.guis.PlayerVisiblityGUI
-import net.axay.hglaborlobby.gui.guis.WarpGUI
+import net.axay.hglaborlobby.gui.guis.*
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
@@ -59,6 +56,7 @@ class InternalMainClass : KSpigot() {
         MainGUI.enable()
         WarpGUI.enable()
         PlayerVisiblityGUI.enable()
+        PrivacySettingsGUI.enable()
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
