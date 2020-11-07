@@ -25,7 +25,6 @@ object BadIPDetection {
     private const val checkExpiresAfterSeconds = 60 * 60 * 24 * 30L
 
     private val detector = BadIPDetector(
-        GetIPIntel(),
         IPHub(ConfigManager.ipServiceConfig.ipHubApiKey)
     )
 
