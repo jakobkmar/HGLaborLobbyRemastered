@@ -48,7 +48,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.3-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay", "KSpigot", "v1.16.3_R18")
+    implementation("net.axay", "KSpigot", "v1.16.4_R19")
 
     // BLUEUTILS
     compileOnly("net.axay", "BlueUtils", "1.0.0")
