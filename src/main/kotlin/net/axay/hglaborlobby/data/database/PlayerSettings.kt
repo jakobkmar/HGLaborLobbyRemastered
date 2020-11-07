@@ -29,7 +29,7 @@ data class PlayerSettings(
         val ifState: Boolean = false,
         val ifCity: Boolean = false
     ) {
-        val ifLoadAny get() = ifCountry || ifState || ifCity
+        val ifLoadAny get() = ifContinent || ifCountry || ifState || ifCity
     }
 
     enum class PlayerVisibilitySettings {
