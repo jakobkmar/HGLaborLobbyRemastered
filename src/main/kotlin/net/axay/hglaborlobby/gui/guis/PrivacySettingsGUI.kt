@@ -64,7 +64,7 @@ object PrivacySettingsGUI {
 
             button(Slots.RowTwoSlotEight, itemStack(Material.YELLOW_GLAZED_TERRACOTTA) {
                 meta {
-                    name = "${KColors.MAROON}CONTINENT"
+                    name = "${KColors.GOLDENROD}CONTINENT"
                     lore = "Lege fest, ob beim Betreten des Servers dein ${KColors.WHITESMOKE}Kontinent ${KColors.CORNSILK}angezeigt werden soll."
                         .toLoreList(KColors.CORNSILK)
                 }
