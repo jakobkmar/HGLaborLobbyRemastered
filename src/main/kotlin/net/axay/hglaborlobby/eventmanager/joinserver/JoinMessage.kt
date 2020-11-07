@@ -32,10 +32,7 @@ object JoinMessage {
                 if (settings.ifState) appendToLocation(ipData.region)
                 if (settings.ifCity) appendToLocation(ipData.city)
 
-                if (locationBuilder.isNotEmpty())
-                    locationBuilder.removeSuffix(" / ")
-
-                locationString = " ${KColors.DIMGRAY}(${locationBuilder})"
+                locationString = " ${KColors.DIMGRAY}(${locationBuilder.removeSuffix(" / ")})"
 
             }
 
