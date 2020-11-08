@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.database
 
 import net.axay.blueutils.database.mongodb.MongoDB
 import net.axay.hglaborlobby.config.ConfigManager
+import net.axay.hglaborlobby.data.database.Area
 import net.axay.hglaborlobby.data.database.IPCheckData
 import net.axay.hglaborlobby.data.database.PlayerSettings
 import net.axay.hglaborlobby.data.database.Warp
@@ -16,5 +17,7 @@ object DatabaseManager {
     val warps = mongoDB.getCollectionOrCreate<Warp>("${PLUGIN_DATA_PREFIX}warps")
 
     val ipAddresses = mongoDB.getCollectionOrCreate<IPCheckData>("${PLUGIN_DATA_PREFIX}ipcheckdata")
+
+    val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas")
 
 }
