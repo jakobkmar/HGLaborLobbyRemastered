@@ -21,7 +21,7 @@ object WarpGUI {
 
     private val warpsGUI = kSpigotGUI(GUIType.THREE_BY_NINE) {
 
-        title = "${KColors.RED}WARPS"
+        title = "${KColors.BLACK}WARPS"
 
         page(1) {
 

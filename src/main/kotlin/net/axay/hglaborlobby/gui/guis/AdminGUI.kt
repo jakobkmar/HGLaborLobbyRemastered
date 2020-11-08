@@ -25,7 +25,7 @@ object AdminGUI : CommandExecutor {
 
     private val gui = kSpigotGUI(GUIType.SIX_BY_NINE) {
 
-        title = "${KColors.RED}ADMIN GUI"
+        title = "${KColors.FIREBRICK}ADMIN GUI"
 
         page(1) {
 

@@ -19,7 +19,7 @@ object PrivacySettingsGUI {
 
     private val privacyGUI = kSpigotGUI(GUIType.THREE_BY_NINE) {
 
-        title = "${KColors.RED}PRIVACY SETTINGS"
+        title = "${KColors.BLACK}PRIVACY SETTINGS"
 
         page(1) {
 

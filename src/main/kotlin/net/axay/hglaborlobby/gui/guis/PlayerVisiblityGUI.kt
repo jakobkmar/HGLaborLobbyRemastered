@@ -15,7 +15,7 @@ object PlayerVisiblityGUI {
 
     private val settingsGUI = kSpigotGUI(GUIType.THREE_BY_NINE) {
 
-        title = "${KColors.RED}VISIBILITY SETTINGS"
+        title = "${KColors.BLACK}VISIBILITY SETTINGS"
 
         page(1) {
 
