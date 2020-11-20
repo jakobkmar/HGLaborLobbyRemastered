@@ -25,6 +25,7 @@ object ChatFormatter {
         ":and:" to "&",
         ":left:" to "←",
         ":right:" to "→"
+        ":copyright:" to "©"
     )
 
     fun enable() {
