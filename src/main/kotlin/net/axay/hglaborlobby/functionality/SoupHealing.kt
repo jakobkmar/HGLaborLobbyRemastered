@@ -23,7 +23,7 @@ object SoupHealing {
                 var ifConsume = false
 
                 if (p.health < p.healthScale) {
-                    (p.health + 6.5).let { if (it >= p.healthScale) p.health = p.healthScale else p.health = it }
+                    (p.health + 7).let { if (it >= p.healthScale) p.health = p.healthScale else p.health = it }
                     ifConsume = true
                 }
 
