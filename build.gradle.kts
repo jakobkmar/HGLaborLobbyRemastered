@@ -51,7 +51,7 @@ dependencies {
     implementation("net.axay", "KSpigot", "v1.16.4_R19")
 
     // BLUEUTILS
-    compileOnly("net.axay", "BlueUtils", "1.0.0")
+    compileOnly("net.axay", "BlueUtils", "1.0.2")
 
     // KMONGO and MONGODB
     compileOnly("org.litote.kmongo", "kmongo-core", "4.1.3")
