@@ -1,8 +1,5 @@
-src/test/
 build/
 .idea/
 .gradle/
 logs/
 gradle.properties
-gradlew
-gradlew.bat
