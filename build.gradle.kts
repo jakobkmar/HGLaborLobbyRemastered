@@ -23,11 +23,11 @@ version = "1.0.0"
 
 plugins {
 
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.21"
 
     id("com.github.johnrengelman.shadow") version "6.1.0"
 
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.21"
 
 }
 
@@ -45,7 +45,7 @@ repositories {
 dependencies {
 
     // SPIGOT
-    compileOnly("org.spigotmc", "spigot", "1.16.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc", "spigot", "1.16.4-R0.1-SNAPSHOT")
 
     // KSPIGOT
     implementation("net.axay", "KSpigot", "v1.16.4_R19")
@@ -54,8 +54,8 @@ dependencies {
     compileOnly("net.axay", "BlueUtils", "1.0.2")
 
     // KMONGO and MONGODB
-    compileOnly("org.litote.kmongo", "kmongo-core", "4.1.3")
-    compileOnly("org.litote.kmongo", "kmongo-serialization-mapping", "4.1.3")
+    compileOnly("org.litote.kmongo", "kmongo-core", "4.2.3")
+    compileOnly("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.3")
 
 }
 
