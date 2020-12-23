@@ -24,7 +24,10 @@ object ChatFormatter {
         ":nop:" to "✖",
         ":and:" to "&",
         ":left:" to "←",
-        ":right:" to "→"
+        ":right:" to "→",
+        ":copyright:" to "©",
+        ":swords:" to "⚔",
+        ":flame:" to "🔥"
     )
 
     fun enable() {
