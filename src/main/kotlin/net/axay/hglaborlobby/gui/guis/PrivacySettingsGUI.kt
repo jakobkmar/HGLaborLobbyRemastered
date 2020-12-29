@@ -91,12 +91,12 @@ object PrivacySettingsGUI {
 
     fun enable() {
 
-        MainGUI.addContent(MainGUI.MainGUICompoundElement(
-            Material.BEACON,
-            "Privacy Settings",
-            "Stelle ein, was angezeigt wird, wenn du den Server betrittst.",
-            onClick = { it.player.openGUI(privacyGUI) }
-        ))
+        //MainGUI.addContent(MainGUI.MainGUICompoundElement(
+        //    Material.BEACON,
+        //    "Privacy Settings",
+        //    "Stelle ein, was angezeigt wird, wenn du den Server betrittst.",
+        //    onClick = { it.player.openGUI(privacyGUI) }
+        //))
 
     }
 
