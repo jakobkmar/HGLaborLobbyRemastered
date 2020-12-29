@@ -2,7 +2,7 @@
 
 package net.axay.hglaborlobby.data.database.holder
 
-import net.axay.blueutils.database.mongodb.insertOneIfNotContains
+import net.axay.blueutils.database.mongodb.insertOneCatchDuplicate
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.data.database.PlayerSettings
 import net.axay.kspigot.event.listen
@@ -20,10 +20,7 @@ object PlayerSettingsHolder {
         = (
             DatabaseManager.playerSettings.findOne(PlayerSettings::uuid eq player.uniqueId)
                 ?: PlayerSettings(player.uniqueId).apply {
-                    DatabaseManager.playerSettings.insertOneIfNotContains(
-                        PlayerSettings::uuid eq player.uniqueId,
-                        this@apply
-                    )
+                    DatabaseManager.playerSettings.insertOneCatchDuplicate(this@apply)
                 }
         ).apply { playerSettings[player] = this@apply }
 
