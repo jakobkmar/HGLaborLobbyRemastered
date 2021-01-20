@@ -56,7 +56,7 @@ class InternalMainClass : KSpigot() {
         MainGUI.enable()
         WarpGUI.enable()
         PlayerVisiblityGUI.enable()
-        PrivacySettingsGUI.enable()
+        //PrivacySettingsGUI.enable()
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
