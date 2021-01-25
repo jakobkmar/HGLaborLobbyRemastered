@@ -1,6 +1,8 @@
 package net.axay.hglaborlobby.main
 
+import net.axay.hglaborlobby.damager.Damager
 import net.axay.hglaborlobby.chat.ChatFormatter
+import net.axay.hglaborlobby.damager.DamageCommand
 import net.axay.hglaborlobby.eventmanager.joinserver.JoinMessage
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
 import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
@@ -49,8 +51,11 @@ class InternalMainClass : KSpigot() {
         OnLeaveManager.enable()
         KickMessageListener.enable()
         ChatFormatter.enable()
+        Damager.enable()
 
         AdminGUI.register("admingui")
+        DamageCommand.register("damage")
+
 
         // Main GUI
         MainGUI.enable()
