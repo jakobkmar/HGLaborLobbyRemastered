@@ -16,12 +16,12 @@ import org.bukkit.inventory.ItemStack
 
 val world = Bukkit.getWorld("world")
 
-val locationArea = LocationArea(vec(95.0, 60.0, 95.0).toLocation(world!!), vec(105.0, 70.0, 105.0).toLocation(world))
-val locationArea2 = LocationArea(vec(0.0, 60.0, 0.0).toLocation(world!!), vec(5.0, 70.0, 5.0).toLocation(world))
-val locationArea3 = LocationArea(vec(-10.0, 60.0, -10.0).toLocation(world!!), vec(-15.0, 70.0, -15.0).toLocation(world))
+val locationArea = LocationArea(vec(-490.5, 62.0, 449.5).toLocation(world!!), vec(-484.5,65, 455.5,).toLocation(world))
+//val locationArea2 = LocationArea(vec(0.0, 60.0, 0.0).toLocation(world!!), vec(5.0, 70.0, 5.0).toLocation(world))
+//val locationArea3 = LocationArea(vec(-10.0, 60.0, -10.0).toLocation(world!!), vec(-15.0, 70.0, -15.0).toLocation(world))
 //TODO config zeug
 //val damagers = de.royzer.utils.Config.config.readConfig()
-val damagers = listOf<LocationArea>(locationArea, locationArea2, locationArea3)
+val damagers = listOf<LocationArea>(locationArea)
 
 val Player.isInDamager: Boolean
     get() {
