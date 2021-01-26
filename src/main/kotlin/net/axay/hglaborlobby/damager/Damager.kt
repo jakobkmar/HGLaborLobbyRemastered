@@ -68,7 +68,7 @@ object Damager {
                 else {
                     p.inventory.clear()
                     p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
-                    p.teleport(Location(Bukkit.getWorld("world"), 102.0, 62.0, 92.0)) // TODO add correct coordinates
+                    p.teleport(Location(Bukkit.getWorld("world"), -495.5, 63.0, 452.5)) // TODO add correct coordinates
                     p.sendMessage("§7Du hast den Damager §4nicht §7geschafft")
                     p.soupsEaten = 0
                 }
