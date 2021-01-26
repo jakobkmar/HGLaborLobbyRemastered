@@ -1,23 +1,19 @@
 package net.axay.hglaborlobby.protection
 
-import net.axay.hglaborlobby.functionality.isLobbyItem
+import net.axay.hglaborlobby.damager.isInDamager
 import net.axay.kspigot.event.listen
-import net.axay.kspigot.event.register
 import net.axay.kspigot.extensions.bukkit.isSimple
 import net.axay.kspigot.utils.hasMark
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
 import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.inventory.InventoryAction
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
 import org.bukkit.inventory.CraftingInventory
+import org.bukkit.inventory.ItemStack
 
 object ServerProtection {
 
@@ -33,7 +29,8 @@ object ServerProtection {
 
         listen<EntityDamageEvent> {
             if (it.entity is Player)
-                it.isCancelled = true
+                if (!(it.entity as Player).isInDamager)
+                    it.isCancelled = true
         }
 
         listen<FoodLevelChangeEvent> {
@@ -60,6 +57,8 @@ object ServerProtection {
             val whoClicked = it.whoClicked
             val clickedInv = it.clickedInventory ?: return@listen
 
+            if ((it.whoClicked as Player).isInDamager) return@listen
+
             fun belongsToPlayer(player: Player): Boolean {
                 return when {
                     clickedInv == player.inventory -> true
@@ -83,6 +82,7 @@ object ServerProtection {
 
         listen<PlayerDeathEvent> {
             it.drops.clear()
+            if (it.entity.isInDamager) it.deathMessage = null
         }
 
         listen<PlayerDropItemEvent> {
@@ -97,3 +97,5 @@ object ServerProtection {
     }
 
 }
+
+val ItemStack.isLobbyItem get() = hasMark("lobbyitem")

@@ -1,19 +1,16 @@
 package net.axay.hglaborlobby.damager
 
 import net.axay.kspigot.event.listen
-import net.axay.kspigot.extensions.bukkit.feed
-import net.axay.kspigot.extensions.bukkit.heal
-import net.axay.kspigot.extensions.bukkit.saturate
+import net.axay.kspigot.extensions.broadcast
+import net.axay.kspigot.extensions.bukkit.*
 import net.axay.kspigot.extensions.geometry.LocationArea
 import net.axay.kspigot.extensions.geometry.vec
 import net.axay.kspigot.extensions.onlinePlayers
 import net.axay.kspigot.runnables.sync
 import net.axay.kspigot.runnables.task
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.Material
+import org.bukkit.*
 import org.bukkit.entity.Player
-import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.inventory.ItemStack
 
@@ -35,26 +32,55 @@ val Player.isInDamager: Boolean
         return res
     }
 
+var Player.soupsEaten: Int
+    get() {
+        if (!Damager.playerSoupsEaten.containsKey(this)) return 0
+        return Damager.playerSoupsEaten[this]!!
+    }
+    set(value) {
+        if (!Damager.playerSoupsEaten.containsKey(this)) Damager.playerSoupsEaten[this] = 0
+        Damager.playerSoupsEaten[this] = value
+    }
+
+
 object Damager {
 
+    var playerSoupsEaten = hashMapOf<Player, Int>()
     var playersInDamager = mutableListOf<String>()
     var playerDamage = hashMapOf<String, Double>()
     var disabled = false
 
     fun enable() {
 
-        listen<PlayerDropItemEvent> {
-            if (it.isDamagerTrash()) {
-                for (damager in damagers) {
-                    if (damager.isInArea(it.itemDrop.location)) {
-                        it.itemDrop.remove()
-                    }
+        listen<EntityDamageEvent> {
+            if (it.entity !is Player) return@listen
+            val p = it.entity as Player
+            if (!p.isInDamager) return@listen
+
+            if (p.health - it.damage <= 0) {
+                if (p.soupsEaten >= 92) {
+                    p.playSound(p.location, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F)
+                    p.sendMessage("§7Du hast den Damager §2geschafft")
+                    if (playerDamage[p.name]!! >= 9.0) broadcast("§6${p.name} hat den legendary Damager geschafft!")
+                    giveItems(p)
+                    p.soupsEaten = 0
                 }
+                else {
+                    p.inventory.clear()
+                    p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
+                    p.teleport(Location(Bukkit.getWorld("world"), 102.0, 62.0, 92.0)) // TODO add correct coordinates
+                    p.sendMessage("§7Du hast den Damager §4nicht §7geschafft")
+                    p.soupsEaten = 0
+                }
+                it.isCancelled = true
             }
         }
 
-        listen<PlayerDeathEvent> {
-            if (it.entity.isInDamager) it.drops.clear()
+        listen<PlayerDropItemEvent> {
+            if (it.isDamagerTrash())
+                for (damager in damagers)
+                    if (damager.isInArea(it.itemDrop.location))
+                        it.itemDrop.remove()
         }
 
         task(
@@ -86,10 +112,9 @@ object Damager {
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
                         playersInDamager.minusAssign(player.name) // remove player from damager
-                        player.sendMessage("Du hast den Damager verlassen")
                         player.inventory.clear()
                         player.heal()
-                        player.feed()
+                        player.feedSaturate()
                         break
                     }
                 }
@@ -107,13 +132,11 @@ object Damager {
 
     private fun giveItems(player: Player) {
         player.health = 20.0
-        player.feed()
-        player.saturate()
+        player.feedSaturate()
         player.inventory.clear()
-        player.gameMode = GameMode.SURVIVAL
+        player.gameMode = GameMode.ADVENTURE
 
         for (i in (1..13)) player.inventory.addItem(ItemStack(Material.MUSHROOM_STEW))
-
         player.inventory.addItem(ItemStack(Material.BOWL, 64))
         player.inventory.addItem(ItemStack(Material.BROWN_MUSHROOM, 64))
         player.inventory.addItem(ItemStack(Material.RED_MUSHROOM, 64))

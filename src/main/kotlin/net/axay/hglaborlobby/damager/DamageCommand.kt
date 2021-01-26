@@ -8,7 +8,6 @@ object DamageCommand: CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) return false
         val damage = args[0].toIntOrNull() ?: return false
-
         if (damage > 20) return false
 
         Damager.playerDamage[sender.name] = damage.toDouble()
