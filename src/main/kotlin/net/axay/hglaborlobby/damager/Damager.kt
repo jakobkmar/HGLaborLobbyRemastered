@@ -114,6 +114,7 @@ object Damager {
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
                         playersInDamager.minusAssign(player.name) // remove player from damager
+                        sync { player.gameMode = GameMode.SURVIVAL }
                         givePlayer(player)
                         player.heal()
                         player.feedSaturate()
@@ -134,7 +135,8 @@ object Damager {
 
     private fun giveItems(player: Player) {
         player.health = 20.0
-        player.feedSaturate()
+        player.feed()
+        player.saturation = 0F
         player.inventory.clear()
         player.gameMode = GameMode.ADVENTURE
 
