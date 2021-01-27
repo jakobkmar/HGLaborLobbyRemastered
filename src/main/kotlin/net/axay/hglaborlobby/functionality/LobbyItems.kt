@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
 
 object LobbyItems {
 
-    private fun givePlayer(player: Player) {
+    fun givePlayer(player: Player) {
 
         player.inventory.clear()
 

@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.damager
 
+import net.axay.hglaborlobby.functionality.LobbyItems.givePlayer
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
 import net.axay.kspigot.extensions.bukkit.*
@@ -16,7 +17,8 @@ import org.bukkit.inventory.ItemStack
 
 val world = Bukkit.getWorld("world")
 
-val locationArea = LocationArea(vec(-490.5, 62.0, 449.5).toLocation(world!!), vec(-484.5,65, 455.5,).toLocation(world))
+val locationArea = LocationArea(vec(-490.5, 62.0, 449.5).toLocation(world!!), vec(-484.5, 65, 455.5).toLocation(world))
+
 //val locationArea2 = LocationArea(vec(0.0, 60.0, 0.0).toLocation(world!!), vec(5.0, 70.0, 5.0).toLocation(world))
 //val locationArea3 = LocationArea(vec(-10.0, 60.0, -10.0).toLocation(world!!), vec(-15.0, 70.0, -15.0).toLocation(world))
 //TODO config zeug
@@ -64,12 +66,12 @@ object Damager {
                     if (playerDamage[p.name]!! >= 9.0) broadcast("§6${p.name} hat den legendary Damager geschafft!")
                     giveItems(p)
                     p.soupsEaten = 0
-                }
-                else {
-                    p.inventory.clear()
-                    p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
+                } else {
                     p.teleport(Location(Bukkit.getWorld("world"), -495.5, 63.0, 452.5)) // TODO add correct coordinates
                     p.sendMessage("§7Du hast den Damager §4nicht §7geschafft")
+                    p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
+                    givePlayer(p)
+                    p.heal()
                     p.soupsEaten = 0
                 }
                 it.isCancelled = true
@@ -112,7 +114,7 @@ object Damager {
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
                         playersInDamager.minusAssign(player.name) // remove player from damager
-                        player.inventory.clear()
+                        givePlayer(player)
                         player.heal()
                         player.feedSaturate()
                         break
