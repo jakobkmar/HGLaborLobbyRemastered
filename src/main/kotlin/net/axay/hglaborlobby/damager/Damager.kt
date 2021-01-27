@@ -142,7 +142,8 @@ object Damager {
         player.inventory.clear()
         player.gameMode = GameMode.ADVENTURE
 
-        for (i in (1..13)) player.inventory.addItem(ItemStack(Material.MUSHROOM_STEW))
+        player.inventory.addItem(ItemStack(Material.STONE_SWORD, 1))
+        for (i in (1..12)) player.inventory.addItem(ItemStack(Material.MUSHROOM_STEW))
         player.inventory.addItem(ItemStack(Material.BOWL, 64))
         player.inventory.addItem(ItemStack(Material.BROWN_MUSHROOM, 64))
         player.inventory.addItem(ItemStack(Material.RED_MUSHROOM, 64))
