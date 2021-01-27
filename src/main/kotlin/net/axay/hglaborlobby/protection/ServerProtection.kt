@@ -4,6 +4,7 @@ import net.axay.hglaborlobby.damager.isInDamager
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import net.axay.kspigot.utils.hasMark
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -20,6 +21,7 @@ object ServerProtection {
     fun enable() {
 
         listen<PlayerInteractEvent> {
+            if (it.item?.type == Material.FIREWORK_ROCKET) return@listen
             GeneralProtectionUtils.checkPlayerAction(it)
         }
 
