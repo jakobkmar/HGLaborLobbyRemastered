@@ -45,7 +45,6 @@ object ServerProtection {
 
             if (damager is Player)
                 GeneralProtectionUtils.checkPlayerAction(it, damager)
-
             else if (damager is Projectile) {
                 val source = damager.shooter
                 if (source is Player)

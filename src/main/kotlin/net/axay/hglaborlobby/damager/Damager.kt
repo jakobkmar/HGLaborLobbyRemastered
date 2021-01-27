@@ -110,7 +110,8 @@ object Damager {
                     if (player.name !in playersInDamager) {
                         sync { giveItems(player) }
                         playersInDamager.plusAssign(player.name)
-                        if (player.name !in playerDamage.keys) playerDamage[player.name] = 5.0 // add player to playerDamage Map if he was not in the damager before
+                        if (player.name !in playerDamage.keys) playerDamage[player.name] =
+                            5.0 // add player to playerDamage Map if he was not in the damager before
                     }
                     break
                 } else {
