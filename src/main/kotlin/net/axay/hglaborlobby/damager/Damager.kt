@@ -54,6 +54,8 @@ object Damager {
 
     fun enable() {
 
+        DamagerDifficulty.enable()
+
         listen<EntityDamageEvent> {
             if (it.entity !is Player) return@listen
             val p = it.entity as Player
