@@ -45,10 +45,10 @@ repositories {
 dependencies {
 
     // SPIGOT
-    compileOnly("org.spigotmc", "spigot", "1.16.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay", "KSpigot", "v1.16.4_R19")
+    implementation("net.axay", "KSpigot", "v1.16.4_R22")
 
     // BLUEUTILS
     compileOnly("net.axay", "BlueUtils", "1.0.2")
