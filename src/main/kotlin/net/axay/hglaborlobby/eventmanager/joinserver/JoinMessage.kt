@@ -1,9 +1,7 @@
 package net.axay.hglaborlobby.eventmanager.joinserver
 
-import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
-import net.axay.kspigot.ipaddress.ipAddressData
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 
