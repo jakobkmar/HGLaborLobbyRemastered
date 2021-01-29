@@ -18,9 +18,6 @@ object OnJoinManager {
 
             val player = it.player
 
-            for (potionEffect in player.activePotionEffects) {
-                player.removePotionEffect(potionEffect.type)
-            }
 
             JoinPlayerReset.resetPlayer(player)
             JoinTablist.setTablist(player)
