@@ -1,5 +1,7 @@
 package net.axay.hglaborlobby.functionality
 
+import net.axay.hglaborlobby.damager.isInDamager
+import net.axay.hglaborlobby.damager.soupsEaten
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.getHandItem
 import org.bukkit.Material
@@ -10,7 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent
 object SoupHealing {
 
     fun enable() {
-
         listen<PlayerInteractEvent> { event ->
 
             if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return@listen
@@ -39,6 +40,7 @@ object SoupHealing {
                 }
 
                 if (ifConsume) interactItem.type = Material.BOWL
+                if (ifConsume && p.isInDamager) p.soupsEaten += 1
 
             }
 
