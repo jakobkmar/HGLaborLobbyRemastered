@@ -124,6 +124,7 @@ object Damager {
                         player.heal()
                         player.feedSaturate()
                         playersInDamager.minusAssign(player.name) // remove player from damager
+                        playerSoupsEaten.remove(player)
                         break
                     }
                 }
