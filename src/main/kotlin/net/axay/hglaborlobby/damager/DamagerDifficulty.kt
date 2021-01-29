@@ -1,6 +1,5 @@
-package de.royzer.damager
+package net.axay.hglaborlobby.damager
 
-import net.axay.hglaborlobby.damager.Damager
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.gui.*

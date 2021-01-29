@@ -1,7 +1,6 @@
 package net.axay.hglaborlobby.damager
 
-import de.royzer.damager.DamagerDifficulty
-import de.royzer.damager.DamagerDifficulty.inconsistencyEnabled
+import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
