@@ -1,6 +1,8 @@
 package net.axay.hglaborlobby.damager
 
-import net.axay.hglaborlobby.functionality.LobbyItems.givePlayer
+import de.royzer.damager.DamagerDifficulty
+import de.royzer.damager.DamagerDifficulty.inconsistencyEnabled
+import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
 import net.axay.kspigot.extensions.bukkit.*
@@ -14,16 +16,15 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.inventory.ItemStack
+import java.util.*
+import kotlin.random.Random
 
 val world = Bukkit.getWorld("world")
 
 val locationArea = LocationArea(vec(-490.5, 62.0, 449.5).toLocation(world!!), vec(-484.5, 65, 455.5).toLocation(world))
 
-//val locationArea2 = LocationArea(vec(0.0, 60.0, 0.0).toLocation(world!!), vec(5.0, 70.0, 5.0).toLocation(world))
-//val locationArea3 = LocationArea(vec(-10.0, 60.0, -10.0).toLocation(world!!), vec(-15.0, 70.0, -15.0).toLocation(world))
 //TODO config zeug
-//val damagers = de.royzer.utils.Config.config.readConfig()
-val damagers = listOf<LocationArea>(locationArea)
+val damagers = listOf(locationArea)
 
 val Player.isInDamager: Boolean
     get() {
@@ -53,7 +54,6 @@ object Damager {
     var disabled = false
 
     fun enable() {
-
         DamagerDifficulty.enable()
 
         listen<EntityDamageEvent> {
@@ -62,18 +62,18 @@ object Damager {
             if (!p.isInDamager) return@listen
 
             if (p.health - it.damage <= 0) {
-                if (p.soupsEaten >= 92) {
+                if (p.soupsEaten >= 90) {
                     p.playSound(p.location, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F)
-                    p.sendMessage("§7Du hast den Damager §2geschafft")
-                    if (playerDamage[p.name]!! >= 9.0) broadcast("§6${p.name} hat den legendary Damager geschafft!")
+                    p.sendMessage("${KColors.GRAY}Du hast den Damager${KColors.GREEN} geschafft")
+                    if (playerDamage[p.name]!! >= 8.9 && !p.inconsistencyEnabled) broadcast("${KColors.GOLD}${p.name} §6hat den legendary Damager geschafft!")
                     giveItems(p)
                     p.soupsEaten = 0
                 } else {
+                    p.inventory.clear()
                     p.teleport(Location(Bukkit.getWorld("world"), -495.5, 63.0, 452.5)) // TODO add correct coordinates
-                    p.sendMessage("§7Du hast den Damager §4nicht §7geschafft")
-                    p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
-                    givePlayer(p)
                     p.heal()
+                    p.sendMessage("${KColors.GRAY}Du hast den Damager ${KColors.RED}nicht${KColors.GRAY} geschafft")
+                    p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
                     p.soupsEaten = 0
                 }
                 it.isCancelled = true
@@ -95,9 +95,15 @@ object Damager {
             checkPlayerPositions()
 
             for (playerName in playersInDamager) {
-                val player = Bukkit.getPlayerExact(playerName)
-                val damage = playerDamage[player?.name]
-                sync { if (damage != null) player?.damage(damage) }
+                val player = Bukkit.getPlayerExact(playerName) ?: continue
+                var damage = playerDamage[player.name]
+
+                if (player.inconsistencyEnabled) {
+                    val damagePair = DamagerDifficulty.inconsistencyRanges[player.name] ?: continue
+                    damage = Random.nextInt(damagePair.first, damagePair.second + 1).toDouble()
+                }
+
+                sync { if (damage != null) player.damage(damage) }
             }
         }
     }
@@ -115,22 +121,21 @@ object Damager {
                     break
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
-                        playersInDamager.minusAssign(player.name) // remove player from damager
                         sync { player.gameMode = GameMode.SURVIVAL }
-                        givePlayer(player)
+                        player.inventory.clear()
                         player.heal()
                         player.feedSaturate()
+                        playersInDamager.minusAssign(player.name) // remove player from damager
                         break
                     }
                 }
             }
         }
-
     }
 
 
     private fun PlayerDropItemEvent.isDamagerTrash() = when (itemDrop.itemStack.type) {
-        Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW -> true
+        Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW, Material.STONE_SWORD -> true
         else -> false
     }
 
@@ -148,6 +153,5 @@ object Damager {
         player.inventory.addItem(ItemStack(Material.BROWN_MUSHROOM, 64))
         player.inventory.addItem(ItemStack(Material.RED_MUSHROOM, 64))
         for (i in (1..21)) player.inventory.addItem(ItemStack(Material.MUSHROOM_STEW))
-
     }
 }
