@@ -16,7 +16,7 @@
       "description": "Öffnet das Admin GUI."
     },
     "damage": {
-        description: "Stellt deinen Damager schaden ein (in halben Herzen)"
+        description: "Stellt deinen Damager Schaden ein (in halben Herzen)"
     }
   }
 }
