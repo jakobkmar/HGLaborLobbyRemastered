@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.eventmanager.leaveserver
 
+import net.axay.hglaborlobby.damager.Damager
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
@@ -19,6 +20,8 @@ object OnLeaveManager {
             val reason = registeredKickReasons.remove(player)
 
             it.quitMessage = null
+
+            if (player in Damager.playerSoupsEaten) Damager.playerSoupsEaten.remove(player)
 
             broadcast(
                 StringBuilder().apply {

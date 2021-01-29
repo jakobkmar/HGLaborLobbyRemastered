@@ -1,6 +1,7 @@
 package net.axay.hglaborlobby.damager
 
 import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
+import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
@@ -50,7 +51,7 @@ object Damager {
     var playerSoupsEaten = hashMapOf<Player, Int>()
     var playersInDamager = mutableListOf<String>()
     var playerDamage = hashMapOf<String, Double>()
-    var disabled = false
+    private val damagerSpawn by lazy { WarpsHolder.instance.warps.find { it.name == "Damager" }?.location }
 
     fun enable() {
         DamagerDifficulty.enable()
@@ -64,16 +65,16 @@ object Damager {
                 if (p.soupsEaten >= 90) {
                     p.playSound(p.location, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F)
                     p.sendMessage("${KColors.GRAY}Du hast den Damager${KColors.GREEN} geschafft")
-                    if (playerDamage[p.name]!! >= 8.9 && !p.inconsistencyEnabled) broadcast("${KColors.GOLD}${p.name} §6hat den legendary Damager geschafft!")
+                    if (playerDamage[p.name]!! >= 8.9 && !p.inconsistencyEnabled) broadcast("${KColors.GOLD}${p.name} hat den legendary Damager geschafft!")
                     giveItems(p)
-                    p.soupsEaten = 0
+                    playerSoupsEaten.remove(p)
                 } else {
                     p.inventory.clear()
-                    p.teleport(Location(Bukkit.getWorld("world"), -495.5, 63.0, 452.5)) // TODO add correct coordinates
+                    p.teleport(damagerSpawn!!)
                     p.heal()
                     p.sendMessage("${KColors.GRAY}Du hast den Damager ${KColors.RED}nicht${KColors.GRAY} geschafft")
                     p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)
-                    p.soupsEaten = 0
+                    playerSoupsEaten.remove(p)
                 }
                 it.isCancelled = true
             }
@@ -90,7 +91,6 @@ object Damager {
             sync = false,
             period = 12L
         ) {
-            if (disabled) return@task
             checkPlayerPositions()
 
             for (playerName in playersInDamager) {
@@ -120,7 +120,6 @@ object Damager {
                     break
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
-                        sync { player.gameMode = GameMode.SURVIVAL }
                         player.inventory.clear()
                         player.heal()
                         player.feedSaturate()
@@ -144,7 +143,6 @@ object Damager {
         player.feed()
         player.saturation = 0F
         player.inventory.clear()
-        player.gameMode = GameMode.ADVENTURE
 
         player.inventory.addItem(ItemStack(Material.STONE_SWORD, 1))
         for (i in (1..12)) player.inventory.addItem(ItemStack(Material.MUSHROOM_STEW))

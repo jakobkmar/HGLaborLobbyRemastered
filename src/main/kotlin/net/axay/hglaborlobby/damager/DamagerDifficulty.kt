@@ -29,7 +29,7 @@ object DamagerDifficulty {
     private var Player.inconsistencyRange: Pair<Int, Int>
         get() {
             if (this.name !in inconsistencyRanges) inconsistencyRanges[this.name] = 4 to 7
-            return inconsistencyRanges[this.name]!!
+            return inconsistencyRanges[this.name] ?: 4 to 7
         }
         set(value) {
             inconsistencyRanges[this.name] = value
@@ -152,9 +152,10 @@ object DamagerDifficulty {
 
     fun enable() {
         listen<PlayerInteractEvent> {
-            if (it.clickedBlock?.type != Material.OAK_WALL_SIGN) return@listen
-            val sign = it.clickedBlock!!.state as Sign
-            if (sign.lines[1] != "Damager") return@listen
+            val clickedBlock = it.clickedBlock
+            if (clickedBlock?.type != Material.OAK_WALL_SIGN) return@listen
+            val sign = clickedBlock.state as Sign
+            if (sign.lines[1] != "DAMAGER") return@listen
             it.player.openGUI(buildDamageGUI(it.player), 0)
         }
     }
