@@ -153,8 +153,7 @@ object DamagerDifficulty {
     fun enable() {
         listen<PlayerInteractEvent> {
             val clickedBlock = it.clickedBlock
-            if (clickedBlock?.type != Material.OAK_WALL_SIGN) return@listen
-            val sign = clickedBlock.state as Sign
+            val sign = clickedBlock?.state as? Sign ?: return@listen
             if (sign.lines[1] != "DAMAGER") return@listen
             it.player.openGUI(buildDamageGUI(it.player), 0)
         }
