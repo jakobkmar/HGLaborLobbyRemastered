@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.protection
 
+import net.axay.hglaborlobby.damager.Damager.isDamagerTrash
 import net.axay.hglaborlobby.damager.isInDamager
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
@@ -87,7 +88,9 @@ object ServerProtection {
         }
 
         listen<PlayerDropItemEvent> {
-            if (it.itemDrop.itemStack.isLobbyItem)
+            if (it.isDamagerTrash)
+                it.itemDrop.remove()
+            else if (it.itemDrop.itemStack.isLobbyItem)
                 GeneralProtectionUtils.checkPlayerAction(it)
         }
 

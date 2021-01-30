@@ -81,13 +81,6 @@ object Damager {
             }
         }
 
-        listen<PlayerDropItemEvent> {
-            if (it.isDamagerTrash())
-                for (damager in damagers)
-                    if (damager.isInArea(it.itemDrop.location))
-                        it.itemDrop.remove()
-        }
-
         task(
             sync = false,
             period = 12L
@@ -134,7 +127,7 @@ object Damager {
     }
 
 
-    private fun PlayerDropItemEvent.isDamagerTrash() = when (itemDrop.itemStack.type) {
+    val PlayerDropItemEvent.isDamagerTrash get() = when (itemDrop.itemStack.type) {
         Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW, Material.STONE_SWORD -> true
         else -> false
     }
