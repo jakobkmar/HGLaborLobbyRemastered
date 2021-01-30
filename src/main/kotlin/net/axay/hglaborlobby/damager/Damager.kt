@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.damager
 
 import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
+import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
@@ -69,7 +70,7 @@ object Damager {
                     giveItems(p)
                     playerSoupsEaten.remove(p)
                 } else {
-                    p.inventory.clear()
+                    LobbyItems.givePlayer(p)
                     p.teleport(damagerSpawn!!)
                     p.heal()
                     p.sendMessage("${KColors.GRAY}Du hast den Damager ${KColors.RED}nicht${KColors.GRAY} geschafft")
@@ -120,7 +121,7 @@ object Damager {
                     break
                 } else {
                     if (player.name in playersInDamager && !player.isInDamager) {
-                        player.inventory.clear()
+                        LobbyItems.givePlayer(player)
                         player.heal()
                         player.feedSaturate()
                         playersInDamager.minusAssign(player.name) // remove player from damager
