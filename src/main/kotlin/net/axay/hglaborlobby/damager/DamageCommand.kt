@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.damager
 
+import net.axay.hglaborlobby.main.LOBBY_PREFIX
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -13,7 +14,7 @@ object DamageCommand: CommandExecutor {
         if ((sender as Player).isInDamager) return false
 
         Damager.playerDamage[sender.name] = damage.toDouble()
-        sender.sendMessage("§7[§bHG§7Labor] Der Damager Schaden beträgt nun ${Damager.playerDamage[sender.name]}")
+        sender.sendMessage("$LOBBY_PREFIX Der Damager Schaden beträgt nun ${Damager.playerDamage[sender.name]}")
 
         return true
     }

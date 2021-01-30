@@ -1,5 +1,6 @@
 package net.axay.hglaborlobby.damager
 
+import net.axay.hglaborlobby.main.LOBBY_PREFIX
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.gui.*
@@ -37,7 +38,7 @@ object DamagerDifficulty {
 
     private fun updatePlayerDamage(player: Player, damage: Double) {
         Damager.playerDamage[player.name] = damage
-        player.sendMessage("§7[§bHG§7Labor] Der Damager Schaden beträgt nun ${Damager.playerDamage[player.name]?.div(2)} Herzen")
+        player.sendMessage("$LOBBY_PREFIX Der Damager Schaden beträgt nun ${Damager.playerDamage[player.name]?.div(2)} Herzen")
         if (player.name in inconsistencyPlayers) inconsistencyPlayers.remove(player.name)
     }
 
