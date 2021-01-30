@@ -35,6 +35,12 @@ object DamagerDifficulty {
             inconsistencyRanges[this.name] = value
         }
 
+    private fun updatePlayerDamage(player: Player, damage: Double) {
+        Damager.playerDamage[player.name] = damage
+        player.sendMessage("§7[§bHG§7Labor] Der Damager Schaden beträgt nun ${Damager.playerDamage[player.name]}")
+        if (player.name in inconsistencyPlayers) inconsistencyPlayers.remove(player.name)
+    }
+
     private fun buildDamageGUI(player: Player): GUI<ForInventoryOneByNine> {
         return kSpigotGUI(GUIType.ONE_BY_NINE) {
             title = "${KColors.INDIANRED} Difficulty"
@@ -48,44 +54,37 @@ object DamagerDifficulty {
                 button(Slots.RowOneSlotTwo, itemStack(Material.WHITE_DYE) {
                     meta { name = "${org.bukkit.ChatColor.WHITE}1.5 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 3.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 3.0)
                 }
                 button(Slots.RowOneSlotThree, itemStack(Material.GREEN_DYE) {
                     meta { name = "${org.bukkit.ChatColor.DARK_GREEN}2 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 4.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 4.0)
                 }
                 button(Slots.RowOneSlotFour, itemStack(Material.LIME_DYE) {
                     meta { name = "${org.bukkit.ChatColor.GREEN}2.5 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 5.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 5.0)
                 }
                 button(Slots.RowOneSlotFive, itemStack(Material.YELLOW_DYE) {
                     meta { name = "${org.bukkit.ChatColor.YELLOW}3 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 6.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 6.0)
                 }
                 button(Slots.RowOneSlotSix, itemStack(Material.ORANGE_DYE) {
                     meta { name = "${org.bukkit.ChatColor.GOLD}3.5 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 7.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 7.0)
                 }
                 button(Slots.RowOneSlotSeven, itemStack(Material.RED_DYE) {
                     meta { name = "${org.bukkit.ChatColor.RED}4 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 8.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 8.0)
                 }
                 button(Slots.RowOneSlotEight, itemStack(Material.PURPLE_DYE) {
                     meta { name = "${org.bukkit.ChatColor.DARK_PURPLE}4.5 Herzen" }
                 }) {
-                    Damager.playerDamage[it.player.name] = 9.0
-                    it.player.sendMessage("§6Dein Damager Schaden ist nun §2${Damager.playerDamage[it.player.name]}")
+                    updatePlayerDamage(player, 9.0)
                 }
                 nextPage(Slots.RowOneSlotNine, itemStack(Material.REPEATER) {
                     meta { name = "Inconsistency settings" }
@@ -153,8 +152,10 @@ object DamagerDifficulty {
     fun enable() {
         listen<PlayerInteractEvent> {
             val clickedBlock = it.clickedBlock
-            val sign = clickedBlock?.state as? Sign ?: return@listen
+            if (clickedBlock?.type != Material.OAK_WALL_SIGN) return@listen
+            val sign = clickedBlock.state as Sign
             if (sign.lines[1] != "DAMAGER") return@listen
+            if (it.player.isInDamager) return@listen
             it.player.openGUI(buildDamageGUI(it.player), 0)
         }
     }
