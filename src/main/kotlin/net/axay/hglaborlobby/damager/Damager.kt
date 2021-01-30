@@ -12,7 +12,11 @@ import net.axay.kspigot.extensions.geometry.vec
 import net.axay.kspigot.extensions.onlinePlayers
 import net.axay.kspigot.runnables.sync
 import net.axay.kspigot.runnables.task
+import net.axay.kspigot.utils.addEffect
+import net.axay.kspigot.utils.editMeta
 import org.bukkit.*
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerDropItemEvent
@@ -66,6 +70,7 @@ object Damager {
                 if (p.soupsEaten >= 90) {
                     p.playSound(p.location, Sound.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F)
                     p.sendMessage("${KColors.GRAY}Du hast den Damager${KColors.GREEN} geschafft")
+                    createFirework(p.location, playerDamage[p.name]!!)
                     if (playerDamage[p.name]!! >= 8.9 && !p.inconsistencyEnabled) broadcast("${KColors.GOLD}${p.name} hat den legendary Damager geschafft!")
                     giveItems(p)
                     playerSoupsEaten.remove(p)
@@ -126,6 +131,27 @@ object Damager {
         }
     }
 
+    private fun createFirework(location: Location, damage: Double) {
+        (location.world?.spawnEntity(location, EntityType.FIREWORK) as Firework).editMeta {
+            addEffect {
+                val c = fireworkColor(damage)
+                withColor(c)
+                withFade(c)
+            }
+        }
+    }
+
+    private fun fireworkColor(damage: Double): Color {
+        return when(damage) {
+            1.0, 2.0, 3.0 -> Color.WHITE
+            4.0 -> Color.GREEN
+            5.0 -> Color.LIME
+            6.0 -> Color.YELLOW
+            7.0 -> Color.ORANGE
+            8.0 -> Color.RED
+            else -> Color.PURPLE
+        }
+    }
 
     val PlayerDropItemEvent.isDamagerTrash get() = when (itemDrop.itemStack.type) {
         Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW, Material.STONE_SWORD -> true

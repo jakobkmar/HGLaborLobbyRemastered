@@ -37,7 +37,7 @@ object DamagerDifficulty {
 
     private fun updatePlayerDamage(player: Player, damage: Double) {
         Damager.playerDamage[player.name] = damage
-        player.sendMessage("§7[§bHG§7Labor] Der Damager Schaden beträgt nun ${Damager.playerDamage[player.name]}")
+        player.sendMessage("§7[§bHG§7Labor] Der Damager Schaden beträgt nun ${Damager.playerDamage[player.name]?.div(2)} Herzen")
         if (player.name in inconsistencyPlayers) inconsistencyPlayers.remove(player.name)
     }
 
