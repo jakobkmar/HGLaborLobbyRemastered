@@ -17,6 +17,7 @@ object ElytraLauncher {
             ) {
                 it.player.velocity = Vector(0, 4, 0)
                 it.player.inventory.chestplate = ItemStack(Material.ELYTRA)
+                it.player.inventory.addItem(ItemStack(Material.FEATHER))
             }
 
             if (it.player.inventory.itemInMainHand.type == Material.FEATHER &&
