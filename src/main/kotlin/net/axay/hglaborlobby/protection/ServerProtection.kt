@@ -6,6 +6,7 @@ import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import net.axay.kspigot.utils.hasMark
 import org.bukkit.Material
+import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -50,7 +51,7 @@ object ServerProtection {
                 val source = damager.shooter
                 if (source is Player)
                     GeneralProtectionUtils.checkPlayerAction(it, source)
-            }
+            } else if (damager is Firework) it.isCancelled = true
 
         }
 
