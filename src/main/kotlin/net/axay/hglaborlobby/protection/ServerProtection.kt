@@ -48,10 +48,13 @@ object ServerProtection {
             if (damager is Player)
                 GeneralProtectionUtils.checkPlayerAction(it, damager)
             else if (damager is Projectile) {
-                if (damager is Firework) it.isCancelled = true
-                val source = damager.shooter
-                if (source is Player)
-                    GeneralProtectionUtils.checkPlayerAction(it, source)
+                if (damager is Firework) {
+                    it.isCancelled = true
+                } else {
+                    val source = damager.shooter
+                    if (source is Player)
+                        GeneralProtectionUtils.checkPlayerAction(it, source)
+                }
             }
 
         }
