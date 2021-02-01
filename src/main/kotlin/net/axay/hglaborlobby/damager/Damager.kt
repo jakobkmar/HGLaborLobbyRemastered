@@ -1,5 +1,7 @@
 package net.axay.hglaborlobby.damager
 
+import net.axay.hglaborlobby.damager.DamagerDifficulty.crapDamagerEnabled
+import net.axay.hglaborlobby.damager.DamagerDifficulty.getCrapDamagerItem
 import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.hglaborlobby.functionality.LobbyItems
@@ -100,6 +102,10 @@ object Damager {
                     val damagePair = DamagerDifficulty.inconsistencyRanges[player.name] ?: continue
                     damage = Random.nextInt(damagePair.first, damagePair.second + 1).toDouble()
                 }
+                if (player.crapDamagerEnabled)
+                    if (Random.nextInt(4) == 3) player.inventory.addItem(
+                        getCrapDamagerItem()
+                    )
 
                 sync { if (damage != null) player.damage(damage) }
             }
