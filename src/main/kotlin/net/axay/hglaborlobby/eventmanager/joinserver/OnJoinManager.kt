@@ -18,7 +18,6 @@ object OnJoinManager {
 
             val player = it.player
 
-
             JoinPlayerReset.resetPlayer(player)
             JoinTablist.setTablist(player)
 
