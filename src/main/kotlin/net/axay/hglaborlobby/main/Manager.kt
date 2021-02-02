@@ -12,6 +12,7 @@ import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.guis.*
+import net.axay.hglaborlobby.pads.ElytraLauncher
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
@@ -52,6 +53,7 @@ class InternalMainClass : KSpigot() {
         KickMessageListener.enable()
         ChatFormatter.enable()
         Damager.enable()
+        ElytraLauncher.enable()
 
         AdminGUI.register("admingui")
         DamageCommand.register("damage")
