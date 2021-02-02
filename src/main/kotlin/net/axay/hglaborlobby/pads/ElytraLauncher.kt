@@ -3,6 +3,7 @@ package net.axay.hglaborlobby.pads
 import net.axay.hglaborlobby.functionality.makeLobbyItem
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isGroundSolid
+import net.axay.kspigot.runnables.taskRunLater
 import net.axay.kspigot.sound.sound
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -27,6 +28,10 @@ object ElytraLauncher {
                 it.player.inventory.addItem(ItemStack(Material.FEATHER).makeLobbyItem())
 
                 it.player.sound(Sound.ITEM_ARMOR_EQUIP_ELYTRA)
+
+                taskRunLater(20, sync = false) {
+                    it.player.isGliding = true
+                }
             }
 
             else if (
