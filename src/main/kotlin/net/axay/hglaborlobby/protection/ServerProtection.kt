@@ -2,9 +2,9 @@ package net.axay.hglaborlobby.protection
 
 import net.axay.hglaborlobby.damager.Damager.isDamagerTrash
 import net.axay.hglaborlobby.damager.isInDamager
+import net.axay.hglaborlobby.functionality.isLobbyItem
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
-import net.axay.kspigot.utils.hasMark
 import org.bukkit.Material
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
@@ -16,7 +16,6 @@ import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.*
 import org.bukkit.inventory.CraftingInventory
-import org.bukkit.inventory.ItemStack
 
 object ServerProtection {
 
@@ -106,5 +105,3 @@ object ServerProtection {
     }
 
 }
-
-val ItemStack.isLobbyItem get() = hasMark("lobbyitem")
