@@ -17,20 +17,10 @@ object OnLeaveManager {
         listen<PlayerQuitEvent>(EventPriority.HIGHEST) {
 
             val player = it.player
-            val reason = registeredKickReasons.remove(player)
 
             it.quitMessage = null
 
             if (player in Damager.playerSoupsEaten) Damager.playerSoupsEaten.remove(player)
-
-            broadcast(
-                StringBuilder().apply {
-                    append("${KColors.PALEVIOLETRED}← ${KColors.GRAY}${player.name}")
-                    if (reason != null)
-                        append(" ${KColors.INDIANRED}${KColors.BOLD}$reason")
-                }.toString()
-            )
-
         }
 
     }
