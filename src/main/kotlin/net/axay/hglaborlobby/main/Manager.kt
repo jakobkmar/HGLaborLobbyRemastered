@@ -3,7 +3,6 @@ package net.axay.hglaborlobby.main
 import net.axay.hglaborlobby.damager.Damager
 import net.axay.hglaborlobby.chat.ChatFormatter
 import net.axay.hglaborlobby.damager.DamageCommand
-import net.axay.hglaborlobby.eventmanager.joinserver.JoinMessage
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
 import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
@@ -49,7 +48,6 @@ class InternalMainClass : KSpigot() {
         PlayerSettingsHolder.enable()
 
         SoupHealing.enable()
-        JoinMessage.enable()
         OnJoinManager.enable()
         LobbyItems.enable()
         OnLeaveManager.enable()
