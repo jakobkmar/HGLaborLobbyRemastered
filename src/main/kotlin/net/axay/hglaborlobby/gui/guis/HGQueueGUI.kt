@@ -12,9 +12,7 @@ import net.axay.kspigot.extensions.events.isRightClick
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.gui.elements.GUICompoundElement
 import net.axay.kspigot.gui.elements.GUIRectSpaceCompound
-import net.axay.kspigot.items.itemMeta
 import net.axay.kspigot.items.name
-import net.axay.kspigot.pluginmessages.sendPluginMessageToBungeeCord
 import net.axay.kspigot.utils.hasMark
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Material
@@ -48,7 +46,7 @@ object HGQueueGUI {
                 val hgInfo = HGInfo.infos[name]
 
                 if (hgInfo!!.gameState() == GameState.INVINCIBILITY) {
-                    if (hgInfo.getOnlinePlayers() >= hgInfo.getMaxPlayers()) {
+                    if (hgInfo.onlinePlayers >= hgInfo.maxPlayers) {
                         return@listen
                     } else {
                         sendPlayer(hgInfo, player)
@@ -74,7 +72,7 @@ object HGQueueGUI {
 
     fun queuePlayer(hgInfo: HGInfo, player: Player) {
         val gson = Gson()
-        val hgQueueInfo = HGQueueInfo(hgInfo.getServerName()!!)
+        val hgQueueInfo = HGQueueInfo(hgInfo.serverName!!)
         player.sendPluginMessage(Manager, HG_QUEUE, gson.toJson(hgQueueInfo, hgQueueInfo.javaClass).toByteArray())
     }
 
@@ -83,7 +81,7 @@ object HGQueueGUI {
         val out = DataOutputStream(bytearray)
         try {
             out.writeUTF("Connect")
-            out.writeUTF(hgInfo.getServerName()!!)
+            out.writeUTF(hgInfo.serverName!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }
