@@ -33,7 +33,7 @@ object LobbyItems {
 
         val playerInv = player.inventory
         contents.forEach { (index, item) ->
-            item.mark("lobbyitem")
+            item.makeLobbyItem()
             playerInv.setItem(index, item)
         }
 
@@ -54,3 +54,4 @@ object LobbyItems {
 }
 
 val ItemStack.isLobbyItem get() = hasMark("lobbyitem")
+fun ItemStack.makeLobbyItem() = apply { mark("lobbyitem") }

@@ -10,6 +10,9 @@ object JoinPlayerReset {
 
         player.feedSaturate()
         player.heal()
+        for (potionEffect in player.activePotionEffects) {
+            player.removePotionEffect(potionEffect.type)
+        }
 
     }
 
