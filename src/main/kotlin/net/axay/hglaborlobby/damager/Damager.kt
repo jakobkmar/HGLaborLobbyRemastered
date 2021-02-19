@@ -120,7 +120,8 @@ object Damager {
                     if (player.name !in playersInDamager) {
                         sync { giveItems(player) }
                         playersInDamager.plusAssign(player.name)
-                        if (player.name !in playerDamage.keys) playerDamage[player.name] = 5.0 // add player to playerDamage Map if he was not in the damager before
+                        if (player.name !in playerDamage.keys) playerDamage[player.name] =
+                            5.0 // add player to playerDamage Map if he was not in the damager before
                     }
                     break
                 } else {
@@ -148,7 +149,7 @@ object Damager {
     }
 
     private fun fireworkColor(damage: Double): Color {
-        return when(damage) {
+        return when (damage) {
             1.0, 2.0, 3.0 -> Color.WHITE
             4.0 -> Color.GREEN
             5.0 -> Color.LIME
@@ -159,11 +160,11 @@ object Damager {
         }
     }
 
-    val PlayerDropItemEvent.isDamagerTrash get() = when (itemDrop.itemStack.type) {
-        Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW, Material.STONE_SWORD -> true
-        else -> false
-    }
-
+    val PlayerDropItemEvent.isDamagerTrash
+        get() = when (itemDrop.itemStack.type) {
+            Material.BROWN_MUSHROOM, Material.BOWL, Material.RED_MUSHROOM, Material.MUSHROOM_STEW, Material.STONE_SWORD -> true
+            else -> false
+        }
 
     private fun giveItems(player: Player) {
         player.health = 20.0

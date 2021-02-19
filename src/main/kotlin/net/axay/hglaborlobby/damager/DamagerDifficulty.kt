@@ -51,7 +51,7 @@ object DamagerDifficulty {
                 transitionTo = PageChangeEffect.SLIDE_HORIZONTALLY
 
                 lateinit var compound: GUIRectSpaceCompound<*, Boolean>
-                compound = createRectCompound<Boolean>(
+                compound = createRectCompound(
                     Slots.RowOneSlotOne,
                     Slots.RowOneSlotOne,
                     iconGenerator = {
@@ -150,7 +150,7 @@ object DamagerDifficulty {
                     }
                 }
                 lateinit var compound: GUIRectSpaceCompound<*, Boolean>
-                compound = createRectCompound<Boolean>(
+                compound = createRectCompound(
                     Slots.RowOneSlotNine,
                     Slots.RowOneSlotNine,
                     iconGenerator = {
