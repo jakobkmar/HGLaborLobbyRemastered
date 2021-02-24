@@ -19,7 +19,8 @@ object HGInformationListener : PluginMessageListener {
         val items = mutableListOf<ItemStack>()
         val compoundElemnts = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
 
-        hgInfos.sortBy { it.gameState() }
+        hgInfos.sortedWith(compareBy<HGInfo> {it.gameState}.thenBy { it.onlinePlayers })
+
         hgInfos.forEach { hgInfo ->
             hgInfo.item = hgInfo.getNewItem()
             items.add(hgInfo.item!!)

@@ -46,16 +46,12 @@ object HGQueueGUI {
                 val hgInfo = HGInfo.infos[name]
 
                 if (hgInfo!!.gameState() == GameState.INVINCIBILITY) {
-                    if (hgInfo.onlinePlayers >= hgInfo.maxPlayers) {
-                        return@listen
-                    } else {
+                    if (hgInfo.onlinePlayers >= hgInfo.maxPlayers) { return@listen }
                         sendPlayer(hgInfo, player)
                         player.closeInventory()
-                        return@listen
-                    }
                 } else {
                     if (event.isRightClick) {
-                        if (hgInfo.gameState() == GameState.END || hgInfo.gameState() == GameState.LOBBY) {
+                        if (hgInfo.gameState() == GameState.LOBBY) {
                             queuePlayer(hgInfo, player)
                             player.closeInventory()
                         }
