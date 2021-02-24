@@ -31,7 +31,16 @@ object LobbyItems {
             mark("maingui")
         }
 
-        contents[4] = itemStack(Material.DIAMOND) {
+        contents[3] = itemStack(Material.NETHER_STAR) {
+            meta {
+                name = "${KColors.CORAL}Server Warps"
+                lore = "Rechtsklicke dieses Item, um die Server Warps zu sehen."
+                    .toLoreList(KColors.CHARTREUSE)
+            }
+            mark("serverwarps")
+        }
+
+        contents[5] = itemStack(Material.DIAMOND) {
             meta {
                 name = "${KColors.CORAL}HG Queue"
                 lore = "Rechtsklicke dieses Item, um die HG Queue zu öffnen."
