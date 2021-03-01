@@ -24,7 +24,8 @@ import java.io.DataOutputStream
 import java.io.IOException
 
 object HGQueueGUI {
-    private var menuCompound: GUIRectSpaceCompound<ForInventoryThreeByNine, GUICompoundElement<ForInventoryThreeByNine>>? = null
+    private var menuCompound: GUIRectSpaceCompound<ForInventoryThreeByNine, GUICompoundElement<ForInventoryThreeByNine>>? =
+        null
 
     val gui = kSpigotGUI(GUIType.THREE_BY_NINE, SharedGUICreator()) {
 
@@ -46,24 +47,16 @@ object HGQueueGUI {
                 val hgInfo = HGInfo.infos[name]
 
                 if (hgInfo!!.gameState() == GameState.INVINCIBILITY) {
-                    if (hgInfo.onlinePlayers >= hgInfo.maxPlayers) {
-                        return@listen
-                    } else {
-                        sendPlayer(hgInfo, player)
-                        player.closeInventory()
-                        return@listen
-                    }
-                } else {
+                    sendPlayer(hgInfo, player)
+                } else if (hgInfo.gameState() == GameState.INGAME) {
+                    sendPlayer(hgInfo, player)
+                } else if (hgInfo.gameState() == GameState.LOBBY) {
                     if (event.isRightClick) {
-                        if (hgInfo.gameState() == GameState.END || hgInfo.gameState() == GameState.LOBBY) {
-                            queuePlayer(hgInfo, player)
-                            player.closeInventory()
-                        }
-                    }
-                    if (event.isLeftClick) {
+                        player.closeInventory()
+                        queuePlayer(hgInfo, player)
+                    } else if (event.isLeftClick) {
                         if (hgInfo.gameState() != GameState.INGAME && hgInfo.gameState() != GameState.END) {
                             sendPlayer(hgInfo, player)
-                            player.closeInventory()
                         }
                     }
                 }
