@@ -1,6 +1,7 @@
 package net.axay.hglaborlobby.damager
 
 import net.axay.hglaborlobby.main.LOBBY_PREFIX
+import net.axay.kspigot.gui.openGUI
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -8,7 +9,10 @@ import org.bukkit.entity.Player
 
 object DamageCommand: CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        if (args.isEmpty()) return false
+        if (args.isEmpty()) {
+            (sender as Player).openGUI(DamagerDifficulty.buildDamageGUI(sender), 0)
+            return true
+        }
         val damage = args[0].toIntOrNull() ?: return false
         if (damage > 19 || damage < 1) return false
         if ((sender as Player).isInDamager) return false

@@ -92,7 +92,7 @@ object ServerProtection {
         }
 
         listen<PlayerDropItemEvent> {
-            if (it.isDamagerTrash)
+            if (it.player.isInDamager)
                 it.itemDrop.remove()
             else if (it.itemDrop.itemStack.isLobbyItem)
                 GeneralProtectionUtils.checkPlayerAction(it)

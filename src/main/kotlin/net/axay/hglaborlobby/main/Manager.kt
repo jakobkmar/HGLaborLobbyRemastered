@@ -13,7 +13,7 @@ import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.guis.*
 import net.axay.hglaborlobby.hgqueue.HGInformationListener
 import net.axay.hglaborlobby.hgqueue.HG_QUEUE
-import net.axay.hglaborlobby.pads.ElytraLauncher
+import net.axay.hglaborlobby.functionality.ElytraLauncher
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
