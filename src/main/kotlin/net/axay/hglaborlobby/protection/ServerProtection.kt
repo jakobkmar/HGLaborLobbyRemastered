@@ -6,9 +6,7 @@ import net.axay.hglaborlobby.functionality.isLobbyItem
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import org.bukkit.Material
-import org.bukkit.entity.Firework
-import org.bukkit.entity.Player
-import org.bukkit.entity.Projectile
+import org.bukkit.entity.*
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -27,6 +25,10 @@ object ServerProtection {
         }
 
         listen<PlayerInteractEntityEvent> {
+            GeneralProtectionUtils.checkPlayerAction(it)
+        }
+
+        listen<PlayerArmorStandManipulateEvent> {
             GeneralProtectionUtils.checkPlayerAction(it)
         }
 

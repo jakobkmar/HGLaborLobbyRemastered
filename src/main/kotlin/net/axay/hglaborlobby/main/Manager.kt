@@ -62,6 +62,7 @@ class InternalMainClass : KSpigot() {
 
         // Main GUI
         MainGUI.enable()
+        ServerWarpsGUI.enable()
         WarpGUI.enable()
         HGQueueGUI.enable()
         PlayerVisiblityGUI.enable()

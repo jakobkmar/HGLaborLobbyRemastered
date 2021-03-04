@@ -1,6 +1,7 @@
 package net.axay.hglaborlobby.gui.guis
 
 import com.google.common.base.Enums
+import net.axay.hglaborlobby.data.database.ServerWarp
 import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.kspigot.chat.KColors
@@ -89,6 +90,59 @@ object AdminGUI : CommandExecutor {
                                 )
 
                                 player.sendMessage("${KColors.GRAY}Du hast den Warp ${KColors.LIGHTGRAY}$warpName ${KColors.SPRINGGREEN}erfolgreich ${KColors.GRAY}erstellt.")
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            button(Slots.RowFiveSlotThree, itemStack(Material.POPPED_CHORUS_FRUIT) {
+                meta {
+                    name = "${KColors.SPRINGGREEN}Server Warp erstellen"
+                    lore = "Erstelle einen neuen Server Warp.".toLoreList(KColors.DARKSEAGREEN)
+                }
+            }) { clickEvent ->
+
+                (clickEvent.bukkitEvent.whoClicked as? Player)?.let { player ->
+
+                    player.awaitAnvilInput("Gib den Namen des Serverwarps ein!") { name ->
+
+                        val serverWarpName = name.input ?: kotlin.run {
+                            player.sendMessage("${KColors.RED}ABBRUCH. ${KColors.INDIANRED}Du musst einen validen Namen für den Warp eingeben!")
+                            return@awaitAnvilInput
+                        }
+
+                        player.sendMessage("${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}$serverWarpName ${KColors.BISQUE}als Serverwarpname festgelegt.")
+
+                        player.awaitAnvilInput("Gib den Servernamen ein!") { servername ->
+
+                            val serverName = servername.input ?: kotlin.run {
+                                player.sendMessage("${KColors.RED}ABBRUCH. ${KColors.INDIANRED}Du musst eine valide Beschreibung für den Warp eingeben!")
+                                return@awaitAnvilInput
+                            }
+
+                            player.sendMessage(
+                                "${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}$serverName ${KColors.BISQUE}als Servernamen festgelegt.")
+
+                            player.awaitAnvilInput("Gib das Iconmaterial des Serverwarps ein!") { material ->
+
+                                val serverWarpMaterial =
+                                    Enums.getIfPresent(Material::class.java, material.input?.toUpperCase() ?: "")
+                                        .orNull() ?: kotlin.run {
+                                        player.sendMessage("${KColors.RED}ABBRUCH. ${KColors.INDIANRED}Du musst ein valides Iconmaterial für den Warp eingeben!")
+                                        @Suppress("LABEL_NAME_CLASH")
+                                        return@awaitAnvilInput
+                                    }
+
+                                player.sendMessage("${KColors.BISQUE}Du hast ${KColors.YELLOWGREEN}$serverWarpMaterial ${KColors.BISQUE}als Iconmaterial des Serverwarps festgelegt.")
+
+                                // save the serverwarp
+                                DatabaseManager.serverWarps.save(
+                                    ServerWarp(serverWarpName, serverName, serverWarpMaterial))
+
+                                player.sendMessage("${KColors.GRAY}Du hast den Warp ${KColors.LIGHTGRAY}$serverName ${KColors.SPRINGGREEN}erfolgreich ${KColors.GRAY}erstellt.")
 
                             }
 
