@@ -9,6 +9,7 @@ import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.name
 import net.axay.kspigot.items.setMeta
+import net.axay.kspigot.pluginmessages.PluginMessageConnect
 import net.axay.kspigot.pluginmessages.PluginMessagePlayerCount
 import net.axay.kspigot.pluginmessages.sendPluginMessageToBungeeCord
 import net.axay.kspigot.runnables.firstAsync
@@ -43,7 +44,7 @@ object ServerWarpsGUI {
             },
                 onClick = { clickEvent, element ->
                     clickEvent.bukkitEvent.isCancelled = true
-                    sendPluginMessageToBungeeCord(clickEvent.player, "connect", listOf(element.serverName), 20)
+                    PluginMessageConnect(element.serverName).sendWithPlayer(clickEvent.player)
                 }
             )
 
