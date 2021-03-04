@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.pads
+package net.axay.hglaborlobby.functionality
 
 import net.axay.hglaborlobby.functionality.makeLobbyItem
 import net.axay.kspigot.event.listen
