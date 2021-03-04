@@ -1,7 +1,7 @@
 package net.axay.hglaborlobby.hgqueue
 
-import com.google.gson.Gson
 import net.axay.hglaborlobby.gui.guis.HGQueueGUI
+import net.axay.hglaborlobby.main.gson
 import net.axay.kspigot.gui.ForInventoryThreeByNine
 import net.axay.kspigot.gui.elements.GUICompoundElement
 import org.bukkit.entity.Player
@@ -11,11 +11,9 @@ import java.nio.charset.StandardCharsets
 
 
 object HGInformationListener : PluginMessageListener {
-    private val GSON = Gson()
-
     override fun onPluginMessageReceived(channel: String, player: Player, message: ByteArray) {
         val hgInformationString = String(message, StandardCharsets.UTF_8)
-        val hgInfos = GSON.fromJson(hgInformationString, Array<HGInfo>::class.java)
+        val hgInfos = gson.fromJson(hgInformationString, Array<HGInfo>::class.java)
         val items = mutableListOf<ItemStack>()
         val compoundElemnts = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
 
