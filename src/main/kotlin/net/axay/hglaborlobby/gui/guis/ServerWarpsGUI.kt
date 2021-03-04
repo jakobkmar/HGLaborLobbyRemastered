@@ -3,6 +3,8 @@ package net.axay.hglaborlobby.gui.guis
 import net.axay.hglaborlobby.data.database.ServerWarp
 import net.axay.hglaborlobby.data.database.holder.ServerWarpsHolder
 import net.axay.kspigot.chat.KColors
+import net.axay.kspigot.event.listen
+import net.axay.kspigot.extensions.events.isRightClick
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.name
@@ -11,7 +13,9 @@ import net.axay.kspigot.pluginmessages.PluginMessagePlayerCount
 import net.axay.kspigot.pluginmessages.sendPluginMessageToBungeeCord
 import net.axay.kspigot.runnables.firstAsync
 import net.axay.kspigot.runnables.thenSync
+import net.axay.kspigot.utils.hasMark
 import org.bukkit.Material
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 object ServerWarpsGUI {
@@ -62,6 +66,12 @@ object ServerWarpsGUI {
             onClick = { it.player.openGUI(serverWarpsGUI) }
         ))
 
+        listen<PlayerInteractEvent> {
+            if (!it.action.isRightClick) return@listen
+            if (it.item?.hasMark("serverwarps") == true) {
+                it.isCancelled = true
+                it.player.openGUI(serverWarpsGUI)
+            }
+        }
     }
-
 }
