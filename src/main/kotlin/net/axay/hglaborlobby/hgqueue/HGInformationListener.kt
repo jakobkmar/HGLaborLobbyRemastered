@@ -17,7 +17,7 @@ object HGInformationListener : PluginMessageListener {
         val hgInformationString = String(message, StandardCharsets.UTF_8)
         val hgInfos = GSON.fromJson(hgInformationString, Array<HGInfo>::class.java)
         val items = mutableListOf<ItemStack>()
-        val compoundElemnts = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
+        val compoundElements = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
 
         hgInfos.sortedWith(compareBy<HGInfo> {it.gameState}.thenBy { it.onlinePlayers })
 
@@ -26,7 +26,7 @@ object HGInformationListener : PluginMessageListener {
             items.add(hgInfo.item!!)
             HGInfo.infos[hgInfo.serverName!!] = hgInfo
         }
-        items.forEach { compoundElemnts.add(HGQueueGUI.HGQueueGUICompoundElement(it)) }
-        HGQueueGUI.setContent(compoundElemnts)
+        items.forEach { compoundElements.add(HGQueueGUI.HGQueueGUICompoundElement(it)) }
+        HGQueueGUI.setContent(compoundElements)
     }
 }
