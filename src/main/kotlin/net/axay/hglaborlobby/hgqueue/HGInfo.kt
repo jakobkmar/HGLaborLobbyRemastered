@@ -14,52 +14,11 @@ class HGInfo {
     }
 
     var serverName: String? = null
-        get() {
-            return field
-        }
-        set(serverName) {
-            field = serverName
-        }
-
     var serverPort = 0
-        get() {
-            return field
-        }
-        set(serverPort) {
-            field = serverPort
-        }
-
     var maxPlayers = 0
-        get() {
-            return field
-        }
-        set(maxPlayers) {
-            field = maxPlayers
-        }
-
     var onlinePlayers = 0
-        get() {
-            return field
-        }
-        set(onlinePlayers) {
-            field = onlinePlayers
-        }
-
     var timeInSeconds = 0
-        get() {
-            return field
-        }
-        set(timeInSeconds) {
-            field = timeInSeconds
-        }
-
     var gameState: String? = null
-        get() {
-            return field
-        }
-        set(gameState) {
-            field = gameState
-        }
 
     var item: ItemStack? = null
 

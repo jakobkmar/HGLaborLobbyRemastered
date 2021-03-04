@@ -27,10 +27,11 @@ object OnLeaveManager {
                 broadcast(
                     StringBuilder().apply {
                         append("${KColors.PALEVIOLETRED}← ${KColors.GRAY}${player.name}")
-                        append(" ${KColors.INDIANRED}${KColors.BOLD}$reason") }.toString())
+                        append(" ${KColors.INDIANRED}${KColors.BOLD}$reason")
+                    }.toString()
+                )
             }
         }
-
     }
 
 }

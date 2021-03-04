@@ -1,4 +1,4 @@
-package net.axay.hglaborlobby.pads
+package net.axay.hglaborlobby.functionality
 
 import net.axay.hglaborlobby.functionality.makeLobbyItem
 import net.axay.kspigot.event.listen
@@ -24,17 +24,16 @@ object ElytraLauncher {
             ) {
                 it.player.velocity = it.player.velocity.setY(10)
 
-                it.player.inventory.chestplate = ItemStack(Material.ELYTRA)
-                it.player.inventory.addItem(ItemStack(Material.FEATHER).makeLobbyItem())
+                it.player.inventory.chestplate = ItemStack(Material.ELYTRA).makeLobbyItem()
+                if (!it.player.inventory.contains(Material.FEATHER))
+                    it.player.inventory.addItem(ItemStack(Material.FEATHER).makeLobbyItem())
 
                 it.player.sound(Sound.ITEM_ARMOR_EQUIP_ELYTRA)
 
                 taskRunLater(20, sync = false) {
                     it.player.isGliding = true
                 }
-            }
-
-            else if (
+            } else if (
                 it.material == Material.FEATHER &&
                 it.player.isGliding &&
                 !it.player.isGroundSolid
