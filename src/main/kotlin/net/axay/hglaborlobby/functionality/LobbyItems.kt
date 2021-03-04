@@ -31,6 +31,15 @@ object LobbyItems {
             mark("maingui")
         }
 
+        contents[4] = itemStack(Material.DIAMOND) {
+            meta {
+                name = "${KColors.CORAL}HG Queue"
+                lore = "Rechtsklicke dieses Item, um die HG Queue zu öffnen."
+                    .toLoreList(KColors.CHARTREUSE)
+            }
+            mark("hgqueue")
+        }
+
         val playerInv = player.inventory
         contents.forEach { (index, item) ->
             item.makeLobbyItem()

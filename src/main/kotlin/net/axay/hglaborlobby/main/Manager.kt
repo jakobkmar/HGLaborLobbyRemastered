@@ -1,17 +1,18 @@
 package net.axay.hglaborlobby.main
 
-import net.axay.hglaborlobby.damager.Damager
 import net.axay.hglaborlobby.chat.ChatFormatter
 import net.axay.hglaborlobby.damager.DamageCommand
-import net.axay.hglaborlobby.eventmanager.joinserver.JoinMessage
+import net.axay.hglaborlobby.damager.Damager
+import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
+import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
 import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
 import net.axay.hglaborlobby.functionality.LobbyItems
-import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
-import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.guis.*
+import net.axay.hglaborlobby.hgqueue.HGInformationListener
+import net.axay.hglaborlobby.hgqueue.HG_QUEUE
 import net.axay.hglaborlobby.functionality.ElytraLauncher
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
@@ -24,6 +25,7 @@ import net.axay.kspigot.extensions.onlinePlayers
 import net.axay.kspigot.main.KSpigot
 import net.axay.kspigot.sound.sound
 import org.bukkit.Sound
+import org.bukkit.plugin.messaging.StandardMessenger
 
 class InternalMainClass : KSpigot() {
 
@@ -46,7 +48,6 @@ class InternalMainClass : KSpigot() {
         PlayerSettingsHolder.enable()
 
         SoupHealing.enable()
-        JoinMessage.enable()
         OnJoinManager.enable()
         LobbyItems.enable()
         OnLeaveManager.enable()
@@ -62,8 +63,17 @@ class InternalMainClass : KSpigot() {
         // Main GUI
         MainGUI.enable()
         WarpGUI.enable()
+        HGQueueGUI.enable()
         PlayerVisiblityGUI.enable()
         //PrivacySettingsGUI.enable()
+
+        server.messenger.registerIncomingPluginChannel(
+            this,
+            StandardMessenger.validateAndCorrectChannel("hglabor:hginformation"),
+            HGInformationListener
+        )
+        server.messenger.registerOutgoingPluginChannel(this, HG_QUEUE)
+        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }

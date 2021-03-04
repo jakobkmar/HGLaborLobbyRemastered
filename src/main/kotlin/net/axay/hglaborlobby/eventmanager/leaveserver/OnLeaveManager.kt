@@ -23,16 +23,15 @@ object OnLeaveManager {
 
             if (player in Damager.playerSoupsEaten) Damager.playerSoupsEaten.remove(player)
 
-            broadcast(
-                StringBuilder().apply {
-                    append("${KColors.PALEVIOLETRED}← ${KColors.GRAY}${player.name}")
-                    if (reason != null)
+            if (reason != null) {
+                broadcast(
+                    StringBuilder().apply {
+                        append("${KColors.PALEVIOLETRED}← ${KColors.GRAY}${player.name}")
                         append(" ${KColors.INDIANRED}${KColors.BOLD}$reason")
-                }.toString()
-            )
-
+                    }.toString()
+                )
+            }
         }
-
     }
 
 }
