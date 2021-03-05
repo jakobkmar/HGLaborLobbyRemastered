@@ -3,6 +3,7 @@ package net.axay.hglaborlobby.main
 import net.axay.hglaborlobby.chat.ChatFormatter
 import net.axay.hglaborlobby.damager.DamageCommand
 import net.axay.hglaborlobby.damager.Damager
+import net.axay.hglaborlobby.data.database.ServerWarpPluginMessageListener
 import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
@@ -75,6 +76,7 @@ class InternalMainClass : KSpigot() {
         )
         server.messenger.registerOutgoingPluginChannel(this, HG_QUEUE)
         server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
+        server.messenger.registerIncomingPluginChannel(this, "BungeeCord", ServerWarpPluginMessageListener)
 
         broadcast("${KColors.MEDIUMSPRINGGREEN}-> ENABLED PLUGIN")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
