@@ -37,8 +37,7 @@ plugins {
 
 repositories {
     mavenLocal()
-
-    jcenter()
+    mavenCentral()
     maven("https://jitpack.io")
 }
 
@@ -48,7 +47,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay", "KSpigot", "v1.16.5_R23")
+    implementation("net.axay:kspigot:1.16.24")
 
     // BLUEUTILS
     compileOnly("net.axay", "BlueUtils", "1.0.2")
