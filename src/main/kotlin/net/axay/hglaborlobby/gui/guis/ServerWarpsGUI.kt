@@ -66,7 +66,7 @@ object ServerWarpsGUI {
     private fun updateGUI() {
         val compoundElements = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
         ServerWarpsHolder.instance.serverWarps.forEach {
-            compoundElements.add(ServerWarpGUICompoundElement(it.itemStack, it))
+            compoundElements.add(ServerWarpGUICompoundElement(it.itemStack(), it))
         }
         menuCompound?.setContent(compoundElements)
     }
