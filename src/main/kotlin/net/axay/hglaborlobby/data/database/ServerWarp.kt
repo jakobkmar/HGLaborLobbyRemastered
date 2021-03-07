@@ -7,13 +7,15 @@ import net.axay.hglaborlobby.data.database.ServerWarp.Companion.playerCount
 import net.axay.hglaborlobby.data.database.holder.ServerWarpsHolder
 import net.axay.hglaborlobby.main.InternalMainClass
 import net.axay.kspigot.chat.KColors
-import net.axay.kspigot.extensions.broadcast
+import net.axay.kspigot.items.flag
 import net.axay.kspigot.items.itemStack
 import net.axay.kspigot.items.name
 import net.axay.kspigot.items.setMeta
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
+import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.messaging.PluginMessageListener
 import java.io.ByteArrayOutputStream
 import java.io.DataOutputStream
@@ -41,16 +43,20 @@ data class ServerWarp(
     }
 }
 
-val ServerWarp.itemStack
-    get() = itemStack(icon) {
+fun ServerWarp.itemStack(): ItemStack {
+    val displayName = name
+     return itemStack(icon) {
         setMeta {
-            name = "${KColors.CORAL}${name?.capitalize()}"
+            name = "${KColors.CORAL}${displayName}"
             lore = arrayListOf<String>().apply {
                 this += "${KColors.DARKGRAY}${KColors.STRIKETHROUGH}                      "
                 this += "${KColors.GRAY}Spieler ${KColors.DARKGRAY}» ${KColors.DODGERBLUE}$playerCount"
             }
+            flag(ItemFlag.HIDE_ATTRIBUTES)
         }
     }
+}
+
 
 object ServerWarpPluginMessageListener : PluginMessageListener {
     override fun onPluginMessageReceived(channel: String, player: Player, message: ByteArray) {
@@ -61,7 +67,6 @@ object ServerWarpPluginMessageListener : PluginMessageListener {
             val server = `in`.readUTF()
             val int = `in`.readInt()
             ServerWarp.playerCounts[server] = int
-            broadcast("${KColors.PLUM}$server $int")
         }
     }
 }
