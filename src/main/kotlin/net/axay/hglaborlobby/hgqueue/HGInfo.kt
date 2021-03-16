@@ -32,7 +32,7 @@ class HGInfo {
 }
 
 fun HGInfo.getNewItem() = itemStack(gameState().material) {
-    amount = 1
+    amount = if (onlinePlayers > 1) onlinePlayers else 1
     meta {
         name = "${KColors.CORNSILK}${serverName}"
         addLore {
