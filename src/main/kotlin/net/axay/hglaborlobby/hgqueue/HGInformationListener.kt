@@ -17,13 +17,12 @@ object HGInformationListener : PluginMessageListener {
         val items = mutableListOf<ItemStack>()
         val compoundElements = mutableListOf<GUICompoundElement<ForInventoryThreeByNine>>()
 
-        hgInfos.sortedWith(compareBy<HGInfo> {it.gameState}.thenBy { it.onlinePlayers })
-
-        hgInfos.forEach { hgInfo ->
-            hgInfo.item = hgInfo.getNewItem()
-            items.add(hgInfo.item!!)
-            HGInfo.infos[hgInfo.serverName!!] = hgInfo
-        }
+        hgInfos.sortedWith(compareBy<HGInfo> { it.gameState }.thenBy { it.onlinePlayers })
+            .forEach { hgInfo ->
+                hgInfo.item = hgInfo.getNewItem()
+                items.add(hgInfo.item!!)
+                HGInfo.infos[hgInfo.serverName!!] = hgInfo
+            }
         items.forEach { compoundElements.add(HGQueueGUI.HGQueueGUICompoundElement(it)) }
         HGQueueGUI.setContent(compoundElements)
     }
