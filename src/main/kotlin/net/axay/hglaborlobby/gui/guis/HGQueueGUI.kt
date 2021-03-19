@@ -55,9 +55,7 @@ object HGQueueGUI {
                         player.closeInventory()
                         queuePlayer(hgInfo, player)
                     } else if (event.isLeftClick) {
-                        if (hgInfo.gameState() != GameState.INGAME && hgInfo.gameState() != GameState.END) {
-                            sendPlayer(hgInfo, player)
-                        }
+                        sendPlayer(hgInfo, player)
                     }
                 }
             }
