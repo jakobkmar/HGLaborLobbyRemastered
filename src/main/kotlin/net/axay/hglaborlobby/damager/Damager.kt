@@ -28,7 +28,7 @@ import kotlin.random.Random
 
 val world = Bukkit.getWorld("world")
 
-val locationArea = LocationArea(vec(-490.5, 62.0, 449.5).toLocation(world!!), vec(-484.5, 65, 455.5).toLocation(world))
+val locationArea = LocationArea(vec(11.5, 62.0, 32.5).toLocation(world!!), vec(18.5, 65, 38.5).toLocation(world))
 
 //TODO config zeug
 val damagers = listOf(locationArea)
