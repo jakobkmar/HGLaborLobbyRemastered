@@ -16,7 +16,7 @@ object RandomFireworkCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
 
         val player: Player = sender as Player
-        if (!player.hasPermission("hglabor.lobby.randomfirework")) return false
+        if (!player.hasPermission("lobby.randomfirework")) return true
 
         val firework: ItemStack = fireworkItemStack {
             addEffect {

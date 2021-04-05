@@ -6,7 +6,7 @@
   "main": "net.axay.hglaborlobby.main.InternalMainClass",
   "api-version": "1.16",
 
-  "depend": ["HGLaborDependencies"],
+  "depend": [ "HGLaborDependencies" ],
 
   "commands": {
     "spawn": {
@@ -16,10 +16,10 @@
       "description": "Öffnet das Admin GUI."
     },
     "damage": {
-        description: "Stellt deinen Damager Schaden ein (in halben Herzen)"
-    }
-      "randomfirework": {
-        description: "Du bekommst ein random Firework"
+      description: "Stellt deinen Damager Schaden ein (in halben Herzen)"
+    },
+    "randomfirework": {
+      description: "Du bekommst ein random Firework"
     }
   }
 }
