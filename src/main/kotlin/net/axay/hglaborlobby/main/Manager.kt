@@ -15,6 +15,7 @@ import net.axay.hglaborlobby.gui.guis.*
 import net.axay.hglaborlobby.hgqueue.HGInformationListener
 import net.axay.hglaborlobby.hgqueue.HG_QUEUE
 import net.axay.hglaborlobby.functionality.ElytraLauncher
+import net.axay.hglaborlobby.functionality.RandomFireworkCommand
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
@@ -59,6 +60,7 @@ class InternalMainClass : KSpigot() {
 
         AdminGUI.register("admingui")
         DamageCommand.register("damage")
+        RandomFireworkCommand.register("randomfirework")
 
 
         // Main GUI

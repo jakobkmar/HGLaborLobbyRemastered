@@ -18,5 +18,8 @@
     "damage": {
         description: "Stellt deinen Damager Schaden ein (in halben Herzen)"
     }
+      "randomfirework": {
+        description: "Du bekommst ein random Firework"
+    }
   }
 }
