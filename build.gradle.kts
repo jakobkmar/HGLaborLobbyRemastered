@@ -39,7 +39,8 @@ repositories {
     jcenter()
     mavenLocal()
     mavenCentral()
-    maven("https://jitpack.io")
+    // AnvilGUI
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
 dependencies {
@@ -48,7 +49,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay:kspigot:1.16.24")
+    implementation("net.axay:kspigot:1.16.26")
 
     // BLUEUTILS
     compileOnly("net.axay", "BlueUtils", "1.0.2")
