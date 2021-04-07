@@ -8,26 +8,29 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import kotlin.random.Random
-
+import kotlin.random.Random.Default.nextBoolean
 
 object RandomFireworkCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (sender !is Player || !sender.hasPermission("lobby.randomfirework"))
+            return true
 
-        val player: Player = sender as Player
-        if (!player.hasPermission("lobby.randomfirework")) return true
-
-        val firework: ItemStack = fireworkItemStack {
+        val firework = fireworkItemStack {
             addEffect {
-                if (Random.nextBoolean()) withFlicker()
+                flicker(nextBoolean())
+                trail(nextBoolean())
+                repeat((1..3).random()) {
+                    withColor(Color.fromRGB((0x000000..0xFFFFFF).random()))
+                }
+                repeat((0..2).random()) {
+                    withFade(Color.fromRGB((0x000000..0xFFFFFF).random()))
+                }
                 with(FireworkEffect.Type.values().random())
-                withColor(Color.fromRGB(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255)))
-                withFade(Color.fromRGB(Random.nextInt(255), Random.nextInt(255), Random.nextInt(255)))
             }
+            power = (1..3).random()
         }
 
-        player.inventory.addItem(firework)
+        sender.inventory.addItem(firework)
 
         return true
     }
