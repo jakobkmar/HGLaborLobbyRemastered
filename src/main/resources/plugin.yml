@@ -20,6 +20,9 @@
     },
     "randomfirework": {
       description: "Du bekommst ein random Firework"
+    },
+    "formatting": {
+      "description": "Zeigt dir an, welche Formatierungsoptionen du hast"
     }
   }
 }

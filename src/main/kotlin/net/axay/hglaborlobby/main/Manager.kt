@@ -27,21 +27,17 @@ import net.axay.kspigot.sound.sound
 import org.bukkit.Sound
 
 class InternalMainClass : KSpigot() {
-
     companion object {
         lateinit var INSTANCE: InternalMainClass; private set
     }
 
     override fun load() {
-
         INSTANCE = this
 
         console.info("Loading Lobby plugin...")
-
     }
 
     override fun startup() {
-
         ServerProtection.enable()
 
         PlayerSettingsHolder.enable()
@@ -58,7 +54,7 @@ class InternalMainClass : KSpigot() {
         AdminGUI.register("admingui")
         DamageCommand.register("damage")
         RandomFirework.register("randomfirework")
-
+        ChatFormatter.register("formatting")
 
         // Main GUI
         MainGUI.enable()
@@ -75,11 +71,9 @@ class InternalMainClass : KSpigot() {
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_ACTIVATE) }
 
         console.success("Lobby plugin enabled.")
-
     }
 
     override fun shutdown() {
-
         console.info("Shutting down Lobby plugin...")
 
         DatabaseManager.mongoDB.close()
@@ -88,9 +82,7 @@ class InternalMainClass : KSpigot() {
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_DEACTIVATE) }
 
         console.success("Shut down Lobby plugin.")
-
     }
-
 }
 
 val Manager by lazy { InternalMainClass.INSTANCE }
