@@ -7,6 +7,7 @@ import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import org.bukkit.Material
 import org.bukkit.entity.*
+import org.bukkit.event.block.Action
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.FoodLevelChangeEvent
@@ -16,11 +17,10 @@ import org.bukkit.event.player.*
 import org.bukkit.inventory.CraftingInventory
 
 object ServerProtection {
-
     fun enable() {
-
         listen<PlayerInteractEvent> {
-            if (it.item?.type == Material.FIREWORK_ROCKET) return@listen
+            if (it.item?.type == Material.FIREWORK_ROCKET && it.action == Action.RIGHT_CLICK_BLOCK)
+                return@listen
             GeneralProtectionUtils.checkPlayerAction(it)
         }
 
@@ -43,7 +43,6 @@ object ServerProtection {
         }
 
         listen<EntityDamageByEntityEvent> {
-
             val damager = it.damager
 
             if (damager is Player)
@@ -57,11 +56,9 @@ object ServerProtection {
                         GeneralProtectionUtils.checkPlayerAction(it, source)
                 }
             }
-
         }
 
         listen<InventoryClickEvent> {
-
             val whoClicked = it.whoClicked
             val clickedInv = it.clickedInventory ?: return@listen
 
@@ -80,7 +77,6 @@ object ServerProtection {
                     if (it.currentItem?.isLobbyItem == true || !it.action.isSimple)
                         GeneralProtectionUtils.checkPlayerAction(it, whoClicked)
                 }
-
         }
 
         listen<PlayerSwapHandItemsEvent> {
@@ -103,7 +99,5 @@ object ServerProtection {
         listen<PlayerTakeLecternBookEvent> {
             GeneralProtectionUtils.checkPlayerAction(it)
         }
-
     }
-
 }
