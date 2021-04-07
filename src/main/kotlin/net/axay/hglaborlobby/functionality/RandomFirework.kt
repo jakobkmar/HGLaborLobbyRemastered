@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import kotlin.random.Random.Default.nextBoolean
 
-object RandomFireworkCommand : CommandExecutor {
+object RandomFirework : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player || !sender.hasPermission("lobby.randomfirework"))
             return true

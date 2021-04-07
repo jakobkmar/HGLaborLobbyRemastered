@@ -11,7 +11,7 @@ import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
 import net.axay.hglaborlobby.functionality.ElytraLauncher
 import net.axay.hglaborlobby.functionality.LobbyItems
-import net.axay.hglaborlobby.functionality.RandomFireworkCommand
+import net.axay.hglaborlobby.functionality.RandomFirework
 import net.axay.hglaborlobby.functionality.SoupHealing
 import net.axay.hglaborlobby.gui.guis.*
 import net.axay.hglaborlobby.protection.ServerProtection
@@ -57,7 +57,7 @@ class InternalMainClass : KSpigot() {
 
         AdminGUI.register("admingui")
         DamageCommand.register("damage")
-        RandomFireworkCommand.register("randomfirework")
+        RandomFirework.register("randomfirework")
 
 
         // Main GUI
