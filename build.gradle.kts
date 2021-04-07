@@ -23,7 +23,7 @@ version = "1.0.0"
 
 plugins {
 
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.4.32"
 
     id("com.github.johnrengelman.shadow") version "6.1.0"
 
@@ -39,7 +39,8 @@ repositories {
     jcenter()
     mavenLocal()
     mavenCentral()
-    maven("https://jitpack.io")
+    // AnvilGUI
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
 dependencies {
@@ -48,7 +49,7 @@ dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
 
     // KSPIGOT
-    implementation("net.axay:kspigot:1.16.24")
+    implementation("net.axay:kspigot:1.16.26")
 
     // BLUEUTILS
     compileOnly("net.axay", "BlueUtils", "1.0.2")
