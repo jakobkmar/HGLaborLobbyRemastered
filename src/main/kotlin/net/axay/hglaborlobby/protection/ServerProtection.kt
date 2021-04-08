@@ -5,6 +5,7 @@ import net.axay.hglaborlobby.functionality.isLobbyItem
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import org.bukkit.Material
+import org.bukkit.block.data.type.Door
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
@@ -21,7 +22,13 @@ object ServerProtection {
     fun enable() {
         listen<PlayerInteractEvent> {
             if (it.action == Action.RIGHT_CLICK_BLOCK) {
-                if (it.item?.type == Material.FIREWORK_ROCKET && it.clickedBlock?.type?.isInteractable != true)
+                val shouldAllow = when {
+                    it.item?.type == Material.FIREWORK_ROCKET && it.clickedBlock?.type?.isInteractable != true -> true
+                    it.clickedBlock?.type == Material.NOTE_BLOCK || it.clickedBlock?.type == Material.BELL -> true
+                    it.clickedBlock?.blockData is Door -> true
+                    else -> false
+                }
+                if (shouldAllow)
                     return@listen
             }
             GeneralProtectionUtils.checkPlayerAction(it)
