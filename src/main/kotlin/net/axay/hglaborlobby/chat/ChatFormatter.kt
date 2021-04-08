@@ -58,10 +58,56 @@ object ChatFormatter : CommandExecutor {
         }
     }
 
+    private val symbols = listOf(
+        "☹",
+        "☹",
+        "☺",
+        "☺",
+        "☻",
+        "◕‿◕",
+        "☣",
+        "☮",
+        "☠",
+        "☀",
+        "☁",
+        "☂",
+        "♕",
+        "✯",
+        "✪",
+        "❤",
+        "♬",
+        "✔",
+        "✖",
+        "&",
+        "←",
+        "→",
+        "⛏",
+        "🔥",
+        "🧪",
+        "⚗",
+        "🎣",
+        "🪓",
+        "🔱",
+        "🏹",
+        "🗡",
+        "❉",
+        "❃",
+        "❀",
+        "✚",
+        "㊚",
+        "✍",
+        "✎",
+        "♀",
+        "♂",
+        "©",
+        "®",
+        "✆"
+    )
+
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
         sender.sendMessage {
-            emojis.values.forEach {
-                text("$it ") {
+            symbols.forEach {
+                text("$it  ") {
                     hoverEventText {
                         text("Click to copy") {
                             color = KColors.CORAL
