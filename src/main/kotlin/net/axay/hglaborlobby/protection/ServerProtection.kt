@@ -1,12 +1,13 @@
 package net.axay.hglaborlobby.protection
 
-import net.axay.hglaborlobby.damager.Damager.isDamagerTrash
 import net.axay.hglaborlobby.damager.isInDamager
 import net.axay.hglaborlobby.functionality.isLobbyItem
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import org.bukkit.Material
-import org.bukkit.entity.*
+import org.bukkit.entity.Firework
+import org.bukkit.entity.Player
+import org.bukkit.entity.Projectile
 import org.bukkit.event.block.Action
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
@@ -19,8 +20,10 @@ import org.bukkit.inventory.CraftingInventory
 object ServerProtection {
     fun enable() {
         listen<PlayerInteractEvent> {
-            if (it.item?.type == Material.FIREWORK_ROCKET && it.action == Action.RIGHT_CLICK_BLOCK)
-                return@listen
+            if (it.action == Action.RIGHT_CLICK_BLOCK) {
+                if (it.item?.type == Material.FIREWORK_ROCKET && it.clickedBlock?.type?.isInteractable != true)
+                    return@listen
+            }
             GeneralProtectionUtils.checkPlayerAction(it)
         }
 
