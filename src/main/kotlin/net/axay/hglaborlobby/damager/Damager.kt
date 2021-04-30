@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack
 import java.util.*
 import kotlin.random.Random
 
-val world = Bukkit.getWorld("world")
+val world = Bukkit.getWorld("hub")
 
 val locationArea = LocationArea(vec(11.5, 54.0, 32.5).toLocation(world!!), vec(18.5, 58.0, 38.5).toLocation(world))
 
