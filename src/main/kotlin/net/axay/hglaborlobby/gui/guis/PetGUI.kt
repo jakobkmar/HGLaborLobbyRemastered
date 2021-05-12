@@ -11,6 +11,7 @@ import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.*
 import net.minecraft.server.v1_16_R3.PathfinderGoalFloat
+import org.bukkit.inventory.ItemStack
 
 object PetGUI {
 
@@ -19,6 +20,11 @@ object PetGUI {
         private lateinit var petEntity: Entity
 
         fun despawn() {
+            if(petEntity.passengers.isNotEmpty()) {
+                for (passenger in petEntity.passengers) {
+                    petEntity.removePassenger(passenger)
+                }
+            }
             petEntity.remove()
         }
 
@@ -91,15 +97,11 @@ object PetGUI {
                     clickEvent.bukkitEvent.isCancelled = true
                     val player = clickEvent.player
                     player.closeInventory()
-                    if (pets.containsKey(player) || player.pet != null) {
-                        if (element.entity == player.pet?.entity) {
-                            player.pet?.despawn()
-                            pets.remove(player)
-                        } else {
-                            player.pet?.despawn()
-                            element.spawn(player)
-                            player.pet = element
-                        }
+                    if (pets.containsKey(player)) {
+                        player.pet?.despawn()
+                        pets.remove(player)
+                        element.spawn(player)
+                        player.pet = element
                     } else {
                         element.spawn(player)
                         player.pet = element
