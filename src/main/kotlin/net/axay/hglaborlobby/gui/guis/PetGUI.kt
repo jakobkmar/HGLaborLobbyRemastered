@@ -22,36 +22,37 @@ object PetGUI {
 
     data class Pet(val name: String, val entity: EntityType, val icon: Material) {
 
-        lateinit var petEntity: Entity
+        private lateinit var petEntity: Entity
 
         fun despawn() {
             petEntity.remove()
         }
 
         fun spawn(owner: Player) {
-            petEntity = owner.world.spawnEntity(owner.location, entity)
-            petEntity.isInvulnerable = true
-            petEntity.customName = "${KColors.CORNFLOWERBLUE}${owner.name}'s $name"
-            petEntity.isCustomNameVisible = true
-            if(petEntity is Mob) {
-                val craftMonster = (petEntity as CraftEntity).handle as EntityInsentient
+            val currentPetEntity = owner.world.spawnEntity(owner.location, entity)
+            petEntity = currentPetEntity
+            currentPetEntity.isInvulnerable = true
+            currentPetEntity.customName = "${KColors.CORNFLOWERBLUE}${owner.name}'s $name"
+            currentPetEntity.isCustomNameVisible = true
+            if(currentPetEntity is Mob) {
+                val craftMonster = (currentPetEntity as CraftEntity).handle as EntityInsentient
                 clearPathfinders(craftMonster)
-                (petEntity as Mob).target = null
+                currentPetEntity.target = null
                 craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
                 craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
             }
-            if(petEntity is AbstractHorse) {
-                petEntity.addPassenger(owner)
+            if(currentPetEntity is AbstractHorse) {
+                currentPetEntity.addPassenger(owner)
             }
-            if(petEntity is Tameable) {
-                (petEntity as Tameable).owner = owner
-                (petEntity as Tameable).isTamed = true
+            if(currentPetEntity is Tameable) {
+                currentPetEntity.owner = owner
+                currentPetEntity.isTamed = true
             }
-            if(petEntity is Llama) {
-                (petEntity as Llama).color = Llama.Color.values().random()
+            if(currentPetEntity is Llama) {
+                currentPetEntity.color = Llama.Color.values().random()
             }
-            if(petEntity is Wolf) {
-                (petEntity as Wolf).collarColor = DyeColor.values().random()
+            if(currentPetEntity is Wolf) {
+                currentPetEntity.collarColor = DyeColor.values().random()
             }
         }
 
