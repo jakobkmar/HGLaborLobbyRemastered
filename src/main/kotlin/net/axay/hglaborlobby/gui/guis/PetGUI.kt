@@ -29,11 +29,15 @@ object PetGUI {
             currentPetEntity.customName = "${KColors.CORNFLOWERBLUE}${owner.name}'s $name"
             currentPetEntity.isCustomNameVisible = true
             if (currentPetEntity is Mob) {
-                val craftMonster = (currentPetEntity as CraftEntity).handle as EntityInsentient
-                clearPathfinders(craftMonster)
-                currentPetEntity.target = null
-                craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
-                craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
+                try {
+                    val craftMonster = (currentPetEntity as CraftEntity).handle as EntityInsentient
+                    clearPathfinders(craftMonster)
+                    currentPetEntity.target = null
+                    craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
+                    craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
+                } catch (e: NoClassDefFoundError) {
+                    
+                }
             }
             if (currentPetEntity is AbstractHorse) {
                 currentPetEntity.addPassenger(owner)
