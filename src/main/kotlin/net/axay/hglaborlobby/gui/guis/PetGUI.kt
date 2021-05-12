@@ -95,8 +95,9 @@ object PetGUI {
                     clickEvent.bukkitEvent.isCancelled = true
                     val player = clickEvent.player
                     player.closeInventory()
-                    if(pets.containsKey(player)) {
+                    if(pets.containsKey(player) || player.pet != null) {
                         player.pet?.despawn()
+                        player.pet = null
                     } else {
                         element.spawn(player)
                         player.pet = element
