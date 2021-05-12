@@ -2,10 +2,7 @@ package net.axay.hglaborlobby.gui.guis
 
 import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
 import net.axay.kspigot.chat.KColors
-import net.axay.kspigot.gui.GUIType
-import net.axay.kspigot.gui.Slots
-import net.axay.kspigot.gui.kSpigotGUI
-import net.axay.kspigot.gui.openGUI
+import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.*
 import net.minecraft.server.v1_16_R3.EntityInsentient
 import net.minecraft.server.v1_16_R3.PathfinderGoalFloat
@@ -78,50 +75,56 @@ object PetGUI {
 
     private val pets = hashMapOf<Player, Pet>()
 
-    private val petsGui = kSpigotGUI(GUIType.THREE_BY_NINE) {
-        title = "${KColors.BLACK}PETS"
-        page(1) {
-            placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS_PANE) { meta { name = null } })
-            val petCompound = createRectCompound<Pet>(
-                Slots.RowTwoSlotTwo,
-                Slots.RowTwoSlotEight,
-                iconGenerator = {
-                    itemStack(it.icon) {
-                        setMeta {
-                            name = "${KColors.CORAL}${it.name}"
-                            addLore {
-                                +"${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
-                                +"${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
-                                +" "
-                                +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
-                                +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
+    private fun petsGui(): GUI<ForInventoryFourByNine> {
+        return kSpigotGUI(GUIType.FOUR_BY_NINE) {
+            title = "${KColors.BLACK}PETS"
+            page(1) {
+                placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS_PANE) { meta { name = null } })
+                val petCompound = createRectCompound<Pet>(
+                    Slots.RowTwoSlotTwo,
+                    Slots.RowThreeSlotEight,
+                    iconGenerator = {
+                        itemStack(it.icon) {
+                            setMeta {
+                                name = "${KColors.CORAL}${it.name}"
+                                addLore {
+                                    +"${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
+                                    +"${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
+                                    +" "
+                                    +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
+                                    +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
+                                }
                             }
                         }
+                    },
+                    onClick = { clickEvent, element ->
+                        clickEvent.bukkitEvent.isCancelled = true
+                        val player = clickEvent.player
+                        player.closeInventory()
+                        if (pets.containsKey(player) || player.pet != null) {
+                            if (element.entity == player.pet?.entity) {
+                                player.pet?.despawn()
+                                pets.remove(player)
+                            } else {
+                                player.pet?.despawn()
+                                element.spawn(player)
+                                player.pet = element
+                            }
+                        } else {
+                            element.spawn(player)
+                            player.pet = element
+                        }
                     }
-                },
-                onClick = { clickEvent, element ->
-                    clickEvent.bukkitEvent.isCancelled = true
-                    val player = clickEvent.player
-                    player.closeInventory()
-                    if (pets.containsKey(player)) {
-                        player.pet?.despawn()
-                        pets.remove(player)
-                        element.spawn(player)
-                        player.pet = element
-                    } else {
-                        element.spawn(player)
-                        player.pet = element
-                    }
-                }
-            )
-            petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.DONKEY_SPAWN_EGG))
-            petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.BLACK_WOOL))
-            petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.LLAMA_SPAWN_EGG))
-            petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.PARROT_SPAWN_EGG))
-            petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
-            petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
-            petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
-            petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.MUSIC_DISC_CAT))
+                )
+                petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.DONKEY_SPAWN_EGG))
+                petCompound.addContent(Pet("Skelletpferd", EntityType.SKELETON_HORSE, Material.SKELETON_SKULL))
+                petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.LLAMA_SPAWN_EGG))
+                petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.PARROT_SPAWN_EGG))
+                petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
+                petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
+                petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
+                petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.MUSIC_DISC_CAT))
+            }
         }
     }
 
@@ -130,7 +133,7 @@ object PetGUI {
             Material.CARROT_ON_A_STICK,
             "Pets",
             "Hole dir einen treuen Begleiter.",
-            onClick = { it.player.openGUI(petsGui) }
+            onClick = { it.player.openGUI(petsGui()) }
         ))
     }
 }
