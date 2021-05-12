@@ -46,6 +46,7 @@ object PetGUI {
             }
             if (currentPetEntity is AbstractHorse) {
                 currentPetEntity.addPassenger(owner)
+                currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
             }
             if (currentPetEntity is Tameable) {
                 currentPetEntity.owner = owner
