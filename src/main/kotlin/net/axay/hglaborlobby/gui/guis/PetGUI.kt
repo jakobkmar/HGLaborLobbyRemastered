@@ -1,16 +1,19 @@
 package net.axay.hglaborlobby.gui.guis
 
+import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
 import net.axay.kspigot.chat.KColors
+import net.axay.kspigot.gui.GUIType
+import net.axay.kspigot.gui.Slots
+import net.axay.kspigot.gui.kSpigotGUI
+import net.axay.kspigot.gui.openGUI
+import net.axay.kspigot.items.*
 import net.minecraft.server.v1_16_R3.EntityInsentient
+import net.minecraft.server.v1_16_R3.PathfinderGoalFloat
 import net.minecraft.server.v1_16_R3.PathfinderGoalSelector
 import org.bukkit.DyeColor
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
-import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
-import net.axay.kspigot.gui.*
-import net.axay.kspigot.items.*
-import net.minecraft.server.v1_16_R3.PathfinderGoalFloat
 
 object PetGUI {
 
@@ -34,7 +37,7 @@ object PetGUI {
                     clearPathfinders(craftMonster)
                     currentPetEntity.target = null
                     craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
-                    craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
+                    craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster))
                 } catch (e: NoClassDefFoundError) {
                 }
             }
@@ -50,6 +53,10 @@ object PetGUI {
             }
             if (currentPetEntity is Wolf) {
                 currentPetEntity.collarColor = DyeColor.values().random()
+            }
+
+            if (currentPetEntity is Cat) {
+                currentPetEntity.catType = Cat.Type.RED
             }
         }
         private fun clearPathfinders(entity: EntityInsentient) {
@@ -113,6 +120,7 @@ object PetGUI {
             petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
             petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
             petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
+            petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.MUSIC_DISC_CAT))
         }
     }
 
