@@ -11,6 +11,8 @@ import org.bukkit.DyeColor
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
+import net.axay.kspigot.gui.*
+import org.bukkit.inventory.ItemStack
 
 object PetGUI {
 
@@ -19,6 +21,7 @@ object PetGUI {
         private lateinit var petEntity: Entity
 
         fun despawn() {
+            petEntity.eject()
             petEntity.remove()
         }
 
@@ -38,15 +41,17 @@ object PetGUI {
                 } catch (e: NoClassDefFoundError) {
                 }
             }
-            if (currentPetEntity is AbstractHorse) {
-                currentPetEntity.addPassenger(owner)
-            }
             if (currentPetEntity is Tameable) {
                 currentPetEntity.owner = owner
                 currentPetEntity.isTamed = true
             }
+            if (currentPetEntity is AbstractHorse) {
+                currentPetEntity.addPassenger(owner)
+                currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
+            }
             if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
+                currentPetEntity.inventory.saddle = ItemStack(Material.PINK_CARPET)
             }
             if (currentPetEntity is Wolf) {
                 currentPetEntity.collarColor = DyeColor.values().random()
