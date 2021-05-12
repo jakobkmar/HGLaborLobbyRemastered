@@ -54,6 +54,7 @@ object PetGUI {
             }
             if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
+                currentPetEntity.inventory.saddle = ItemStack(Material.PINK_CARPET)
             }
             if (currentPetEntity is Wolf) {
                 currentPetEntity.collarColor = DyeColor.values().random()
