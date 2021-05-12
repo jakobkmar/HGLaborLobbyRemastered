@@ -84,9 +84,11 @@ object PetGUI {
                         setMeta {
                             name = "${KColors.CORAL}${it.name}"
                             addLore {
-                                + "${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter um dich in der Lobby aufzuhalten!"
+                                + "${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
+                                + "${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
                                 + " "
-                                + "${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item, um das Pet zu beschwören."
+                                + "${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
+                                + "${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
                             }
                         }
                     }
