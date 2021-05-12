@@ -1,6 +1,7 @@
 package net.axay.hglaborlobby.eventmanager.leaveserver
 
 import net.axay.hglaborlobby.damager.Damager
+import net.axay.hglaborlobby.gui.guis.PetGUI.pet
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.broadcast
@@ -22,6 +23,8 @@ object OnLeaveManager {
             it.quitMessage = null
 
             if (player in Damager.playerSoupsEaten) Damager.playerSoupsEaten.remove(player)
+
+            if(player.pet != null) player.pet?.despawn()
 
             if (reason != null) {
                 broadcast(

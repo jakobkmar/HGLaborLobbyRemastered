@@ -9,14 +9,12 @@ version = "1.0.0"
 
 plugins {
     kotlin("jvm") version "1.4.32"
-
     id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.21"
 }
 
 repositories {
     mavenLocal()
-
     jcenter()
     mavenCentral()
     maven("https://repo.codemc.io/repository/maven-snapshots/")
@@ -42,9 +40,7 @@ tasks {
         dependencies {
             exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib.*"))
         }
-
         minimize()
-
         simpleRelocate("net.axay.kspigot")
     }
 }
