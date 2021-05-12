@@ -98,8 +98,14 @@ object PetGUI {
                     val player = clickEvent.player
                     player.closeInventory()
                     if(pets.containsKey(player) || player.pet != null) {
-                        player.pet?.despawn()
-                        pets.remove(player)
+                        if(element.entity == player.pet?.entity) {
+                            player.pet?.despawn()
+                            pets.remove(player)
+                        } else {
+                            player.pet?.despawn()
+                            element.spawn(player)
+                            player.pet = element
+                        }
                     } else {
                         element.spawn(player)
                         player.pet = element
