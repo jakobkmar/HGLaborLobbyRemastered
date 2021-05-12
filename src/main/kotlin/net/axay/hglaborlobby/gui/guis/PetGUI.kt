@@ -99,7 +99,7 @@ object PetGUI {
                     player.closeInventory()
                     if(pets.containsKey(player) || player.pet != null) {
                         player.pet?.despawn()
-                        player.pet = null
+                        pets.remove(player)
                     } else {
                         element.spawn(player)
                         player.pet = element
