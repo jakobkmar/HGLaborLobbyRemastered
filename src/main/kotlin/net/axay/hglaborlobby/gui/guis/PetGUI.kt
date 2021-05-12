@@ -63,9 +63,9 @@ object PetGUI {
     }
 
     var Player.pet: Pet?
-    get() = pets[player]
+    get() = pets[this]
     set(value) {
-        pets[player!!] = value!!
+        pets[this] = value!!
     }
 
     private val pets = hashMapOf<Player, Pet>()
