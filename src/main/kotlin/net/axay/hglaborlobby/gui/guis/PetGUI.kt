@@ -36,7 +36,6 @@ object PetGUI {
                     craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
                     craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
                 } catch (e: NoClassDefFoundError) {
-                    
                 }
             }
             if (currentPetEntity is AbstractHorse) {
