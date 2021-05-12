@@ -47,7 +47,7 @@ object PetGUI {
             }
             if (currentPetEntity is AbstractHorse) {
                 currentPetEntity.addPassenger(owner)
-                currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
+                if(currentPetEntity !is Llama) currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
             }
             if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
