@@ -8,15 +8,9 @@ import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
 import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
-import net.axay.kspigot.extensions.bukkit.*
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.*
-import net.axay.kspigot.runnables.task
 import net.minecraft.server.v1_16_R3.PathfinderGoalFloat
-import org.bukkit.Sound
-import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.ItemStack
-
 
 object PetGUI {
 
@@ -34,47 +28,43 @@ object PetGUI {
             currentPetEntity.isInvulnerable = true
             currentPetEntity.customName = "${KColors.CORNFLOWERBLUE}${owner.name}'s $name"
             currentPetEntity.isCustomNameVisible = true
-            if(currentPetEntity is Mob) {
+            if (currentPetEntity is Mob) {
                 val craftMonster = (currentPetEntity as CraftEntity).handle as EntityInsentient
                 clearPathfinders(craftMonster)
                 currentPetEntity.target = null
                 craftMonster.goalSelector.a(0, LaborPathfinderMoveToPlayer(owner, craftMonster))
                 craftMonster.goalSelector.a(1, PathfinderGoalFloat(craftMonster));
             }
-            if(currentPetEntity is AbstractHorse) {
+            if (currentPetEntity is AbstractHorse) {
                 currentPetEntity.addPassenger(owner)
             }
-            if(currentPetEntity is Tameable) {
+            if (currentPetEntity is Tameable) {
                 currentPetEntity.owner = owner
                 currentPetEntity.isTamed = true
             }
-            if(currentPetEntity is Llama) {
+            if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
             }
-            if(currentPetEntity is Wolf) {
+            if (currentPetEntity is Wolf) {
                 currentPetEntity.collarColor = DyeColor.values().random()
             }
         }
-
         private fun clearPathfinders(entity: EntityInsentient) {
             entity.goalSelector = PathfinderGoalSelector(entity.getWorld().methodProfilerSupplier)
             entity.targetSelector = PathfinderGoalSelector(entity.getWorld().methodProfilerSupplier)
         }
-
     }
 
     var Player.pet: Pet?
-    get() = pets[this]
-    set(value) {
-        pets[this] = value!!
-    }
+        get() = pets[this]
+        set(value) {
+            pets[this] = value!!
+        }
 
     private val pets = hashMapOf<Player, Pet>()
 
     private val petsGui = kSpigotGUI(GUIType.THREE_BY_NINE) {
-
         title = "${KColors.BLACK}PETS"
-
         page(1) {
             placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS_PANE) { meta { name = null } })
             val petCompound = createRectCompound<Pet>(
@@ -85,21 +75,21 @@ object PetGUI {
                         setMeta {
                             name = "${KColors.CORAL}${it.name}"
                             addLore {
-                                + "${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
-                                + "${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
-                                + " "
-                                + "${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
-                                + "${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
+                                +"${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
+                                +"${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
+                                +" "
+                                +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
+                                +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
                             }
                         }
                     }
                 },
-                onClick = {clickEvent, element ->
+                onClick = { clickEvent, element ->
                     clickEvent.bukkitEvent.isCancelled = true
                     val player = clickEvent.player
                     player.closeInventory()
-                    if(pets.containsKey(player) || player.pet != null) {
-                        if(element.entity == player.pet?.entity) {
+                    if (pets.containsKey(player) || player.pet != null) {
+                        if (element.entity == player.pet?.entity) {
                             player.pet?.despawn()
                             pets.remove(player)
                         } else {
@@ -121,20 +111,14 @@ object PetGUI {
             petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
             petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
         }
-
     }
 
     fun enable() {
-
         MainGUI.addContent(MainGUI.MainGUICompoundElement(
             Material.CARROT_ON_A_STICK,
             "Pets",
             "Hole dir einen treuen Begleiter.",
             onClick = { it.player.openGUI(petsGui) }
         ))
-
     }
-
-
-
 }
