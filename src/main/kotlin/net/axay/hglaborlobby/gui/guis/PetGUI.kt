@@ -20,11 +20,7 @@ object PetGUI {
         private lateinit var petEntity: Entity
 
         fun despawn() {
-            if(petEntity.passengers.isNotEmpty()) {
-                for (passenger in petEntity.passengers) {
-                    petEntity.removePassenger(passenger)
-                }
-            }
+            petEntity.eject()
             petEntity.remove()
         }
 
@@ -44,13 +40,13 @@ object PetGUI {
                 } catch (e: NoClassDefFoundError) {
                 }
             }
-            if (currentPetEntity is AbstractHorse) {
-                currentPetEntity.addPassenger(owner)
-                currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
-            }
             if (currentPetEntity is Tameable) {
                 currentPetEntity.owner = owner
                 currentPetEntity.isTamed = true
+            }
+            if (currentPetEntity is AbstractHorse) {
+                currentPetEntity.addPassenger(owner)
+                currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
             }
             if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
@@ -111,7 +107,7 @@ object PetGUI {
                 }
             )
             petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.DONKEY_SPAWN_EGG))
-            petCompound.addContent(Pet("Skelletpferd", EntityType.SKELETON_HORSE, Material.SKELETON_SKULL))
+            petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.BLACK_WOOL))
             petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.LLAMA_SPAWN_EGG))
             petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.PARROT_SPAWN_EGG))
             petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
