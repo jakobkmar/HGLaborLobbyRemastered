@@ -63,7 +63,7 @@ object PetGUI {
                     }
                 })
                 currentPetEntity.isShivering = false
-                currentPetEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.let { attribute -> attribute.baseValue = 0.275 }
+                currentPetEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.let { attribute -> attribute.baseValue = 0.500 }
                 currentPetEntity.addPassenger(owner)
             }
             if (currentPetEntity is Llama) {
