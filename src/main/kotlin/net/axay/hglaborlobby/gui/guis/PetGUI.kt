@@ -23,15 +23,11 @@ object PetGUI {
 
     data class Pet(val name: String, val entity: EntityType, val icon: Material) {
 
-        private lateinit var petEntity: Entity
+        lateinit var petEntity: Entity
 
         fun despawn() {
             petEntity.eject()
             petEntity.remove()
-        }
-
-        fun ride(player: Player) {
-            petEntity.passengers.add(player)
         }
 
         fun spawn(owner: Player) {
@@ -164,8 +160,8 @@ object PetGUI {
                     if(player.pet == null) {
                         player.sendMessage("${KColors.TOMATO}Du hast aktuell kein Haustier ausgewählt!")
                     } else {
+                        player.pet?.petEntity?.addPassenger(player)
                         player.playSound(player.location, Sound.ENTITY_PIG_SADDLE, 1.0f, 1.0f)
-                        player.pet?.ride(player)
                     }
                 })
             }
