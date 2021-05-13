@@ -12,6 +12,10 @@ import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
 import net.axay.kspigot.gui.*
+import org.bukkit.Sound
+import org.bukkit.attribute.Attribute
+import org.bukkit.enchantments.Enchantment
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
 object PetGUI {
@@ -23,6 +27,12 @@ object PetGUI {
         fun despawn() {
             petEntity.eject()
             petEntity.remove()
+        }
+
+        fun ride(player: Player) {
+            if(!petEntity.passengers.contains(player)) {
+                petEntity.passengers.add(player)
+            }
         }
 
         fun spawn(owner: Player) {
@@ -49,6 +59,12 @@ object PetGUI {
                 currentPetEntity.addPassenger(owner)
                 if(currentPetEntity !is Llama) currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
             }
+            if (currentPetEntity is Strider) {
+                owner.inventory.setItemInOffHand(itemStack(Material.WARPED_FUNGUS_ON_A_STICK) { meta { isUnbreakable = true } })
+                currentPetEntity.isShivering = false
+                currentPetEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.let { attribute -> attribute.baseValue = 0.275 }
+                currentPetEntity.addPassenger(owner)
+            }
             if (currentPetEntity is Llama) {
                 currentPetEntity.color = Llama.Color.values().random()
                 currentPetEntity.inventory.saddle = ItemStack(Material.PINK_CARPET)
@@ -56,7 +72,6 @@ object PetGUI {
             if (currentPetEntity is Wolf) {
                 currentPetEntity.collarColor = DyeColor.values().random()
             }
-
             if (currentPetEntity is Cat) {
                 currentPetEntity.catType = Cat.Type.RED
             }
@@ -75,7 +90,7 @@ object PetGUI {
 
     private val pets = hashMapOf<Player, Pet>()
 
-    private fun petsGui(): GUI<ForInventoryFourByNine> {
+    private fun petsGui(player: Player): GUI<ForInventoryFourByNine> {
         return kSpigotGUI(GUIType.FOUR_BY_NINE) {
             title = "${KColors.BLACK}PETS"
             page(1) {
@@ -87,6 +102,12 @@ object PetGUI {
                         itemStack(it.icon) {
                             setMeta {
                                 name = "${KColors.CORAL}${it.name}"
+                                if(player.pet != null) {
+                                    if(player.pet?.entity == it.entity) {
+                                        addEnchant(Enchantment.DAMAGE_ALL, 1, true)
+                                        addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                                    }
+                                }
                                 addLore {
                                     +"${KColors.BISQUE}Hole dir ein ${it.name} als treuen Begleiter,"
                                     +"${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
@@ -94,6 +115,7 @@ object PetGUI {
                                     +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
                                     +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
                                 }
+                                addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                             }
                         }
                     },
@@ -124,6 +146,24 @@ object PetGUI {
                 petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
                 petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
                 petCompound.addContent(Pet("Floppa", EntityType.CAT, Material.MUSIC_DISC_CAT))
+                petCompound.addContent(Pet("Strider", EntityType.STRIDER, Material.WARPED_FUNGUS))
+
+                button(Slots.CornerBottomRight, itemStack(Material.SADDLE) {
+                    meta {
+                        name = "${KColors.SADDLEBROWN}Haustier reiten"
+                        addLore {
+                            + "${KColors.BISQUE}Reite dein aktuell ausgewähltes Haustier"
+                        }
+                    }
+                }, onClick = {
+                    player.closeInventory()
+                    if(player.pet == null) {
+                        player.sendMessage("${KColors.TOMATO}Du hast aktuell kein Haustier ausgewählt!")
+                    } else {
+                        player.playSound(player.location, Sound.ENTITY_PIG_SADDLE, 1.0f, 1.0f)
+                        player.pet?.ride(player)
+                    }
+                })
             }
         }
     }
@@ -133,7 +173,7 @@ object PetGUI {
             Material.CARROT_ON_A_STICK,
             "Pets",
             "Hole dir einen treuen Begleiter.",
-            onClick = { it.player.openGUI(petsGui()) }
+            onClick = { it.player.openGUI(petsGui(it.player)) }
         ))
     }
 }
