@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.gui.guis
 
 import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
 import net.axay.kspigot.chat.KColors
+import net.axay.kspigot.chat.input.awaitAnvilInput
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.*
 import net.minecraft.server.v1_16_R3.EntityInsentient
@@ -162,6 +163,29 @@ object PetGUI {
                     } else {
                         player.pet?.petEntity?.addPassenger(player)
                         player.playSound(player.location, Sound.ENTITY_PIG_SADDLE, 1.0f, 1.0f)
+                    }
+                })
+
+                button(Slots.RowTwoSlotNine, itemStack(Material.NAME_TAG) {
+                    meta {
+                        name = "${KColors.SADDLEBROWN}Haustier umbennen"
+                        addLore {
+                            + "${KColors.BISQUE}Dir gefällt der Name deines Haustiers nicht?"
+                            + "${KColors.BISQUE}Kein Problem! Klicke auf das Item um ihn zu ändern."
+                        }
+                    }
+                }, onClick = {
+                    player.closeInventory()
+                    if(player.pet == null) {
+                        player.sendMessage("${KColors.TOMATO}Du hast aktuell kein Haustier ausgewählt!")
+                    } else {
+                        it.player.awaitAnvilInput("Trage den neuen Namen ein") { name ->
+                            val newName = name.input ?: kotlin.run {
+                                return@awaitAnvilInput
+                            }
+                            player.pet?.petEntity?.customName = newName
+                            player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 10.0f)
+                        }
                     }
                 })
             }
