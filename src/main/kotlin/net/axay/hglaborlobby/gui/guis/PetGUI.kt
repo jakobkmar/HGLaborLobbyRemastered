@@ -12,6 +12,7 @@ import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
 import net.axay.kspigot.gui.*
+import net.axay.kspigot.utils.mark
 import org.bukkit.Sound
 import org.bukkit.attribute.Attribute
 import org.bukkit.enchantments.Enchantment
@@ -30,9 +31,7 @@ object PetGUI {
         }
 
         fun ride(player: Player) {
-            if(!petEntity.passengers.contains(player)) {
-                petEntity.passengers.add(player)
-            }
+            petEntity.passengers.add(player)
         }
 
         fun spawn(owner: Player) {
@@ -60,7 +59,12 @@ object PetGUI {
                 if(currentPetEntity !is Llama) currentPetEntity.inventory.saddle = ItemStack(Material.SADDLE)
             }
             if (currentPetEntity is Strider) {
-                owner.inventory.setItemInOffHand(itemStack(Material.WARPED_FUNGUS_ON_A_STICK) { meta { isUnbreakable = true } })
+                owner.inventory.setItemInOffHand(itemStack(Material.WARPED_FUNGUS_ON_A_STICK) {
+                    meta {
+                        isUnbreakable = true
+                        mark("lobbyitem")
+                    }
+                })
                 currentPetEntity.isShivering = false
                 currentPetEntity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.let { attribute -> attribute.baseValue = 0.275 }
                 currentPetEntity.addPassenger(owner)
