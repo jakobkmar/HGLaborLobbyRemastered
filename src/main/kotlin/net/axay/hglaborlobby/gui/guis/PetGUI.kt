@@ -143,7 +143,7 @@ object PetGUI {
                     }
                 )
                 petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.DONKEY_SPAWN_EGG))
-                petCompound.addContent(Pet("Skelletpferd", EntityType.SKELETON_HORSE, Material.SKELETON_SKULL))
+                petCompound.addContent(Pet("Skelletpferd", EntityType.SKELETON_HORSE, Material.IRON_HORSE_ARMOR))
                 petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.LLAMA_SPAWN_EGG))
                 petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.PARROT_SPAWN_EGG))
                 petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
