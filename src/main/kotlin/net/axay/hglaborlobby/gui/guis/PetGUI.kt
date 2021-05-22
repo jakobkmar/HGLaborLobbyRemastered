@@ -203,5 +203,14 @@ object PetGUI {
             "Hole dir einen treuen Begleiter.",
             onClick = { it.player.openGUI(petsGui(it.player)) }
         ))
+        listen<PlayerInteractEvent> {
+            if(it.action == Action.LEFT_CLICK_AIR) {
+                if(it.player.vehicle != null) {
+                    if(it.player.vehicle is Snowman) {
+                        it.player.launchProjectile(Snowball::class.java, it.player.location.direction.multiply(1))
+                    }
+                }
+            }
+        }
     }
 }
