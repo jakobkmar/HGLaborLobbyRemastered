@@ -13,8 +13,6 @@ object DatabaseManager {
 
     val warps = mongoDB.getCollectionOrCreate<Warp>("${PLUGIN_DATA_PREFIX}warps")
 
-    val serverWarps = mongoDB.getCollectionOrCreate<ServerWarp>("${PLUGIN_DATA_PREFIX}serverwarps")
-
     val ipAddresses = mongoDB.getCollectionOrCreate<IPCheckData>("${PLUGIN_DATA_PREFIX}ipcheckdata")
 
     val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas")
