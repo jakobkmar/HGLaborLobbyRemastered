@@ -4,6 +4,7 @@ import net.axay.hglaborlobby.damager.DamagerDifficulty.crapDamagerEnabled
 import net.axay.hglaborlobby.damager.DamagerDifficulty.getCrapDamagerItem
 import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
+import net.axay.hglaborlobby.data.database.location
 import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
@@ -58,7 +59,6 @@ object Damager {
     var playerSoupsEaten = hashMapOf<Player, Int>()
     var playersInDamager = mutableListOf<String>()
     var playerDamage = hashMapOf<String, Double>()
-    private val damagerSpawn by lazy { WarpsHolder.instance.warps.find { it.name == "Damager" }?.location }
 
     fun enable() {
         DamagerDifficulty.enable()
@@ -78,7 +78,9 @@ object Damager {
                     playerSoupsEaten.remove(p)
                 } else {
                     LobbyItems.givePlayer(p)
-                    p.teleport(damagerSpawn!!)
+                    WarpsHolder.instance.spawn?.let { warp ->
+                        p.teleport(warp.location())
+                    }
                     p.heal()
                     p.sendMessage("${KColors.GRAY}Du hast den Damager ${KColors.RED}nicht${KColors.GRAY} geschafft")
                     p.playSound(p.location, Sound.ENTITY_OCELOT_HURT, 1.0F, 1.0F)

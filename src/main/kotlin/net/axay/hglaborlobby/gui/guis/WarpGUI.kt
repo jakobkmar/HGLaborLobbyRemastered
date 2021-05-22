@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.gui.guis
 
 import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
+import net.axay.hglaborlobby.data.database.location
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.gui.GUIType
 import net.axay.kspigot.gui.Slots
@@ -33,7 +34,7 @@ object WarpGUI {
                 Slots.RowTwoSlotEight,
 
                 iconGenerator = {
-                    itemStack(it.icon) {
+                    itemStack(Material.valueOf(it.icon)) {
                         setMeta {
                             name = "${KColors.CORAL}${it.name.capitalize()}"
                             lore = (it.description?.toLoreList(KColors.DARKAQUA)?.toMutableList() ?: ArrayList()).apply {
@@ -49,7 +50,7 @@ object WarpGUI {
 
                     clickEvent.bukkitEvent.isCancelled = true
 
-                    clickEvent.bukkitEvent.whoClicked.teleport(element.location)
+                    clickEvent.bukkitEvent.whoClicked.teleport(element.location())
 
                 }
 
@@ -67,12 +68,14 @@ object WarpGUI {
 
     fun enable() {
 
+
         MainGUI.addContent(MainGUI.MainGUICompoundElement(
             Material.COMPASS,
             "Warps",
             "Sehe alle Warps, die existieren.",
             onClick = { it.player.openGUI(warpsGUI) }
         ))
+
 
     }
 

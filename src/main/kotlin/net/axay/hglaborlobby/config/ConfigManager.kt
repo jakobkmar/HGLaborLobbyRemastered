@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.config
 
 import net.axay.blueutils.database.DatabaseLoginInformation
 import net.axay.hglaborlobby.data.config.IPServiceConfig
+import net.axay.hglaborlobby.data.config.WarpsConfig
 import net.axay.kspigot.config.PluginFile
 import net.axay.kspigot.config.kSpigotJsonConfig
 
@@ -15,6 +16,11 @@ object ConfigManager {
     val ipServiceConfig
             by kSpigotJsonConfig(PluginFile("ipServiceConfig.json"), true) {
                 IPServiceConfig()
+            }
+
+    val warpConfig
+            by kSpigotJsonConfig(PluginFile("warpConfig.json"), true) {
+                WarpsConfig()
             }
 
 }
