@@ -31,13 +31,22 @@ object LobbyItems {
             mark("maingui")
         }
 
-        contents[5] = itemStack(Material.DIAMOND) {
+        contents[4] = itemStack(Material.HEART_OF_THE_SEA) {
             meta {
-                name = "${KColors.CORAL}HG Queue"
-                lore = "Rechtsklicke dieses Item, um die HG Queue zu öffnen."
+                name = "${KColors.CORAL}Warps"
+                lore = "Rechtsklicke dieses Item, um die Warps zu öffnen."
                     .toLoreList(KColors.CHARTREUSE)
             }
-            mark("hgqueue")
+            mark("warps")
+        }
+
+        contents[1] = itemStack(Material.CARROT_ON_A_STICK) {
+            meta {
+                name = "${KColors.ORANGE}Pets"
+                lore = "Rechtsklicke dieses Item, um die Pets zu öffnen."
+                    .toLoreList(KColors.CHARTREUSE)
+            }
+            mark("pets")
         }
 
         val playerInv = player.inventory

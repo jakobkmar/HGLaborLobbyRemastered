@@ -8,6 +8,7 @@ group = "net.axay"
 version = "1.0.0"
 
 plugins {
+    java
     kotlin("jvm") version "1.4.32"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.21"
@@ -26,6 +27,7 @@ dependencies {
     compileOnly("net.axay", "BlueUtils", "1.0.2")
     compileOnly("org.litote.kmongo", "kmongo-core", "4.2.3")
     compileOnly("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.3")
+    compileOnly("net.luckperms:api:5.3")
 }
 
 java.sourceCompatibility = jvmVersion
@@ -42,6 +44,7 @@ tasks {
         }
         minimize()
         simpleRelocate("net.axay.kspigot")
+        simpleRelocate("kotlinx.serialization")
     }
 }
 

@@ -29,7 +29,7 @@ object OnJoinManager {
 
             async {
                 if (!player.hasPermission("hglabor.bypassvpn")) {
-                    BadIPDetection.checkPlayer(player)
+                    //BadIPDetection.checkPlayer(player) causes serialization error
                 }
             }
         }

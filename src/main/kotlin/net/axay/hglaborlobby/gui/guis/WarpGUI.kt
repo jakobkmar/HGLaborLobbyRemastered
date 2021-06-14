@@ -4,6 +4,8 @@ import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.hglaborlobby.data.database.location
 import net.axay.kspigot.chat.KColors
+import net.axay.kspigot.event.listen
+import net.axay.kspigot.extensions.events.isRightClick
 import net.axay.kspigot.gui.GUIType
 import net.axay.kspigot.gui.Slots
 import net.axay.kspigot.gui.kSpigotGUI
@@ -15,7 +17,9 @@ import net.axay.kspigot.items.toLoreList
 import net.axay.kspigot.runnables.async
 import net.axay.kspigot.runnables.firstAsync
 import net.axay.kspigot.runnables.thenSync
+import net.axay.kspigot.utils.hasMark
 import org.bukkit.Material
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 
 object WarpGUI {
@@ -75,6 +79,17 @@ object WarpGUI {
             "Sehe alle Warps, die existieren.",
             onClick = { it.player.openGUI(warpsGUI) }
         ))
+
+        listen<PlayerInteractEvent> {
+
+            if (!it.action.isRightClick) return@listen
+
+            if (it.item?.hasMark("warps") == true) {
+                it.isCancelled = true
+                it.player.openGUI(warpsGUI)
+            }
+
+        }
 
 
     }

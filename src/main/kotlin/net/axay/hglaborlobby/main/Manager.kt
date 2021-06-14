@@ -61,6 +61,7 @@ class InternalMainClass : KSpigot() {
         HGQueueGUI.enable()
         PlayerVisiblityGUI.enable()
         PetGUI.enable()
+        PrefixGUI.enable()
         //PrivacySettingsGUI.enable()
 
         server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")

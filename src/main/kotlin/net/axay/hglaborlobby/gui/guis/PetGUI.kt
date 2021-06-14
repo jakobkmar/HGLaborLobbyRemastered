@@ -4,6 +4,7 @@ import net.axay.hglaborlobby.pathfinding.LaborPathfinderMoveToPlayer
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.chat.input.awaitAnvilInput
 import net.axay.kspigot.event.listen
+import net.axay.kspigot.extensions.events.isRightClick
 import net.axay.kspigot.gui.*
 import net.axay.kspigot.items.*
 import net.minecraft.server.v1_16_R3.EntityInsentient
@@ -14,6 +15,7 @@ import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity
 import org.bukkit.entity.*
 import net.axay.kspigot.gui.*
+import net.axay.kspigot.utils.hasMark
 import net.axay.kspigot.utils.mark
 import org.bukkit.Sound
 import org.bukkit.attribute.Attribute
@@ -25,7 +27,7 @@ import org.bukkit.inventory.ItemStack
 
 object PetGUI {
 
-    data class Pet(val name: String, val entity: EntityType, val icon: Material) {
+    data class Pet(val name: String, val entity: EntityType, val icon: Material, val requiredRank: String = "default") {
 
         lateinit var petEntity: Entity
 
@@ -94,14 +96,14 @@ object PetGUI {
 
     private val pets = hashMapOf<Player, Pet>()
 
-    private fun petsGui(player: Player): GUI<ForInventoryFourByNine> {
-        return kSpigotGUI(GUIType.FOUR_BY_NINE) {
+    private fun petsGui(player: Player): GUI<ForInventorySixByNine> {
+        return kSpigotGUI(GUIType.SIX_BY_NINE) {
             title = "${KColors.BLACK}PETS"
             page(1) {
                 placeholder(Slots.Border, itemStack(Material.WHITE_STAINED_GLASS_PANE) { meta { name = null } })
                 val petCompound = createRectCompound<Pet>(
                     Slots.RowTwoSlotTwo,
-                    Slots.RowThreeSlotEight,
+                    Slots.RowFiveSlotEight,
                     iconGenerator = {
                         itemStack(it.icon) {
                             setMeta {
@@ -117,7 +119,7 @@ object PetGUI {
                                     +"${KColors.BISQUE}um dich in der Lobby aufzuhalten!"
                                     +" "
                                     +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}Klicke auf dieses Item,"
-                                    +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören."
+                                    +"${KColors.LIGHTSLATEGRAY}${KColors.ITALIC}um das Pet zu beschwören.${if(it.requiredRank != "default") " ${KColors.SLATEBLUE}(Benötigt den ${KColors.DARKSLATEBLUE}${it.requiredRank} ${KColors.SLATEBLUE}Rang)" else ""}"
                                 }
                                 addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                             }
@@ -127,25 +129,29 @@ object PetGUI {
                         clickEvent.bukkitEvent.isCancelled = true
                         val player = clickEvent.player
                         player.closeInventory()
-                        if (pets.containsKey(player) || player.pet != null) {
-                            if (element.entity == player.pet?.entity) {
-                                player.pet?.despawn()
-                                pets.remove(player)
+                        if(player.hasPermission("group.${element.requiredRank.toLowerCase()}")) {
+                            if (pets.containsKey(player) || player.pet != null) {
+                                if (element.entity == player.pet?.entity) {
+                                    player.pet?.despawn()
+                                    pets.remove(player)
+                                } else {
+                                    player.pet?.despawn()
+                                    element.spawn(player)
+                                    player.pet = element
+                                }
                             } else {
-                                player.pet?.despawn()
                                 element.spawn(player)
                                 player.pet = element
                             }
                         } else {
-                            element.spawn(player)
-                            player.pet = element
+                            player.sendMessage("${KColors.BISQUE}Du benötigst den ${KColors.TOMATO}${element.requiredRank} ${KColors.BISQUE}Rang, um dieses Haustier nutzen zu können.")
                         }
                     }
                 )
-                petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.DONKEY_SPAWN_EGG))
+                petCompound.addContent(Pet("Esel", EntityType.DONKEY, Material.BROWN_WOOL))
                 petCompound.addContent(Pet("Skelletpferd", EntityType.SKELETON_HORSE, Material.IRON_HORSE_ARMOR))
-                petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.LLAMA_SPAWN_EGG))
-                petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.PARROT_SPAWN_EGG))
+                petCompound.addContent(Pet("Lama", EntityType.LLAMA, Material.MAGENTA_CARPET))
+                petCompound.addContent(Pet("Papagei", EntityType.PARROT, Material.FEATHER))
                 petCompound.addContent(Pet("Doggo", EntityType.WOLF, Material.BONE))
                 petCompound.addContent(Pet("Schildkröte", EntityType.TURTLE, Material.TURTLE_HELMET))
                 petCompound.addContent(Pet("Panda", EntityType.PANDA, Material.BAMBOO))
@@ -153,6 +159,16 @@ object PetGUI {
                 petCompound.addContent(Pet("Strider", EntityType.STRIDER, Material.WARPED_FUNGUS))
                 petCompound.addContent(Pet("Eisbär", EntityType.POLAR_BEAR, Material.PACKED_ICE))
                 petCompound.addContent(Pet("Schneemann", EntityType.SNOWMAN, Material.SNOWBALL))
+                petCompound.addContent(Pet("Biene", EntityType.BEE, Material.HONEYCOMB, "Sub"))
+                petCompound.addContent(Pet("Fuchs", EntityType.FOX, Material.SWEET_BERRIES, "Sub"))
+                petCompound.addContent(Pet("Zoglin", EntityType.ZOGLIN, Material.PORKCHOP, "Sub"))
+                petCompound.addContent(Pet("Guardian", EntityType.GUARDIAN, Material.PRISMARINE_CRYSTALS, "Sub"))
+                petCompound.addContent(Pet("Ghast", EntityType.GHAST, Material.FIRE_CHARGE, "Contributor"))
+                petCompound.addContent(Pet("Verwüster", EntityType.RAVAGER, Material.DEAD_FIRE_CORAL_BLOCK, "Contributor"))
+                petCompound.addContent(Pet("Tintenfisch", EntityType.SQUID, Material.INK_SAC))
+                petCompound.addContent(Pet("Pilzkuh", EntityType.MUSHROOM_COW, Material.BROWN_MUSHROOM, "Sub"))
+                petCompound.addContent(Pet("Kugelfisch", EntityType.PUFFERFISH, Material.PUFFERFISH_BUCKET))
+                petCompound.addContent(Pet("Witherskelett", EntityType.WITHER_SKELETON, Material.COAL, "Sub"))
                 button(Slots.CornerBottomRight, itemStack(Material.SADDLE) {
                     meta {
                         name = "${KColors.SADDLEBROWN}Haustier reiten"
@@ -211,6 +227,16 @@ object PetGUI {
                     }
                 }
             }
+        }
+        listen<PlayerInteractEvent> {
+
+            if (!it.action.isRightClick) return@listen
+
+            if (it.item?.hasMark("pets") == true) {
+                it.isCancelled = true
+                it.player.openGUI(petsGui(it.player))
+            }
+
         }
     }
 }
