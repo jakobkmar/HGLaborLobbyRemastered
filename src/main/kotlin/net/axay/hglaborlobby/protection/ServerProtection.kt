@@ -2,6 +2,7 @@ package net.axay.hglaborlobby.protection
 
 import net.axay.hglaborlobby.damager.isInDamager
 import net.axay.hglaborlobby.functionality.isLobbyItem
+import net.axay.hglaborlobby.minigames.isInWaterfightRegion
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.bukkit.isSimple
 import org.bukkit.Material
@@ -9,6 +10,7 @@ import org.bukkit.block.data.type.Door
 import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
+import org.bukkit.entity.Trident
 import org.bukkit.event.block.Action
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
@@ -21,11 +23,12 @@ import org.bukkit.inventory.CraftingInventory
 object ServerProtection {
     fun enable() {
         listen<PlayerInteractEvent> {
-            if (it.action == Action.RIGHT_CLICK_BLOCK) {
+            if (it.action == Action.RIGHT_CLICK_BLOCK || it.action == Action.RIGHT_CLICK_AIR) {
                 val shouldAllow = when {
                     it.item?.type == Material.FIREWORK_ROCKET && it.clickedBlock?.type?.isInteractable != true -> true
                     it.clickedBlock?.type == Material.NOTE_BLOCK || it.clickedBlock?.type == Material.BELL -> true
                     it.clickedBlock?.blockData is Door -> true
+                    it.item?.type == Material.TRIDENT -> true
                     else -> false
                 }
                 if (shouldAllow)
@@ -44,7 +47,7 @@ object ServerProtection {
 
         listen<EntityDamageEvent> {
             if (it.entity is Player)
-                if (!(it.entity as Player).isInDamager)
+                if (!(it.entity as Player).isInDamager && !(it.entity as Player).isInWaterfightRegion)
                     it.isCancelled = true
         }
 
@@ -55,15 +58,22 @@ object ServerProtection {
         listen<EntityDamageByEntityEvent> {
             val damager = it.damager
 
-            if (damager is Player)
+            if (damager is Player) {
+                if(it.entity is Player && (it.damager as Player).isInWaterfightRegion) {
+                    return@listen
+                }
                 GeneralProtectionUtils.checkPlayerAction(it, damager)
+            }
             else if (damager is Projectile) {
                 if (damager is Firework) {
                     it.isCancelled = true
                 } else {
                     val source = damager.shooter
-                    if (source is Player)
-                        GeneralProtectionUtils.checkPlayerAction(it, source)
+                    if (source is Player) {
+                        if(damager !is Trident || it.entity !is Player) {
+                            GeneralProtectionUtils.checkPlayerAction(it, source)
+                        }
+                    }
                 }
             }
         }
