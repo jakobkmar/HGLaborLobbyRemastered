@@ -7,17 +7,15 @@ import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.bukkit.info
 import net.axay.kspigot.extensions.bukkit.kick
 import net.axay.kspigot.extensions.console
-import net.axay.kspigot.ipaddress.BadIPDetectionResult
-import net.axay.kspigot.ipaddress.BadIPDetector
+import net.axay.kspigot.ipaddress.*
 import net.axay.kspigot.ipaddress.badipdetectionservices.IPHub
-import net.axay.kspigot.ipaddress.checkIP
-import net.axay.kspigot.ipaddress.ipAddressOrNull
 import net.axay.kspigot.runnables.sync
 import org.bukkit.entity.Player
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.save
 import java.time.Instant
+
 
 object BadIPDetection {
 
@@ -31,7 +29,6 @@ object BadIPDetection {
 
         val ip = player.ipAddressOrNull
         if (ip != null) {
-
             // find out if the ip has already been checked and was not bad
 
             var mustCheck = true
@@ -89,3 +86,6 @@ object BadIPDetection {
     }
 
 }
+
+
+
