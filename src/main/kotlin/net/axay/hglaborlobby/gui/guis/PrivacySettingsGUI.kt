@@ -14,7 +14,7 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.projection
 import org.litote.kmongo.setValue
 import kotlin.reflect.KProperty
-
+/*
 object PrivacySettingsGUI {
 
     private val privacyGUI = kSpigotGUI(GUIType.THREE_BY_NINE) {
@@ -101,3 +101,6 @@ object PrivacySettingsGUI {
     }
 
 }
+
+
+ */

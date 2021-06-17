@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
+/*
 object PlayerSettingsHolder {
 
     private val playerSettings = mutableMapOf<Player, PlayerSettings>()
@@ -36,3 +37,5 @@ object PlayerSettingsHolder {
     }
 
 }
+
+ */

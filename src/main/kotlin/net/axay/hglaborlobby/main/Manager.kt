@@ -3,16 +3,13 @@ package net.axay.hglaborlobby.main
 import net.axay.hglaborlobby.chat.ChatFormatter
 import net.axay.hglaborlobby.damager.DamageCommand
 import net.axay.hglaborlobby.damager.Damager
-import net.axay.hglaborlobby.data.database.holder.PlayerSettingsHolder
 import net.axay.hglaborlobby.database.DatabaseManager
 import net.axay.hglaborlobby.eventmanager.joinserver.OnJoinManager
 import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
-import net.axay.hglaborlobby.functionality.ElytraLauncher
-import net.axay.hglaborlobby.functionality.LobbyItems
-import net.axay.hglaborlobby.functionality.RandomFirework
-import net.axay.hglaborlobby.functionality.SoupHealing
+import net.axay.hglaborlobby.functionality.*
 import net.axay.hglaborlobby.gui.guis.*
+import net.axay.hglaborlobby.minigames.Waterfight
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
@@ -32,14 +29,19 @@ class InternalMainClass : KSpigot() {
 
     override fun load() {
         INSTANCE = this
-
+        System.setProperty(
+            "org.litote.mongo.test.mapping.service",
+            "org.litote.kmongo.serialization.SerializationClassMappingTypeService"
+        )
         console.info("Loading Lobby plugin...")
     }
 
     override fun startup() {
         ServerProtection.enable()
 
-        PlayerSettingsHolder.enable()
+        //PlayerSettingsHolder.enable()
+
+        StatsDisplay.enable()
 
         SoupHealing.enable()
         OnJoinManager.enable()
@@ -48,6 +50,7 @@ class InternalMainClass : KSpigot() {
         KickMessageListener.enable()
         ChatFormatter.enable()
         Damager.enable()
+        Waterfight.enable()
         ElytraLauncher.enable()
 
         AdminGUI.register("admingui")
@@ -59,7 +62,7 @@ class InternalMainClass : KSpigot() {
         MainGUI.enable()
         WarpGUI.enable()
         HGQueueGUI.enable()
-        PlayerVisiblityGUI.enable()
+        //PlayerVisiblityGUI.enable()
         PetGUI.enable()
         PrefixGUI.enable()
         //PrivacySettingsGUI.enable()
@@ -75,7 +78,7 @@ class InternalMainClass : KSpigot() {
     override fun shutdown() {
         console.info("Shutting down Lobby plugin...")
 
-        DatabaseManager.mongoDB.close()
+        DatabaseManager.statsClient.close()
 
         broadcast("${KColors.TOMATO}-> DISABLING PLUGIN ${KColors.DARKGRAY}(maybe a reload)")
         onlinePlayers.forEach { it.sound(Sound.BLOCK_BEACON_DEACTIVATE) }

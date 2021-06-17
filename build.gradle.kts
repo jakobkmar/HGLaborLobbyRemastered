@@ -23,9 +23,11 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
     implementation("net.axay:kspigot:1.16.26")
-    compileOnly("net.axay", "BlueUtils", "1.0.2")
-    compileOnly("org.litote.kmongo", "kmongo-core", "4.2.3")
-    compileOnly("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.3")
+    implementation("net.axay", "BlueUtils", "1.0.2")
+    implementation("org.litote.kmongo", "kmongo-core", "4.2.7")
+    implementation("org.litote.kmongo:kmongo-coroutine-core:4.2.7")
+    implementation("de.hglabor:hglabor-utils:0.0.12")
+    implementation("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.7")
     compileOnly("net.luckperms:api:5.3")
 }
 
@@ -41,9 +43,10 @@ tasks {
         dependencies {
             exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib.*"))
         }
-        minimize()
+        //minimize()
         simpleRelocate("net.axay.kspigot")
-        simpleRelocate("kotlinx.serialization")
+        //simpleRelocate("org.litote.kmongo.kmongo-core")
+        //simpleRelocate("org.litote.kmongo.kmongo-serialization-mapping")
     }
 }
 
