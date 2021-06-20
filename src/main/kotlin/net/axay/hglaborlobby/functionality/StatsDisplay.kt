@@ -9,12 +9,16 @@ import net.axay.hglaborlobby.database.mongoScope
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.bukkit.info
 import net.axay.kspigot.extensions.console
+import net.axay.kspigot.items.itemStack
+import net.axay.kspigot.items.meta
 import net.axay.kspigot.runnables.sync
 import net.axay.kspigot.runnables.task
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
+import org.bukkit.inventory.meta.SkullMeta
 import org.litote.kmongo.*
 
 object StatsDisplay {
@@ -28,6 +32,22 @@ object StatsDisplay {
         ) {
             updateDisplay(Location(Bukkit.getWorld("hub"), 124.5, 106.5, 15.5))
         }
+    }
+
+    private fun spawnPlayerHead(location: Location, playerName: String, isMini: Boolean = true): ArmorStand? {
+        val newLocation = location.clone()
+        newLocation.yaw = 90.0f
+        newLocation.pitch = 0.0f
+        val armorStand = location.world?.spawn(newLocation, ArmorStand::class.java)
+        armorStand!!.isVisible = false
+        armorStand.equipment?.setItemInMainHand(itemStack(Material.PLAYER_HEAD) {
+            meta<SkullMeta> {
+                owner = playerName
+            }
+        })
+        armorStand.isSmall = isMini
+        armorStand.setGravity(false)
+        return armorStand
     }
 
     private fun updateDisplay(highestLocation: Location) {
@@ -48,11 +68,15 @@ object StatsDisplay {
                 playerName?.let {
                     val rankingPos = data.indexOf(hgStats)+1
                     sync {
+                        val playerHead = spawnPlayerHead(location.clone().add(0.0, 0.08, 1.6)/*.clone().add(0.0, -0.7, 1.0)*/, it)
                         val hologram = HologramUtils.spawnHologram(
                             location,
                             "${getColor(rankingPos)}${KColors.UNDERLINE}#$rankingPos.${KColors.RESET} ${KColors.GRAY}$it ${KColors.DARKGRAY}- ${KColors.LIGHTGOLDENRODYELLOW}${hgStats.kills}"
                         )
                         hologramList.add(hologram)
+                        if (playerHead != null) {
+                            hologramList.add(playerHead)
+                        }
                         location = highestLocation.subtract(0.0, 0.3, 0.0)
                     }
                 }
