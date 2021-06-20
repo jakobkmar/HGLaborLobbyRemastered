@@ -3,6 +3,7 @@ package net.axay.hglaborlobby.eventmanager.joinserver
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
 import net.axay.hglaborlobby.data.database.location
 import net.axay.hglaborlobby.security.BadIPDetection
+import net.axay.hglaborlobby.security.VPNCommand
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.runnables.async
 import org.bukkit.event.EventPriority
@@ -25,8 +26,10 @@ object OnJoinManager {
             }
 
             async {
-                if (!player.hasPermission("hglabor.bypassvpn")) {
-                    BadIPDetection.checkPlayer(player)
+                if(VPNCommand.isActive) {
+                    if (!player.hasPermission("hglabor.bypassvpn")) {
+                        BadIPDetection.checkPlayer(player)
+                    }
                 }
             }
         }

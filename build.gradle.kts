@@ -21,6 +21,7 @@ repositories {
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
     compileOnly("org.spigotmc", "spigot", "1.16.5-R0.1-SNAPSHOT")
     implementation("net.axay:kspigot:1.16.26")
     implementation("net.axay", "BlueUtils", "1.0.2")
@@ -40,9 +41,9 @@ tasks.withType<KotlinCompile> {
 
 tasks {
     shadowJar {
-        dependencies {
-            exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib.*"))
-        }
+        //dependencies {
+        //    exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib.*"))
+        //}
         //minimize()
         simpleRelocate("net.axay.kspigot")
         //simpleRelocate("org.litote.kmongo.kmongo-core")

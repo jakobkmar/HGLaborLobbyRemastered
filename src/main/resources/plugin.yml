@@ -6,9 +6,12 @@
   "main": "net.axay.hglaborlobby.main.InternalMainClass",
   "api-version": "1.16",
 
-  "depend": ["LuckPerms" ],
+  "depend": ["LuckPerms"],
 
   "commands": {
+    "vpn": {
+      "description": "Toggle the vpn protection."
+    },
     "spawn": {
       "description": "Teleportiert dich zum Spawn."
     },

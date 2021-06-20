@@ -11,6 +11,7 @@ import net.axay.hglaborlobby.functionality.*
 import net.axay.hglaborlobby.gui.guis.*
 import net.axay.hglaborlobby.minigames.Waterfight
 import net.axay.hglaborlobby.protection.ServerProtection
+import net.axay.hglaborlobby.security.VPNCommand
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.broadcast
 import net.axay.kspigot.extensions.bukkit.info
@@ -57,6 +58,7 @@ class InternalMainClass : KSpigot() {
         DamageCommand.register("damage")
         RandomFirework.register("randomfirework")
         ChatFormatter.register("formatting")
+        VPNCommand.register("vpn")
 
         // Main GUI
         MainGUI.enable()

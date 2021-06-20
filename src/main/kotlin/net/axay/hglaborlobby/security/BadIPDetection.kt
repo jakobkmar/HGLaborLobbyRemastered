@@ -36,7 +36,7 @@ object BadIPDetection {
             val checkData = DatabaseManager.ipAddresses.findOne(IPCheckData::ip eq player.ipAddressOrNull)
             if (checkData != null) {
 
-                if (checkData.expiresAt > Instant.now()) {
+                if (checkData.expiresAt < Instant.now()) {
                     if (!checkData.isBad)
                         mustCheck = false
                 }
