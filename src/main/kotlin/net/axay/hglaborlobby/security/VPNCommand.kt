@@ -9,12 +9,12 @@ object VPNCommand : CommandExecutor {
 
     var isActive = true
 
-    override fun onCommand(p0: CommandSender, p1: Command, p2: String, p3: Array<out String>): Boolean {
-        if(p0.hasPermission("hglabor.togglevpn")) {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if(sender.hasPermission("hglabor.togglevpn")) {
             isActive = !isActive
-            p0.sendMessage("${KColors.CORNSILK}VPN Protection: ${KColors.SANDYBROWN}${isActive}")
+            sender.sendMessage("${KColors.CORNSILK}VPN Protection: ${KColors.SANDYBROWN}${isActive}")
         } else {
-            p0.sendMessage("${KColors.TOMATO}Du hast keine Rechte, um die VPN Protection einzuestellen.")
+            sender.sendMessage("${KColors.TOMATO}Du hast keine Rechte, um die VPN Protection einzuestellen.")
         }
         return false
     }
