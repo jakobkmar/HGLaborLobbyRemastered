@@ -100,7 +100,7 @@ object Waterfight {
             meta {
                 name = "${KColors.SKYBLUE}Dreizack"
                 isUnbreakable = true
-                addEnchant(Enchantment.LOYALTY, 1, true)
+                addEnchant(Enchantment.RIPTIDE, 3, true)
                 addItemFlags(ItemFlag.HIDE_UNBREAKABLE)
                 addItemFlags(ItemFlag.HIDE_ENCHANTS)
                 addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
