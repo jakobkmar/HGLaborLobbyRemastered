@@ -163,7 +163,6 @@ object PetGUI {
                 petCompound.addContent(Pet("Fuchs", EntityType.FOX, Material.SWEET_BERRIES, "Sub"))
                 petCompound.addContent(Pet("Zoglin", EntityType.ZOGLIN, Material.PORKCHOP, "Sub"))
                 petCompound.addContent(Pet("Guardian", EntityType.GUARDIAN, Material.PRISMARINE_CRYSTALS, "Sub"))
-                petCompound.addContent(Pet("Ghast", EntityType.GHAST, Material.FIRE_CHARGE, "Contributor"))
                 petCompound.addContent(Pet("Verwüster", EntityType.RAVAGER, Material.DEAD_FIRE_CORAL_BLOCK, "Contributor"))
                 petCompound.addContent(Pet("Tintenfisch", EntityType.SQUID, Material.INK_SAC))
                 petCompound.addContent(Pet("Pilzkuh", EntityType.MUSHROOM_COW, Material.BROWN_MUSHROOM, "Sub"))
