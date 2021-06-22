@@ -25,7 +25,7 @@ object OnJoinManager {
             }
 
             async {
-                if(VPNCommand.isActive) {
+                if (VPNCommand.isActive) {
                     if (!player.hasPermission("hglabor.bypassvpn")) {
                         BadIPDetection.checkPlayer(player)
                     }
