@@ -7,11 +7,8 @@ import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.extensions.bukkit.info
 import net.axay.kspigot.extensions.bukkit.kick
 import net.axay.kspigot.extensions.console
-import net.axay.kspigot.ipaddress.BadIPDetectionResult
-import net.axay.kspigot.ipaddress.BadIPDetector
+import net.axay.kspigot.ipaddress.*
 import net.axay.kspigot.ipaddress.badipdetectionservices.IPHub
-import net.axay.kspigot.ipaddress.checkIP
-import net.axay.kspigot.ipaddress.ipAddressOrNull
 import net.axay.kspigot.runnables.sync
 import org.bukkit.entity.Player
 import org.litote.kmongo.eq
@@ -28,38 +25,25 @@ object BadIPDetection {
     )
 
     fun checkPlayer(player: Player): String? {
-
         val ip = player.ipAddressOrNull
         if (ip != null) {
-
             // find out if the ip has already been checked and was not bad
-
             var mustCheck = true
-
             val checkData = DatabaseManager.ipAddresses.findOne(IPCheckData::ip eq player.ipAddressOrNull)
             if (checkData != null) {
-
-                if (checkData.expiresAt > Instant.now()) {
+                if (checkData.expiresAt < Instant.now()) {
                     if (!checkData.isBad)
                         mustCheck = false
                 }
-
             }
-
             if (!mustCheck) return null
-
             // now check the players ip address
-
             val checkResult = player.checkIP(detector)
-
             console.info("IP check result for player ${player.name}: ${checkResult.values}")
-
             // no result or only error codes?
             if (!checkResult.all { it.value == BadIPDetectionResult.ERROR || it.value == BadIPDetectionResult.LIMIT }) {
-
                 // is there a bad result?
                 val badResult = checkResult.filter { it.value.isBad }.values.firstOrNull()?.typeName?.toUpperCase()
-
                 // save result to database
                 val expiresAfter = Instant.now().plusSeconds(checkExpiresAfterSeconds)
                 DatabaseManager.ipAddresses.save(
@@ -68,7 +52,6 @@ object BadIPDetection {
                     else
                         IPCheckData(ip, false, expiresAfter)
                 )
-
                 badResult?.let {
                     val kickReason = if (it.equals(BadIPDetectionResult.GENERAL_BAD.typeName, true))
                         "BAD IP (Do not connect via VPN, TOR or a remote proxy)"
@@ -77,15 +60,9 @@ object BadIPDetection {
                     sync { player.kick(kickReason) }
                     return "${KColors.INDIANRED}${KColors.BOLD}$it"
                 }
-
                 return null
-
             }
-
         }
-
         return "${KColors.LIGHTGRAY}(not checked)"
-
     }
-
 }

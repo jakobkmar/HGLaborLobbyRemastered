@@ -1,22 +1,59 @@
 package net.axay.hglaborlobby.database
 
+import com.mongodb.MongoClientSettings
+import com.mongodb.MongoCredential
+import com.mongodb.ServerAddress
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import net.axay.blueutils.database.DatabaseLoginInformation
 import net.axay.blueutils.database.mongodb.MongoDB
 import net.axay.hglaborlobby.config.ConfigManager
 import net.axay.hglaborlobby.data.database.*
 import net.axay.hglaborlobby.main.PLUGIN_DATA_PREFIX
+import org.bson.UuidRepresentation
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.getCollection
+
+val mongoScope = CoroutineScope(Dispatchers.IO)
 
 object DatabaseManager {
 
-    val mongoDB = MongoDB(ConfigManager.databaseLoginInformation, spigot = true)
+    val mongoClient = KMongo.createClient(settings = MongoClientSettings.builder()
+        .uuidRepresentation(UuidRepresentation.STANDARD)
+        .credential(MongoCredential.createCredential(
+            ConfigManager.otherDbUsername,
+            ConfigManager.otherDbDatabase,
+            ConfigManager.otherDbPassword
+        ))
+        .applyToClusterSettings { it.hosts(listOf(ServerAddress("localhost"))) }
+        .build()
+    )
 
-    val playerSettings = mongoDB.getCollectionOrCreate<PlayerSettings>("${PLUGIN_DATA_PREFIX}player_settings")
+    val statsClient = KMongo.createClient(settings = MongoClientSettings.builder()
+        .uuidRepresentation(UuidRepresentation.STANDARD)
+        .credential(MongoCredential.createCredential(
+            ConfigManager.hgStatsDbUsername,
+            ConfigManager.hgStatsDbDatabase,
+            ConfigManager.hgStatsDbPassword
+        ))
+        .applyToClusterSettings { it.hosts(listOf(ServerAddress("localhost"))) }
+        .build()
+    )
 
-    val warps = mongoDB.getCollectionOrCreate<Warp>("${PLUGIN_DATA_PREFIX}warps")
+    val statsDB = statsClient.getDatabase("hg")
 
-    val serverWarps = mongoDB.getCollectionOrCreate<ServerWarp>("${PLUGIN_DATA_PREFIX}serverwarps")
+    val mongoDB = mongoClient.getDatabase("hglabordb")
 
-    val ipAddresses = mongoDB.getCollectionOrCreate<IPCheckData>("${PLUGIN_DATA_PREFIX}ipcheckdata")
+    val hgStats = statsDB.getCollection<HGStats>("hgStats")
 
-    val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas")
+    val playerNameCache = statsDB.getCollection<PlayerNameCache>("playerNameCache")
+
+    //val playerSettings = mongoDB.getCollectionOrCreate<PlayerSettings>("${PLUGIN_DATA_PREFIX}player_settings")
+
+    val warps = mongoDB.getCollection<Warp>("${PLUGIN_DATA_PREFIX}warps")
+
+    val ipAddresses = mongoDB.getCollection<IPCheckData>("${PLUGIN_DATA_PREFIX}ipcheckdata")
+
+    //val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas") not used?
 
 }

@@ -16,6 +16,6 @@ class WarpsHolderInstance {
 
     val warps by lazy { DatabaseManager.warps.find().toList() }
 
-    val spawn by lazy { warps.find { it.name == "spawn" } }
+    val spawn by lazy { warps.find { it.name.equals(other = "Spawn", ignoreCase = true) } }
 
 }
