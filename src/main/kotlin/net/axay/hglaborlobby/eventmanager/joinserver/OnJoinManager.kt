@@ -1,7 +1,6 @@
 package net.axay.hglaborlobby.eventmanager.joinserver
 
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
-import net.axay.hglaborlobby.data.database.location
 import net.axay.hglaborlobby.security.BadIPDetection
 import net.axay.hglaborlobby.security.VPNCommand
 import net.axay.kspigot.event.listen
@@ -21,8 +20,8 @@ object OnJoinManager {
             JoinPlayerReset.resetPlayer(player)
             JoinTablist.setTablist(player)
 
-            WarpsHolder.instance.spawn.let { warp ->
-                player.teleport(warp.location())
+            WarpsHolder.instance.spawn?.let { warp ->
+                player.teleport(warp.location)
             }
 
             async {

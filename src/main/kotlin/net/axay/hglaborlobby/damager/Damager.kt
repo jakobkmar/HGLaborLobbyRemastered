@@ -4,7 +4,6 @@ import net.axay.hglaborlobby.damager.DamagerDifficulty.crapDamagerEnabled
 import net.axay.hglaborlobby.damager.DamagerDifficulty.getCrapDamagerItem
 import net.axay.hglaborlobby.damager.DamagerDifficulty.inconsistencyEnabled
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
-import net.axay.hglaborlobby.data.database.location
 import net.axay.hglaborlobby.functionality.LobbyItems
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
@@ -79,7 +78,7 @@ object Damager {
                 } else {
                     LobbyItems.givePlayer(p)
                     WarpsHolder.instance.spawn?.let { warp ->
-                        p.teleport(warp.location())
+                        p.teleport(warp.location)
                     }
                     p.heal()
                     p.sendMessage("${KColors.GRAY}Du hast den Damager ${KColors.RED}nicht${KColors.GRAY} geschafft")
