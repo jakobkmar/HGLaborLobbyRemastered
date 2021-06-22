@@ -51,14 +51,16 @@ object StatsDisplay {
     }
 
     private fun updateDisplay(highestLocation: Location) {
-        val holoTop = HologramUtils.spawnHologram(highestLocation.clone().add(0.0, 0.3,0.0), "${KColors.SLATEBLUE}HG Top 10 ${KColors.DARKGRAY}- ${KColors.MEDIUMVIOLETRED}Kills")
-        hologramList.add(holoTop)
         mongoScope.launch {
             var location = highestLocation.clone()
             for (hologram in hologramList) {
                 hologram.remove()
             }
             hologramList.clear()
+            sync {
+                val holoTop = HologramUtils.spawnHologram(highestLocation.clone().add(0.0, 0.3,0.0), "${KColors.SLATEBLUE}HG Top 10 ${KColors.DARKGRAY}- ${KColors.MEDIUMVIOLETRED}Kills")
+                hologramList.add(holoTop)
+            }
             val data = DatabaseManager.hgStats.aggregate<HGStats>(
                 sort(descending(HGStats::kills)),
                 limit(10)
