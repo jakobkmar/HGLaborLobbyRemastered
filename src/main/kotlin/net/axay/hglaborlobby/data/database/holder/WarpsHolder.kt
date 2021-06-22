@@ -1,7 +1,5 @@
 package net.axay.hglaborlobby.data.database.holder
 
-import net.axay.hglaborlobby.config.ConfigManager
-import net.axay.hglaborlobby.damager.locationArea
 import net.axay.hglaborlobby.database.DatabaseManager
 
 object WarpsHolder {
@@ -16,8 +14,8 @@ object WarpsHolder {
 
 class WarpsHolderInstance {
 
-    val warps by lazy { ConfigManager.warpConfig.warps }
+    val warps by lazy { DatabaseManager.warps.find().toList() }
 
-    val spawn by lazy { warps[0] }
+    val spawn by lazy { warps.find { it.name == "Spawn" } }
 
 }

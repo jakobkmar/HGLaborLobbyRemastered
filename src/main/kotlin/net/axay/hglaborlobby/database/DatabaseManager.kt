@@ -18,8 +18,6 @@ val mongoScope = CoroutineScope(Dispatchers.IO)
 
 object DatabaseManager {
 
-    //val mongoDB = MongoDB(DatabaseLoginInformation.NOTSET_DEFAULT, spigot = true)
-
     val mongoClient = KMongo.createClient(settings = MongoClientSettings.builder()
         .uuidRepresentation(UuidRepresentation.STANDARD)
         .credential(MongoCredential.createCredential(
@@ -46,20 +44,16 @@ object DatabaseManager {
 
     val mongoDB = mongoClient.getDatabase("hglabordb")
 
-    init {
-        //System.setProperty("org.litote.mongo.test.mapping.service", "org.litote.kmongo.jackson.JacksonClassMappingTypeService")
-    }
-
     val hgStats = statsDB.getCollection<HGStats>("hgStats")
 
     val playerNameCache = statsDB.getCollection<PlayerNameCache>("playerNameCache")
 
     //val playerSettings = mongoDB.getCollectionOrCreate<PlayerSettings>("${PLUGIN_DATA_PREFIX}player_settings")
 
-    //val warps = mongoDB.getCollectionOrCreate<Warp>("${PLUGIN_DATA_PREFIX}warps")
+    val warps = mongoDB.getCollection<Warp>("${PLUGIN_DATA_PREFIX}warps")
 
     val ipAddresses = mongoDB.getCollection<IPCheckData>("${PLUGIN_DATA_PREFIX}ipcheckdata")
 
-    //val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas")
+    //val areas = mongoDB.getCollectionOrCreate<Area>("${PLUGIN_DATA_PREFIX}areas") not used?
 
 }

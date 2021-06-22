@@ -2,7 +2,6 @@ package net.axay.hglaborlobby.gui.guis
 
 import net.axay.hglaborlobby.data.database.Warp
 import net.axay.hglaborlobby.data.database.holder.WarpsHolder
-import net.axay.hglaborlobby.data.database.location
 import net.axay.kspigot.chat.KColors
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.extensions.events.isRightClick
@@ -38,7 +37,7 @@ object WarpGUI {
                 Slots.RowTwoSlotEight,
 
                 iconGenerator = {
-                    itemStack(Material.valueOf(it.icon)) {
+                    itemStack(it.icon) {
                         setMeta {
                             name = "${KColors.CORAL}${it.name.capitalize()}"
                             lore = (it.description?.toLoreList(KColors.DARKAQUA)?.toMutableList() ?: ArrayList()).apply {
@@ -54,7 +53,7 @@ object WarpGUI {
 
                     clickEvent.bukkitEvent.isCancelled = true
 
-                    clickEvent.bukkitEvent.whoClicked.teleport(element.location())
+                    clickEvent.bukkitEvent.whoClicked.teleport(element.location)
 
                 }
 
