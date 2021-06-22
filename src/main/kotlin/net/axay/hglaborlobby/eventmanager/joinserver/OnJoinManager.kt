@@ -11,19 +11,14 @@ import org.bukkit.event.player.PlayerJoinEvent
 object OnJoinManager {
 
     fun enable() {
-
         listen<PlayerJoinEvent>(EventPriority.HIGHEST) {
             it.joinMessage = null
-
             val player = it.player
-
             JoinPlayerReset.resetPlayer(player)
             JoinTablist.setTablist(player)
-
             WarpsHolder.instance.spawn?.let { warp ->
                 player.teleport(warp.location)
             }
-
             async {
                 if (VPNCommand.isActive) {
                     if (!player.hasPermission("hglabor.bypassvpn")) {
@@ -32,6 +27,5 @@ object OnJoinManager {
                 }
             }
         }
-
     }
 }
