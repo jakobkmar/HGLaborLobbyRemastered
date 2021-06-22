@@ -8,11 +8,11 @@ import org.bukkit.configuration.file.YamlConfiguration
 object ConfigManager {
 
     val hgStatsDbPassword
-    get() = hgStatsDbConfig.getString("dbPassword")?.toCharArray() ?: "bingus".toCharArray()
+        get() = hgStatsDbConfig.getString("dbPassword")?.toCharArray() ?: "bingus".toCharArray()
     val hgStatsDbUsername
-    get() = hgStatsDbConfig.getString("dbUsername") ?: "name"
+        get() = hgStatsDbConfig.getString("dbUsername") ?: "name"
     val hgStatsDbDatabase
-    get() = hgStatsDbConfig.getString("dbDatabase") ?: "db"
+        get() = hgStatsDbConfig.getString("dbDatabase") ?: "db"
 
     val otherDbPassword
         get() = otherDbConfig.getString("dbPassword")?.toCharArray() ?: "bingus".toCharArray()
