@@ -169,7 +169,7 @@ object PetGUI {
                 petCompound.addContent(Pet("Pilzkuh", EntityType.MUSHROOM_COW, Material.BROWN_MUSHROOM, "Sub"))
                 petCompound.addContent(Pet("Kugelfisch", EntityType.PUFFERFISH, Material.PUFFERFISH_BUCKET))
                 petCompound.addContent(Pet("Witherskelett", EntityType.WITHER_SKELETON, Material.COAL, "Sub"))
-                petCompound.addContent(Pet("Iron Golem", EntityType.IRON_GOLEM, Material.IRON_BLOCK, "Sub"))
+                petCompound.addContent(Pet("Gaming Golem", EntityType.IRON_GOLEM, Material.IRON_BLOCK, "Sub")) //grüße an w3stside
                 button(Slots.CornerBottomRight, itemStack(Material.SADDLE) {
                     meta {
                         name = "${KColors.SADDLEBROWN}Haustier reiten"
