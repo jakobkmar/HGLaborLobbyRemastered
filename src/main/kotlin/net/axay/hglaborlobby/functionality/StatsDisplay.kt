@@ -51,7 +51,8 @@ object StatsDisplay {
     }
 
     private fun updateDisplay(highestLocation: Location) {
-        HologramUtils.spawnHologram(highestLocation.clone().add(0.0, 0.3,0.0), "${KColors.SLATEBLUE}HG Top 10 ${KColors.DARKGRAY}- ${KColors.MEDIUMVIOLETRED}Kills")
+        val holoTop = HologramUtils.spawnHologram(highestLocation.clone().add(0.0, 0.3,0.0), "${KColors.SLATEBLUE}HG Top 10 ${KColors.DARKGRAY}- ${KColors.MEDIUMVIOLETRED}Kills")
+        hologramList.add(holoTop)
         mongoScope.launch {
             var location = highestLocation.clone()
             for (hologram in hologramList) {
