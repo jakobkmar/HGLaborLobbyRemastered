@@ -9,6 +9,7 @@ import net.axay.hglaborlobby.eventmanager.leaveserver.KickMessageListener
 import net.axay.hglaborlobby.eventmanager.leaveserver.OnLeaveManager
 import net.axay.hglaborlobby.functionality.*
 import net.axay.hglaborlobby.gui.guis.*
+import net.axay.hglaborlobby.hg.HostCommand
 import net.axay.hglaborlobby.minigames.Waterfight
 import net.axay.hglaborlobby.protection.ServerProtection
 import net.axay.hglaborlobby.security.VPNCommand
@@ -59,6 +60,7 @@ class InternalMainClass : KSpigot() {
         RandomFirework.register("randomfirework")
         ChatFormatter.register("formatting")
         VPNCommand.register("vpn")
+        HostCommand.register("host")
 
         // Main GUI
         MainGUI.enable()

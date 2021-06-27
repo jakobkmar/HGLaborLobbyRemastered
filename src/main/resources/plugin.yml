@@ -26,6 +26,9 @@
     },
     "formatting": {
       "description": "Zeigt dir an, welche Formatierungsoptionen du hast"
+    },
+    "host": {
+      "description": "Öffnet das Host GUI"
     }
   }
 }

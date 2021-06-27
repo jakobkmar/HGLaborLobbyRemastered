@@ -8,9 +8,9 @@ group = "net.axay"
 version = "1.0.0"
 
 plugins {
-    kotlin("jvm") version "1.4.32"
+    kotlin("jvm") version "1.5.10"
     id("com.github.johnrengelman.shadow") version "6.1.0"
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("plugin.serialization") version "1.5.10"
 }
 
 repositories {
@@ -18,6 +18,7 @@ repositories {
     jcenter()
     mavenCentral()
     maven("https://repo.codemc.io/repository/maven-snapshots/")
+    maven("https://repo.cloudnetservice.eu/repository/releases/")
 }
 
 dependencies {
@@ -30,6 +31,10 @@ dependencies {
     implementation("de.hglabor:hglabor-utils:0.0.12")
     implementation("org.litote.kmongo", "kmongo-serialization-mapping", "4.2.7")
     compileOnly("net.luckperms:api:5.3")
+
+    compileOnly ("de.dytanic.cloudnet:cloudnet-bridge:3.3.0-RELEASE")
+    compileOnly ("de.dytanic.cloudnet:cloudnet:3.3.0-RELEASE")
+    compileOnly ("de.dytanic.cloudnet:cloudnet-wrapper-jvm:3.3.0-RELEASE")
 }
 
 java.sourceCompatibility = jvmVersion
